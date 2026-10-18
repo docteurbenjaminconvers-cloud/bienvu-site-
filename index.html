@@ -34,6 +34,15 @@
   --bg:#171C23; --surface:#1F262F; --ink:#E9ECEF; --muted:#9DA7B2; --line:#303A46;
   --accent:#B9C6D4; --accent-ink:#141A21; --accent-soft:#2B3541; --copper:#D08A5A; --copper-ink:#1A120C; --gold:#D4B37A; --prestige-bg:#0F141A; --prestige-ink:#F2EFE8; --prestige-muted:#A9B1BB; --good:#86BE9E; --warn:#D2A35C; --bad:#DE8C8A; --tint:#252D37; color-scheme:dark}
 *{box-sizing:border-box}
+/* Fantaisie : fil de fer immobilier en fond, discret et adapté au thème */
+.wire{position:fixed;inset:0;z-index:-2;pointer-events:none;background:var(--accent);opacity:.07;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20360%20360%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20transform%3D%22translate%2824%2030%29%22%3E%3Cpath%20d%3D%22M0%2026%20L22%206%20L44%2026%20M6%2022%20V46%20H38%20V22%20M18%2046%20V32%20H26%20V46%20M30%2012%20V4%20H36%20V18%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28130%2018%29%22%3E%3Cpath%20d%3D%22M0%2058%20V8%20H34%20V58%20M8%2016%20H14%20M20%2016%20H26%20M8%2028%20H14%20M20%2028%20H26%20M8%2040%20H14%20M20%2040%20H26%20M14%2058%20V50%20H20%20V58%20M34%2058%20V26%20H50%20V58%20M40%2034%20H44%20M40%2044%20H44%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28250%2026%29%22%3E%3Cpath%20d%3D%22M14%2046%20V30%20M14%2030%20C2%2030%200%2016%208%2012%20C6%202%2022%202%2022%2010%20C30%208%2032%2024%2020%2026%20C24%2030%2016%2032%2014%2030%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%2840%20150%29%22%3E%3Cpath%20d%3D%22M0%2010%20A8%208%200%201%200%2016%2010%20A8%208%200%201%200%200%2010%20M16%2010%20H44%20M38%2010%20V17%20M31%2010%20V15%20M4%207%20L8%2011%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28140%20140%29%22%3E%3Cpath%20d%3D%22M0%2048%20V14%20L30%2014%20L52%2024%20V48%20M0%2048%20H52%20M8%2048%20V34%20A6%206%200%200%201%2020%2034%20V48%20M30%2024%20H42%20V32%20H30%20Z%20M16%2014%20V6%20H22%20V14%20M8%2022%20H14%20M8%2028%20H14%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28260%20140%29%22%3E%3Cpath%20d%3D%22M0%2060%20V20%20L16%204%20L32%2020%20V60%20M8%2028%20H24%20M8%2040%20H24%20M12%2060%20V50%20H20%20V60%20M16%204%20V-6%20M12%20-2%20H20%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%2820%20270%29%22%3E%3Cpath%20d%3D%22M0%2050%20V22%20H22%20V50%20M30%2050%20V12%20H56%20V50%20M64%2050%20V30%20H80%20V50%20M6%2030%20H14%20M6%2040%20H14%20M38%2020%20H48%20M38%2030%20H48%20M38%2040%20H48%20M70%2038%20H74%20M0%2050%20H86%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28150%20262%29%22%3E%3Cpath%20d%3D%22M12%2048%20V10%20M12%2010%20H52%20M48%2010%20V4%20M4%2020%20H12%20M12%2026%20H24%20V34%20H12%20M44%2048%20V40%20H52%20M0%2048%20H60%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28250%20268%29%22%3E%3Cpath%20d%3D%22M0%2044%20L20%2010%20L40%2044%20Z%20M20%2010%20V2%20M10%2044%20V30%20H30%20V44%20M16%2036%20H24%22/%3E%3C/g%3E%0A%3C/svg%3E") 0 0/360px 360px repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20360%20360%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cg%20transform%3D%22translate%2824%2030%29%22%3E%3Cpath%20d%3D%22M0%2026%20L22%206%20L44%2026%20M6%2022%20V46%20H38%20V22%20M18%2046%20V32%20H26%20V46%20M30%2012%20V4%20H36%20V18%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28130%2018%29%22%3E%3Cpath%20d%3D%22M0%2058%20V8%20H34%20V58%20M8%2016%20H14%20M20%2016%20H26%20M8%2028%20H14%20M20%2028%20H26%20M8%2040%20H14%20M20%2040%20H26%20M14%2058%20V50%20H20%20V58%20M34%2058%20V26%20H50%20V58%20M40%2034%20H44%20M40%2044%20H44%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28250%2026%29%22%3E%3Cpath%20d%3D%22M14%2046%20V30%20M14%2030%20C2%2030%200%2016%208%2012%20C6%202%2022%202%2022%2010%20C30%208%2032%2024%2020%2026%20C24%2030%2016%2032%2014%2030%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%2840%20150%29%22%3E%3Cpath%20d%3D%22M0%2010%20A8%208%200%201%200%2016%2010%20A8%208%200%201%200%200%2010%20M16%2010%20H44%20M38%2010%20V17%20M31%2010%20V15%20M4%207%20L8%2011%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28140%20140%29%22%3E%3Cpath%20d%3D%22M0%2048%20V14%20L30%2014%20L52%2024%20V48%20M0%2048%20H52%20M8%2048%20V34%20A6%206%200%200%201%2020%2034%20V48%20M30%2024%20H42%20V32%20H30%20Z%20M16%2014%20V6%20H22%20V14%20M8%2022%20H14%20M8%2028%20H14%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28260%20140%29%22%3E%3Cpath%20d%3D%22M0%2060%20V20%20L16%204%20L32%2020%20V60%20M8%2028%20H24%20M8%2040%20H24%20M12%2060%20V50%20H20%20V60%20M16%204%20V-6%20M12%20-2%20H20%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%2820%20270%29%22%3E%3Cpath%20d%3D%22M0%2050%20V22%20H22%20V50%20M30%2050%20V12%20H56%20V50%20M64%2050%20V30%20H80%20V50%20M6%2030%20H14%20M6%2040%20H14%20M38%2020%20H48%20M38%2030%20H48%20M38%2040%20H48%20M70%2038%20H74%20M0%2050%20H86%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28150%20262%29%22%3E%3Cpath%20d%3D%22M12%2048%20V10%20M12%2010%20H52%20M48%2010%20V4%20M4%2020%20H12%20M12%2026%20H24%20V34%20H12%20M44%2048%20V40%20H52%20M0%2048%20H60%22/%3E%3C/g%3E%0A%3Cg%20transform%3D%22translate%28250%20268%29%22%3E%3Cpath%20d%3D%22M0%2044%20L20%2010%20L40%2044%20Z%20M20%2010%20V2%20M10%2044%20V30%20H30%20V44%20M16%2036%20H24%22/%3E%3C/g%3E%0A%3C/svg%3E") 0 0/360px 360px repeat}
+.skyline{position:fixed;left:0;right:0;bottom:0;width:100%;height:min(28vh,220px);z-index:-1;pointer-events:none;color:var(--accent);opacity:.16;display:block}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wire{opacity:.09}:root:not([data-theme="light"]) .skyline{opacity:.2}}
+:root[data-theme="dark"] .wire{opacity:.09}:root[data-theme="dark"] .skyline{opacity:.2}
+body{position:relative;z-index:0}
+.hero-art{width:100%;height:72px;color:var(--copper);opacity:.75;display:block;margin:-4px 0 -8px}
+
 .prestige{background:var(--prestige-bg);color:var(--prestige-ink);border-radius:var(--r);padding:18px 16px;margin-top:24px;display:grid;gap:14px}
 .prestige-h{display:grid;gap:8px}
 .prestige-h h2{color:var(--prestige-ink)}
@@ -72,7 +81,7 @@ input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px 
 input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;min-width:0}
 .header .acts{display:flex;gap:6px;flex:none}
-@media (max-width:480px){.brand{flex-direction:column;align-items:flex-start;gap:0;line-height:1.1}.brand small{font-size:10.5px}.brand #sync{display:none}.header .acts .btn{padding:8px 10px;font-size:12.5px}}
+@media (max-width:480px){.brand{flex:0 0 auto}.brand small{display:none}.header .acts .btn{padding:8px 10px;font-size:12.5px}}
 .brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.01em;color:var(--accent);display:flex;align-items:baseline;gap:8px;min-width:0;flex:1 1 auto}
 .brand small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r);padding:10px 18px;font-weight:700;white-space:nowrap}
@@ -304,11 +313,37 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <div class="brand">Bienvu <small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
   <div class="acts"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
 </header>
+<div class="wire" aria-hidden="true"></div>
+<svg class="skyline" aria-hidden="true" viewBox="0 0 1400 220" preserveAspectRatio="xMidYMax slice" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 220 H1400"/>
+<path d="M20 220 V150 L60 118 L100 150 V220 M34 220 V190 H58 V220 M70 160 H88 V176 H70 Z M84 128 V110 H94 V136"/>
+<path d="M130 220 V90 H200 V220 M142 104 H156 M168 104 H186 M142 124 H156 M168 124 H186 M142 144 H156 M168 144 H186 M142 164 H156 M168 164 H186 M142 184 H156 M168 184 H186 M158 220 V196 H174 V220 M160 90 V78 H170 V90"/>
+<path d="M230 220 V170 H290 V220 M240 180 H252 M240 196 H252 M262 220 V194 A8 8 0 0 1 278 194 V220 M250 170 L260 158 H290"/>
+<path d="M330 220 V60 H352 V48 H370 V60 H392 V220 M340 76 H348 M352 76 H368 M374 76 H384 M340 100 H348 M352 100 H368 M374 100 H384 M340 124 H348 M352 124 H368 M374 124 H384 M340 148 H348 M352 148 H368 M374 148 H384 M340 172 H348 M352 172 H368 M374 172 H384 M340 196 H348 M374 196 H384 M356 220 V200 H366 V220 M361 48 V30"/>
+<path d="M430 220 V140 L470 108 L510 140 V220 M452 220 V184 H488 V220 M470 108 V96 M440 160 H456 V174 H440 Z M484 160 H500 V174 H484 Z"/>
+<path d="M540 220 V180 M540 180 C520 180 518 150 536 146 C532 128 564 126 562 144 C578 142 580 170 560 172 C566 178 548 182 540 180"/>
+<path d="M600 220 V120 H680 V220 M612 134 H626 V148 H612 Z M636 134 H650 V148 H636 Z M660 134 H670 V148 H660 Z M612 160 H626 V174 H612 Z M636 160 H650 V174 H636 Z M660 160 H670 V174 H660 Z M612 186 H626 V200 H612 Z M660 186 H670 V200 H660 Z M636 220 V190 H650 V220 M600 120 L640 100 L680 120"/>
+<path d="M720 220 V100 L740 70 L760 100 V220 M740 70 V50 M732 56 H748 M734 112 A6 6 0 0 1 746 112 V128 H734 Z M734 150 H746 M734 170 H746 M760 220 V140 H820 V220 M772 152 H784 M796 152 H808 M772 170 H784 M796 170 H808 M784 220 V200 H796 V220"/>
+<path d="M860 220 V156 H900 V130 H960 V220 M870 168 H884 M870 184 H884 M870 200 H884 M910 142 H920 M930 142 H950 M910 160 H920 M930 160 H950 M910 178 H920 M930 178 H950 M910 196 H920 M930 196 H950"/>
+<path d="M1000 220 V170 H1050 V220 M1010 182 H1022 M1010 198 H1022 M1030 220 V190 H1042 V220 M1000 170 L1025 150 L1050 170 M1016 158 V146 H1022 V154"/>
+<path d="M1070 160 V220 M1070 160 L1130 140 M1130 140 V220 M1130 140 L1180 90 L1178 96 M1176 140 L1230 140 M1128 150 L1136 158 M1132 146 L1124 154"/>
+<path d="M1260 220 V110 H1300 V96 H1312 V110 H1350 V220 M1272 124 H1288 M1272 146 H1288 M1272 168 H1288 M1272 190 H1288 M1322 124 H1338 M1322 146 H1338 M1322 168 H1338 M1322 190 H1338 M1298 220 V194 H1314 V220"/>
+<path d="M1370 220 V196 M1370 196 C1356 196 1356 176 1368 172 C1366 160 1386 160 1384 170 C1394 170 1396 190 1382 190 C1386 194 1376 198 1370 196"/>
+</svg>
 
 <main>
 <!-- ACCUEIL / RECHERCHE -->
 <section class="view" id="v-home">
   <div class="hero">
+<svg class="hero-art" aria-hidden="true" viewBox="0 0 400 72" preserveAspectRatio="xMidYMax meet" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 70 H400"/>
+<path d="M20 70 V44 L44 26 L68 44 V70 M30 70 V56 H44 V70 M50 50 H60 V58 H50 Z M58 32 V24 H64 V36"/>
+<path d="M90 70 V20 H130 V70 M98 28 H106 M114 28 H122 M98 42 H106 M114 42 H122 M98 56 H106 M114 56 H122 M106 70 V62 H114 V70"/>
+<path d="M156 70 V52 M156 52 C146 52 146 38 154 36 C152 28 168 28 166 36 C174 36 174 50 164 50 C168 52 160 54 156 52"/>
+<path d="M190 70 V40 H250 V70 M198 48 H210 M220 48 H232 M198 60 H210 M232 70 V60 H242 V70 M190 40 L220 24 L250 40"/>
+<path d="M276 70 V34 L292 10 L308 34 V70 M292 10 V2 M286 6 H298 M286 44 A6 6 0 0 1 298 44 V54 H286 Z"/>
+<path d="M330 70 V30 H380 V70 M338 38 H348 M360 38 H372 M338 52 H348 M360 52 H372 M350 70 V58 H360 V70 M338 30 V22 H346 V30"/>
+</svg>
     <span class="eyebrow">Occitanie · vente et location · 0 % de commission</span>
     <h1>L'immobilier entre nous. Sans agence, sans commission, sans mauvaise surprise.</h1>
     <p>Vendeurs et bailleurs vérifiés, prix comparés aux ventes réelles, visite 3D avant de vous déplacer. Aucun professionnel n'est intercalé entre vous.</p>
