@@ -62,7 +62,7 @@
 .unlock .row{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
 .unlock .row span:first-child{color:var(--prestige-muted)}
 html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;display:flex;flex-direction:column}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;display:flex;flex-direction:column;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;text-wrap:balance;line-height:1.2}
 h1{font-size:27px}h2{font-size:20px}h3{font-size:16px}
@@ -70,8 +70,10 @@ p{margin:0}
 button{font:inherit;cursor:pointer}
 input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;width:100%}
 input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.01em;color:var(--accent);display:flex;align-items:baseline;gap:8px}
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;min-width:0}
+.header .acts{display:flex;gap:6px;flex:none}
+@media (max-width:480px){.brand{flex-direction:column;align-items:flex-start;gap:0;line-height:1.1}.brand small{font-size:10.5px}.brand #sync{display:none}.header .acts .btn{padding:8px 10px;font-size:12.5px}}
+.brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.01em;color:var(--accent);display:flex;align-items:baseline;gap:8px;min-width:0;flex:1 1 auto}
 .brand small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r);padding:10px 18px;font-weight:700;white-space:nowrap}
 .btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
@@ -300,7 +302,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 
 <header class="header">
   <div class="brand">Bienvu <small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
-  <div style="display:flex;gap:6px"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
+  <div class="acts"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
 </header>
 
 <main>
@@ -982,5 +984,4 @@ const _openVendeur=openVendeur; openVendeur=function(){ _openVendeur(); persist(
 document.getElementById('post').addEventListener('submit',async()=>{ if(!document.getElementById('post').hidden) return; const L=listingFromForm(); if(!L.prix||!L.surface||!L.ville) return; if(DB&&UID){ try{ await DB.collection('annonces').add({...L,owner:UID}); }catch(e){ BIENS.unshift({...L,id:'local-'+Date.now()}); renderHome(); } } else { BIENS.unshift({...L,id:'local-'+Date.now()}); renderHome(); } });
 </script>
 
-</body>
-</html>
+</body></html>
