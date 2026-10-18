@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3B4A5C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bienvu">
+<meta name="description" content="Bienvu — l'immobilier entre nous. Vente et location entre particuliers, sans commission, sécurisées.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Bienvu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: une app mobile-first à onglets, feuille de recherche en tête, cartes de biens en liste, fiche en plein écran.
+   Identité « Ardoise & cuivre » : gris-bleu ardoise #3B4A5C, accent cuivre #A8622F pour l'action, Merriweather + Karla, angles carrés ; mode sombre ardoise profonde, cuivre clair. */
+:root{
+  --bg:#F2F3F4; --surface:#FFFFFF; --ink:#2A3440; --muted:#5B6673; --line:#DDE1E6;
+  --accent:#3B4A5C; --accent-ink:#FFFFFF; --accent-soft:#E6E9ED;
+  --copper:#A8622F; --copper-ink:#FFFFFF; --gold:#B08D57; --prestige-bg:#1E2630; --prestige-ink:#F2EFE8; --prestige-muted:#B6BDC6;
+  --good:#2F6B4F; --warn:#9A6A2A; --bad:#A14140; --tint:#EEF0F2;
+  --r:4px;
+  --display:'Merriweather',Georgia,'Times New Roman',serif; --body:'Karla',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171C23; --surface:#1F262F; --ink:#E9ECEF; --muted:#9DA7B2; --line:#303A46;
+  --accent:#B9C6D4; --accent-ink:#141A21; --accent-soft:#2B3541; --copper:#D08A5A; --copper-ink:#1A120C; --gold:#D4B37A; --prestige-bg:#0F141A; --prestige-ink:#F2EFE8; --prestige-muted:#A9B1BB; --good:#86BE9E; --warn:#D2A35C; --bad:#DE8C8A; --tint:#252D37; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171C23; --surface:#1F262F; --ink:#E9ECEF; --muted:#9DA7B2; --line:#303A46;
+  --accent:#B9C6D4; --accent-ink:#141A21; --accent-soft:#2B3541; --copper:#D08A5A; --copper-ink:#1A120C; --gold:#D4B37A; --prestige-bg:#0F141A; --prestige-ink:#F2EFE8; --prestige-muted:#A9B1BB; --good:#86BE9E; --warn:#D2A35C; --bad:#DE8C8A; --tint:#252D37; color-scheme:dark}
+*{box-sizing:border-box}
+.prestige{background:var(--prestige-bg);color:var(--prestige-ink);border-radius:var(--r);padding:18px 16px;margin-top:24px;display:grid;gap:14px}
+.prestige-h{display:grid;gap:8px}
+.prestige-h h2{color:var(--prestige-ink)}
+.prestige-h p{color:var(--prestige-muted);font-size:14px;max-width:60ch}
+.btn.gold{background:var(--gold);color:#1A140C;justify-self:start}
+.plist{display:grid;gap:12px}
+.pcard{background:transparent;border:1px solid rgba(255,255,255,.14);border-radius:var(--r);overflow:hidden;text-align:left;padding:0;color:var(--prestige-ink);font:inherit;cursor:pointer;display:grid}
+.pcard .ph{aspect-ratio:16/9;max-width:100%;background:linear-gradient(160deg,#2B3744,#161C24);display:flex;align-items:flex-end;justify-content:space-between;padding:12px;font-size:12px;color:var(--prestige-muted)}
+.pcard .ph .tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:3px 8px;border-radius:3px}
+.pcard .body{padding:12px 14px;display:grid;gap:3px}
+.pcard .price{font-family:var(--display);font-size:22px;font-weight:700;color:var(--prestige-ink)}
+.pcard .meta{color:var(--prestige-muted)}
+.pcard .badges .badge{background:transparent;border-color:rgba(255,255,255,.2);color:var(--prestige-muted)}
+.pcard .badges .badge.gold{border-color:var(--gold);color:var(--gold)}
+.pfilters{display:flex;gap:6px;flex-wrap:wrap}
+.pf{font:inherit;font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:var(--r);border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--prestige-muted)}
+.pf[aria-pressed="true"]{background:var(--gold);color:#1A140C;border-color:var(--gold)}
+.badge.gold{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.nda-text{max-height:320px;overflow-y:auto;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13.5px;line-height:1.5;background:var(--tint)}
+.nda-text h4{font-family:var(--display);font-size:14px;margin:12px 0 4px}
+.nda-text h4:first-child{margin-top:0}
+.nda-text p{margin:0 0 6px}
+.nda-text ol{margin:0 0 6px;padding-left:18px}
+.unlock{background:var(--prestige-bg);color:var(--prestige-ink);border-radius:var(--r);padding:14px;display:grid;gap:8px}
+.unlock b{color:var(--gold)}
+.unlock .row{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.unlock .row span:first-child{color:var(--prestige-muted)}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:27px}h2{font-size:20px}h3{font-size:16px}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+input,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;width:100%}
+input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.01em;color:var(--accent);display:flex;align-items:baseline;gap:8px}
+.brand small{font-family:var(--body);font-weight:500;font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--r);padding:10px 18px;font-weight:700;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn.cta{background:var(--copper);color:var(--copper-ink)}
+.btn.sm{padding:7px 14px;font-size:13px}
+main{flex:1;padding-block:20px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:760px;width:100%;margin:0 auto}
+.view[hidden]{display:none}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--copper)}
+.hero{display:flex;flex-direction:column;gap:14px;margin-bottom:22px}
+.hero p{color:var(--muted);max-width:60ch}
+.search{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.search .wide{grid-column:1/-1}
+.seg{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;grid-column:1/-1}
+.seg button{flex:1;border:0;background:transparent;border-radius:0;padding:9px;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.proofs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:22px 0}
+.proof{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.proof b{display:block;font-size:14px}.proof span{font-size:13px;color:var(--muted)}
+.list{display:grid;gap:14px;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:120px 1fr;text-align:left;padding:0;color:inherit}
+.card .ph{background:var(--tint);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:13px;color:var(--muted);min-height:118px;position:relative;overflow:hidden}
+.card .ph img,.pcard .ph img,.gallery img,.mhead .ph img,.conv .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tag3d{position:absolute;left:6px;top:6px;font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:3px;background:rgba(0,0,0,.55);color:#fff}
+.mhead .ph,.conv .ph{position:relative;overflow:hidden}
+.pcard .ph{position:relative}.pcard .ph>span{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.6)}.pcard .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55))}.pcard .ph>span{z-index:2}
+.card .body{padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.price{font-family:var(--display);font-weight:700;font-size:20px;font-variant-numeric:tabular-nums}
+.meta{font-size:13px;color:var(--muted)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:3px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.badge.ok{background:var(--accent);color:var(--accent-ink)}
+.badge.good{color:var(--good)}.badge.warn{color:var(--warn)}.badge.bad{color:var(--bad)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.count{color:var(--muted);font-size:14px}
+.detail{display:flex;flex-direction:column;gap:18px}
+.gallery{aspect-ratio:16/10;max-width:100%;background:var(--tint);border-radius:var(--r);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--muted);font-family:var(--display);position:relative}
+.gallery .v3d{position:absolute;right:12px;bottom:12px;z-index:2}
+.gallery>span{position:relative;z-index:2;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.gallery:has(img)::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45));z-index:1}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.kv div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.kv b{display:block;font-size:16px;font-variant-numeric:tabular-nums}.kv span{font-size:12px;color:var(--muted)}
+.baro{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.gauge{position:relative;height:8px;border-radius:999px;background:var(--tint);border:1px solid var(--line)}
+.gauge::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--line)}
+.gauge i{position:absolute;top:-6px;width:18px;height:18px;border-radius:50%;background:var(--copper);border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);transform:translateX(-50%)}
+.gauge-l{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.seller{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.calc{display:grid;gap:12px}
+.calc label{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.calc output{display:block}
+.result{background:var(--accent);color:var(--accent-ink);border-radius:var(--r);padding:18px;display:grid;gap:4px}
+.result b{font-family:var(--display);font-size:34px;font-variant-numeric:tabular-nums}
+.result span{opacity:.85;font-size:13px}
+.steps{display:grid;gap:10px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px}
+.step h3{display:flex;gap:10px;align-items:center}
+.n{width:26px;height:26px;border-radius:3px;background:var(--copper);color:var(--copper-ink);font-family:var(--body);font-size:13px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:13px;color:var(--muted)}
+.ok-msg{background:var(--accent-soft);color:var(--accent);border-radius:var(--r);padding:12px 14px;font-weight:600}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));z-index:9}
+.nav button{flex:1;border:0;background:transparent;padding:10px 4px 8px;color:var(--muted);font-size:11px;font-weight:600;display:grid;gap:3px;justify-items:center}
+.nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav button[aria-current="page"]{color:var(--accent)}
+.back{background:transparent;border:0;color:var(--accent);font-weight:600;padding:0;display:inline-flex;gap:6px;align-items:center}
+.note{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+.pricetag{font-family:var(--display);font-weight:700;font-size:15px;color:var(--copper);white-space:nowrap;font-variant-numeric:tabular-nums}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.opt:last-of-type{border-bottom:0}
+.opt input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--copper)}
+.opt .l{flex:1;min-width:0;font-size:14px}.opt .l small{display:block;color:var(--muted);font-size:12.5px}
+.opt .p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding-top:10px;border-top:2px solid var(--accent);font-weight:700}
+.total b{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.free{font-size:12.5px;color:var(--good);font-weight:700}
+.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.shot{aspect-ratio:1;max-width:100%;border:1px dashed var(--line);border-radius:var(--r);background:var(--tint);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:inherit;font-size:12px;color:var(--muted);padding:6px;text-align:center;cursor:pointer}
+.shot.done{border:1px solid var(--accent);background:var(--accent-soft);color:var(--ink)}
+.shot small{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.qs{display:grid;gap:4px;margin-top:4px}
+.q{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.q .a{display:flex;gap:4px;flex:none}
+.q .a button{font:inherit;font-size:12px;font-weight:700;padding:5px 9px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:var(--r)}
+.q .a button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.decl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:8px}
+.decl .row{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+.decl .row:last-child{border-bottom:0}
+.decl .row b{font-weight:600;color:var(--ink)}
+.badge.decl{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.trust{background:var(--accent-soft);border-radius:var(--r);padding:14px;display:grid;gap:8px}
+.trust-h{display:flex;gap:8px;align-items:center;font-size:14px}
+.shield{width:14px;height:16px;flex:none;background:var(--accent);clip-path:polygon(50% 0,100% 20%,100% 60%,50% 100%,0 60%,0 20%)}
+.trust ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.45;display:grid;gap:4px}
+.conf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted);padding-top:6px;border-top:1px solid var(--line)}
+.conf span{flex-basis:100%}
+.warnb{color:var(--bad);border-color:var(--bad)}
+.rel{font-size:12.5px;color:var(--muted)}
+.rel b{color:var(--ink)}
+.mhead{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);margin-top:10px}
+.mhead .ph{width:52px;height:52px;border-radius:var(--r);background:var(--tint);flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.mhead b{display:block;font-size:14px}.mhead span{font-size:12.5px;color:var(--muted)}
+.thread{display:flex;flex-direction:column;gap:8px;padding:14px 0;min-height:200px}
+.bub{max-width:82%;padding:9px 12px;border-radius:var(--r);font-size:14px;line-height:1.4;position:relative}
+.bub.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink)}
+.bub.them{align-self:flex-start;background:var(--surface);border:1px solid var(--line)}
+.bub.sys{align-self:center;background:var(--tint);color:var(--muted);font-size:12.5px;text-align:center;max-width:95%}
+.bub.block{align-self:center;background:var(--bad);color:#fff;font-size:12.5px;max-width:95%}
+.bub.ok{align-self:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;max-width:95%;text-align:center}
+.bub time{display:block;font-size:10.5px;opacity:.7;margin-top:3px;font-variant-numeric:tabular-nums}
+.composer{display:flex;gap:8px;position:sticky;bottom:calc(66px + env(safe-area-inset-bottom,0px));background:var(--bg);padding:8px 0}
+.composer input{flex:1;min-width:0}
+.mactions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:4px}
+.slots{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;gap:8px;margin-bottom:8px}
+.slots .sg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.slots button.s{font:inherit;font-size:13px;padding:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--r);text-align:left}
+.slots button.s b{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.conv{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);text-align:left;background:transparent;border-left:0;border-right:0;border-top:0;color:inherit;width:100%;font:inherit;cursor:pointer}
+.conv .ph{width:52px;height:52px;border-radius:var(--r);background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+.conv b{display:block;font-size:14px}.conv span{font-size:12.5px;color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .dot{width:10px;height:10px;border-radius:50%;background:var(--copper)}
+.offer{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--copper);border-radius:var(--r);padding:14px;display:grid;gap:10px;margin-top:10px}
+.offer label{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.offer label.opt{display:flex}
+.offer-card{align-self:stretch;background:var(--surface);border:1px solid var(--accent);border-radius:var(--r);padding:12px 14px;font-size:13.5px;display:grid;gap:6px}
+.offer-card .t{display:flex;justify-content:space-between;align-items:baseline;font-weight:700}
+.offer-card .t b{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.offer-card .r{display:flex;justify-content:space-between;gap:8px;color:var(--muted)}
+.offer-card .r b{color:var(--ink);font-weight:600;text-align:right}
+.offer-card .st{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--copper)}
+.offer-card .st.acc{color:var(--good)}
+.offer-card time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.next{display:grid;gap:6px;background:var(--accent-soft);border-radius:var(--r);padding:12px;font-size:13.5px;align-self:stretch}
+.np{display:grid;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.np>b{font-size:14px}
+.docs{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:13px}
+.docs li{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.docs li:last-child{border-bottom:0}
+.docs li span:last-child{color:var(--muted);font-size:12px;white-space:nowrap}
+.docs li.ok span:last-child{color:var(--good);font-weight:700}
+.track{align-self:stretch;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:6px;font-size:13.5px}
+.track .s{display:flex;gap:10px;align-items:flex-start}
+.track .s i{width:10px;height:10px;border-radius:50%;flex:none;margin-top:5px;background:var(--line);font-style:normal}
+.track .s i.d{background:var(--good)}.track .s i.c{background:var(--copper)}
+.track .s small{display:block;color:var(--muted);font-size:12px}
+.dh{background:var(--accent);color:var(--accent-ink);border-radius:var(--r);padding:14px;display:grid;gap:4px;margin-top:10px}
+.dh b{font-family:var(--display);font-size:20px}.dh span{font-size:13px;opacity:.85}
+.dates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.date{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 8px;text-align:center}
+.date b{display:block;font-family:var(--display);font-size:18px;font-variant-numeric:tabular-nums}
+.date span{font-size:11.5px;color:var(--muted);display:block;line-height:1.3}
+.date small{display:block;font-size:11px;font-weight:700;color:var(--copper);margin-top:2px}
+.date.urg small{color:var(--bad)}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:8px;margin-bottom:12px}
+.pane h3{display:flex;justify-content:space-between;align-items:baseline}
+.pane h3 small{font-family:var(--body);font-size:12px;color:var(--muted);font-weight:600}
+.piece{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.piece:last-child{border-bottom:0}
+.piece small{display:block;color:var(--muted);font-size:12px}
+.piece .st{font-size:11.5px;font-weight:700;white-space:nowrap}
+.piece .st.ok{color:var(--good)}.piece .st.late{color:var(--bad)}.piece .st.wait{color:var(--warn)}
+.piece button{font:inherit;font-size:12px;font-weight:700;padding:6px 10px;border:1px solid var(--copper);background:transparent;color:var(--copper);border-radius:var(--r);white-space:nowrap}
+.fin{display:grid;gap:6px}
+.fin .b{height:8px;border-radius:999px;background:var(--tint);overflow:hidden}
+.fin .b i{display:block;height:100%;background:var(--accent)}
+.log{font-size:12.5px;color:var(--muted);display:grid;gap:4px}
+.log div{display:flex;gap:8px}.log time{flex:none;font-variant-numeric:tabular-nums;color:var(--ink)}
+.who{display:grid;gap:6px;font-size:13px}
+.who div{display:flex;justify-content:space-between;gap:8px}.who span{color:var(--muted)}.who b{text-align:right;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 6px;text-align:center}
+.kpi b{display:block;font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:11px;color:var(--muted);display:block;line-height:1.2}
+.kpi small{display:block;font-size:11px;font-weight:700;color:var(--good)}
+.ofr{border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;gap:8px}
+.ofr.best{border-color:var(--copper)}
+.ofr .t{display:flex;justify-content:space-between;align-items:baseline}
+.ofr .t b{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.ofr .t span{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--copper)}
+.ofr .t span.acc{color:var(--good)}.ofr .t span.ref{color:var(--muted)}
+.ofr .d{font-size:13px;color:var(--muted);display:grid;gap:2px}
+.ofr .d b{color:var(--ink);font-weight:600}
+.ofr .acts{display:flex;gap:6px;flex-wrap:wrap}
+.ofr .acts button{font:inherit;font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.ofr .acts button.a{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ofr .acts button.c{border-color:var(--copper);color:var(--copper)}
+.ofr .cp{display:flex;gap:6px}.ofr .cp input{flex:1}
+.vis{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.vis:last-child{border-bottom:0}.vis small{display:block;color:var(--muted);font-size:12px}
+.vis .st{font-size:11.5px;font-weight:700;color:var(--accent);white-space:nowrap}
+.upsell{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.upsell:last-child{border-bottom:0}.upsell small{display:block;color:var(--muted);font-size:12px}
+.upsell button{font:inherit;font-size:12px;font-weight:700;padding:6px 10px;border:1px solid var(--copper);background:transparent;color:var(--copper);border-radius:var(--r);white-space:nowrap}
+.cams{position:relative;aspect-ratio:3/4;max-width:100%;max-height:420px;border-radius:var(--r);overflow:hidden;background:#1F262F}
+.cam{position:absolute;color:#E9ECEF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px}
+.cam.main{inset:0;background:radial-gradient(ellipse at 50% 40%,#3B4A5C,#1F262F 70%)}
+.cam.main small{font-size:18px;font-family:var(--display);font-weight:700}
+.cam.main em{position:absolute;left:12px;top:12px;font-style:normal;font-variant-numeric:tabular-nums;font-size:13px;background:rgba(0,0,0,.4);padding:3px 8px;border-radius:3px}
+.cam.main .rec{position:absolute;right:12px;top:12px;color:#F08383;font-size:12px;background:rgba(0,0,0,.4);padding:3px 8px;border-radius:3px}
+.cam.me{right:12px;bottom:12px;width:96px;height:128px;background:#2E3742;border:2px solid #E9ECEF;border-radius:var(--r)}
+.tour{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:grid;gap:8px;margin:12px 0}
+.tour-list{display:flex;gap:6px;flex-wrap:wrap}
+.tour-list button{font:inherit;font-size:12px;font-weight:600;padding:6px 10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:var(--r)}
+.tour-list button.seen{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.tour-list button.now{background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}
+.slots .mode{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.slots .mode button{flex:1;font:inherit;font-size:13px;font-weight:700;padding:8px;border:0;background:transparent;color:var(--muted)}
+.slots .mode button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.next b{font-size:14px}
+.pv{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+.ai{background:var(--tint);border-radius:var(--r);padding:12px;display:grid;gap:6px;font-size:13.5px}
+.ai .t{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:13px}
+.ai .t small{font-weight:600;color:var(--muted);font-size:11.5px}
+.ai .f{display:flex;gap:8px;align-items:flex-start}
+.ai .f i{width:8px;height:8px;border-radius:50%;flex:none;margin-top:6px;font-style:normal}
+.ai .f i.g{background:var(--good)}.ai .f i.w{background:var(--warn)}.ai .f i.b{background:var(--bad)}
+.ai .f small{display:block;color:var(--muted);font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r);font-size:14px;font-weight:600;z-index:20}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:active{transform:scale(.99)}}
+@media (max-width:420px){.card{grid-template-columns:96px 1fr}h1{font-size:26px}}
+</style>
+
+<header class="header">
+  <div class="brand">Bienvu <small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
+  <div style="display:flex;gap:6px"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
+</header>
+
+<main>
+<!-- ACCUEIL / RECHERCHE -->
+<section class="view" id="v-home">
+  <div class="hero">
+    <span class="eyebrow">Occitanie · vente et location · 0 % de commission</span>
+    <h1>L'immobilier entre nous. Sans agence, sans commission, sans mauvaise surprise.</h1>
+    <p>Vendeurs et bailleurs vérifiés, prix comparés aux ventes réelles, visite 3D avant de vous déplacer. Aucun professionnel n'est intercalé entre vous.</p>
+  </div>
+  <form class="search" id="search">
+    <div class="seg" role="group" aria-label="Type de recherche">
+      <button type="button" id="seg-vente" aria-pressed="true">Acheter</button>
+      <button type="button" id="seg-location" aria-pressed="false">Louer</button>
+    </div>
+    <input class="wide" id="q" placeholder="Ville ou code postal — ex. Montpellier, 30700" aria-label="Ville">
+    <select id="type" aria-label="Type de bien"><option value="">Tous les biens</option><option>Appartement</option><option>Studio</option><option>Maison</option><option>Loft</option><option>Terrain</option><option>Parking</option><option>Immeuble</option><option>Local</option></select>
+    <select id="budget" aria-label="Budget maximum"><option value="">Budget max</option><option value="150000">150 000 €</option><option value="250000">250 000 €</option><option value="400000">400 000 €</option><option value="700000">700 000 €</option></select>
+    <button class="btn wide" type="submit">Voir les biens</button>
+  </form>
+  <div class="proofs">
+    <div class="proof"><b>Vérifié et déclaré</b><span>Identité et propriété contrôlées ; état du bien déclaré, photographié et signé par le vendeur.</span></div>
+    <div class="proof"><b>Prix réels</b><span>Chaque annonce est comparée aux ventes notariées du quartier (DVF).</span></div>
+    <div class="proof"><b>Visite 3D</b><span>Visitez depuis votre canapé, déplacez-vous seulement pour les coups de cœur.</span></div>
+    <div class="proof"><b>Actes sécurisés</b><span>Offre, compromis, bail et dépôt de garantie en ligne, sans fonds chez Bienvu.</span></div>
+  </div>
+  <div class="step" style="margin-bottom:6px"><div class="toolbar"><h3>Combien ça coûte ?</h3><span class="pricetag">0 € pour chercher</span></div><p class="hint">Annonce gratuite, options de visibilité dès 9 €, Pack Transaction 99 €. Jamais de commission sur votre vente. <a href="#" id="lnk-tarifs" style="color:var(--copper);font-weight:700;text-decoration:none">Voir les tarifs</a> · <a href="#" id="lnk-guide" style="color:var(--copper);font-weight:700;text-decoration:none">Comment ça marche</a></p></div>
+  <h2>Derniers biens vérifiés</h2>
+  <div class="list" id="home-list"></div>
+  <section class="prestige" id="prestige-band">
+    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><h2>Immobilier d'exception, entre nous aussi.</h2><p>Mas, hôtels particuliers, villas pieds dans l'eau, domaines : vendus directement par leurs propriétaires, avec la discrétion d'un cabinet et sans ses 5 %.</p><button class="btn gold sm" type="button" id="go-prestige">Voir la sélection</button></div>
+    <div class="plist" id="prestige-list"></div>
+  </section>
+</section>
+
+<!-- PRESTIGE -->
+<section class="view" id="v-prestige" hidden>
+  <button class="back" id="back-prestige" type="button">← Accueil</button>
+  <div class="prestige" style="margin-top:12px">
+    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><h2>Immobilier d'exception</h2><p>Biens à partir de 1 M€ (ou 4 000 € de loyer), vendus entre particuliers. Diffusion confidentielle possible, visites sur rendez-vous uniquement, dossier complet avant toute visite.</p></div>
+    <div class="pfilters"><button type="button" class="pf" data-pf="all" aria-pressed="true">Tous</button><button type="button" class="pf" data-pf="mas" aria-pressed="false">Mas & domaines</button><button type="button" class="pf" data-pf="mer" aria-pressed="false">Littoral</button><button type="button" class="pf" data-pf="ville" aria-pressed="false">Hôtels particuliers & villes</button><button type="button" class="pf" data-pf="prive" aria-pressed="false">Off-market</button></div>
+    <div class="plist" id="prestige-full"></div>
+  </div>
+  <div class="pane" style="margin-top:14px">
+    <h3>Ce que comprend Bienvu Prestige <small>pour le vendeur · 490 €</small></h3>
+    <div class="piece"><div><span>Diffusion confidentielle</span><small>Annonce sans adresse ni photos extérieures identifiables, accessible aux acheteurs vérifiés ayant signé un engagement de confidentialité ; prix sur demande possible.</small></div></div>
+    <div class="piece"><div><span>Reportage photo, drone et visite 3D</span><small>Réalisés par un photographe partenaire, inclus.</small></div></div>
+    <div class="piece"><div><span>Acheteurs qualifiés</span><small>Attestation de capacité financière établie par la banque du candidat sur formulaire Bienvu et vérifiée par nous auprès de l'agence ; accord de confidentialité signé ; visites sur rendez-vous, accompagnées si vous le souhaitez.</small></div></div>
+    <div class="piece"><div><span>Pack Transaction inclus</span><small>Offre, notaires, suivi jusqu'à l'acte, conciergerie de déménagement partenaire.</small></div></div>
+    <p class="note">Toujours sans commission : 490 € à l'acte, quel que soit le prix du bien. Sur une vente à 1,8 M€, un cabinet de prestige facture 70 000 à 100 000 €.</p>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
+<section class="view" id="v-results" hidden>
+  <button class="back" id="back-home" type="button">← Modifier la recherche</button>
+  <div class="toolbar" style="margin-top:12px">
+    <h2 id="res-title">Biens à vendre</h2>
+    <span class="count" id="res-count"></span>
+  </div>
+  <div class="list" id="res-list"></div>
+</section>
+
+<!-- FICHE BIEN -->
+<section class="view" id="v-detail" hidden></section>
+
+<!-- CALCULETTE -->
+<section class="view" id="v-calc" hidden>
+  <span class="eyebrow">Financement</span>
+  <h2 style="margin:6px 0 14px">Calculette de prêt immobilier</h2>
+  <div class="calc">
+    <label>Prix du bien (€)<input id="c-prix" type="number" inputmode="numeric" value="250000" min="10000" step="1000"></label>
+    <div class="row2">
+      <label>Apport (€)<input id="c-apport" type="number" inputmode="numeric" value="30000" min="0" step="1000"></label>
+      <label>Durée (ans)<input id="c-duree" type="number" inputmode="numeric" value="20" min="5" max="27"></label>
+    </div>
+    <div class="row2">
+      <label>Taux nominal (%)<input id="c-taux" type="number" inputmode="decimal" value="3.4" min="0" max="10" step="0.05"></label>
+      <label>Assurance (% / an)<input id="c-assu" type="number" inputmode="decimal" value="0.30" min="0" max="2" step="0.05"></label>
+    </div>
+    <label>Bien <select id="c-neuf"><option value="ancien">Ancien (frais de notaire ≈ 7,5 %)</option><option value="neuf">Neuf (frais ≈ 2,5 %)</option></select></label>
+    <div class="result"><span>Mensualité, assurance comprise</span><b id="c-mens">—</b><span id="c-sub"></span></div>
+    <table>
+      <tr><td>Frais de notaire estimés</td><td id="c-notaire"></td></tr>
+      <tr><td>Montant emprunté</td><td id="c-emprunt"></td></tr>
+      <tr><td>Coût total du crédit (intérêts + assurance)</td><td id="c-cout"></td></tr>
+      <tr><td>Revenu net mensuel conseillé (taux d'effort 35 %)</td><td id="c-revenu"></td></tr>
+    </table>
+    <p class="note">Simulation indicative et gratuite. Bienvu n'est pas un intermédiaire en crédit ; nos courtiers partenaires vous rappellent sans frais, Bienvu est rémunéré par eux.</p>
+  </div>
+</section>
+
+<!-- DÉPÔT D'ANNONCE -->
+<section class="view" id="v-post" hidden>
+  <span class="eyebrow">Dépôt guidé · 10 minutes</span>
+  <h2 style="margin:6px 0 14px">Publier votre bien</h2>
+  <form class="steps" id="post">
+    <div class="step">
+      <h3><span class="n">1</span>Qui êtes-vous ?</h3>
+      <div class="row2"><input id="p-prenom" placeholder="Prénom" required><input id="p-nom" placeholder="Nom" required></div>
+      <input id="p-tel" placeholder="Mobile (masqué sur le site)" inputmode="tel" required>
+      <p class="hint">Vous passerez ensuite une vérification d'identité (pièce d'identité + selfie, 2 minutes). Votre numéro n'apparaît jamais sur l'annonce.</p>
+    </div>
+    <div class="step">
+      <h3><span class="n">2</span>Votre bien</h3>
+      <div class="row2">
+        <select id="p-op"><option>Vente</option><option>Location</option></select>
+        <select id="p-type"><option>Appartement</option><option>Studio</option><option>Maison</option><option>Loft</option><option>Terrain</option><option>Parking</option><option>Immeuble</option><option>Local</option></select>
+      </div>
+      <div class="row2"><input id="p-ville" placeholder="Ville" required><input id="p-surface" placeholder="Surface (m²)" inputmode="numeric" required></div>
+      <div class="row2"><input id="p-pieces" placeholder="Pièces" inputmode="numeric"><select id="p-dpe"><option value="">DPE (obligatoire)</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></div>
+      <p class="hint">Preuve de propriété demandée après publication : titre, taxe foncière ou attestation notariale.</p>
+    </div>
+    <div class="step">
+      <h3><span class="n">3</span>Déclaration du bien</h3>
+      <p class="hint">Photos prises dans l'appli uniquement (galerie désactivée), horodatées, géolocalisées et vérifiées : position conforme à l'adresse, façade comparée à la vue de rue, aucune image réutilisée ou retouchée. Focale standard imposée. Sans déclaration complète, pas de publication.</p>
+      <div class="shots" id="shots"></div>
+      <div class="qs" id="qs"></div>
+      <div class="pv" id="pv-block">
+        <div class="toolbar"><b style="font-size:14px">PV de la dernière assemblée générale</b><span class="hint">Copropriété uniquement</span></div>
+        <p class="hint">Obligatoire pour une vente en copropriété (loi Alur). Bienvu l'analyse automatiquement et signale à l'acheteur ce qui compte : travaux votés, procédures, impayés, fonds travaux.</p>
+        <label class="btn ghost sm" style="display:inline-block;cursor:pointer">Joindre le PV (PDF ou photo)<input type="file" id="p-pv" accept=".pdf,image/*" style="display:none"></label>
+        <div id="pv-result" hidden></div>
+      </div>
+      <label class="opt" style="border:0;padding-top:12px"><input type="checkbox" id="p-cert"><span class="l">Je certifie l'exactitude de cette déclaration<small>Elle sera horodatée, signée électroniquement et jointe à l'annonce.</small></span></label>
+    </div>
+    <div class="step">
+      <h3><span class="n">4</span>Votre prix</h3>
+      <input id="p-prix" placeholder="Prix (€)" inputmode="numeric" required>
+      <p class="hint" id="p-baro">Saisissez ville, surface et prix : Bienvu compare au prix réel du marché.</p>
+    </div>
+    <div class="step">
+      <h3><span class="n">5</span>Options <span class="free" style="margin-left:auto">Annonce : 0 €</span></h3>
+      <label class="opt"><input type="checkbox" class="optc" value="9" id="o-top"><span class="l">Remontée en tête de liste<small>7 jours, renouvelable</small></span><span class="p">9 €</span></label>
+      <label class="opt"><input type="checkbox" class="optc" value="19" id="o-boost"><span class="l">Boost réseaux sociaux<small>Diffusion sur les groupes locaux</small></span><span class="p">19 €</span></label>
+      <label class="opt"><input type="checkbox" class="optc" value="39" id="o-verif"><span class="l">Pack Vérifié+<small>Badge, photos retouchées, plan 2D</small></span><span class="p">39 €</span></label>
+      <label class="opt"><input type="checkbox" class="optc" value="129" id="o-3d"><span class="l">Visite virtuelle 3D<small>Capture par un partenaire sous 72 h</small></span><span class="p">129 €</span></label>
+      <label class="opt"><input type="checkbox" class="optc" value="99" id="o-pack"><span class="l">Pack Transaction<small>Compromis ou bail, signature, séquestre</small></span><span class="p" id="o-pack-p">99 €</span></label>
+      <div class="total"><span>Total à régler</span><b id="p-total">0 €</b></div>
+      <p class="hint">Payé une fois à la publication, jamais au résultat. Aucune commission sur votre vente.</p>
+    </div>
+    <button class="btn cta" type="submit" id="p-submit">Publier gratuitement</button>
+    <p class="hint">Annonce gratuite pendant le lancement en Occitanie. Vous pouvez ajouter des options plus tard depuis votre tableau de bord.</p>
+  </form>
+  <div id="post-ok" hidden></div>
+</section>
+
+<!-- MESSAGERIE -->
+<section class="view" id="v-msg" hidden>
+  <div id="msg-list"></div>
+  <div id="msg-thread" hidden>
+    <button class="back" id="back-msg" type="button">← Mes conversations</button>
+    <div class="mhead" id="m-head"></div>
+    <div class="thread" id="m-body"></div>
+    <div class="slots" id="m-slots" hidden></div>
+    <div class="composer">
+      <input id="m-input" placeholder="Votre message…" aria-label="Message" autocomplete="off">
+      <button class="btn cta sm" type="button" id="m-send">Envoyer</button>
+    </div>
+    <div class="mactions"><button class="btn ghost sm" type="button" id="m-visit">Demander une visite</button><button class="btn ghost sm" type="button" id="m-offer" hidden>Faire une offre d'achat</button><button class="btn ghost sm" type="button" id="m-cand" hidden>Candidater</button><span class="hint">Numéros masqués · aucun paiement avant le compromis</span></div>
+    <form class="offer" id="offer" hidden>
+      <h3>Offre d'achat</h3>
+      <p class="hint">Une offre acceptée par le vendeur vous engage. Aucune somme ne peut être versée à ce stade : l'acompte ne se règle qu'au compromis, chez le notaire.</p>
+      <div id="of-base"></div>
+      <label>Prix proposé (€)<input id="of-prix" type="number" inputmode="numeric" step="1000" min="1000" required></label>
+      <p class="hint" id="of-baro"></p>
+      <div class="row2">
+        <label>Financement<select id="of-fin"><option value="pret">Prêt immobilier</option><option value="comptant">Comptant</option></select></label>
+        <label>Apport (€)<input id="of-apport" type="number" inputmode="numeric" step="1000" min="0" value="30000"></label>
+      </div>
+      <div class="row2" id="of-pretrow">
+        <label>Durée du prêt (ans)<input id="of-duree" type="number" inputmode="numeric" value="20" min="5" max="27"></label>
+        <label>Taux maximal accepté (%)<input id="of-taux" type="number" inputmode="decimal" value="3.8" step="0.1" min="0"></label>
+      </div>
+      <div class="row2">
+        <label>Validité de l'offre<select id="of-val"><option value="7">7 jours</option><option value="10" selected>10 jours</option><option value="15">15 jours</option></select></label>
+        <label>Signature souhaitée<select id="of-sig"><option>Sous 30 jours</option><option>Sous 60 jours</option><option>Sous 90 jours</option></select></label>
+      </div>
+      <label class="opt" style="border:0"><input type="checkbox" id="of-ok" required><span class="l">J'ai compris que cette offre, si elle est acceptée, m'engage à acheter aux conditions indiquées<small>Condition suspensive d'obtention du prêt incluse automatiquement si financement par prêt (loi Scrivener).</small></span></label>
+      <div class="row2"><button class="btn cta" type="submit">Signer et envoyer l'offre</button><button class="btn ghost" type="button" id="of-cancel">Annuler</button></div>
+    </form>
+    <form class="offer" id="cand" hidden>
+      <h3>Dossier locataire</h3>
+      <p class="hint">Constitué une fois, réutilisable pour toutes vos candidatures. Le bailleur ne voit vos pièces qu'après vous avoir présélectionné ; il ne peut demander que les documents autorisés par la loi (décret 2015-1437).</p>
+      <div class="np"><b>Situation</b>
+        <div class="row2"><select id="cd-sit"><option>CDI</option><option>CDD</option><option>Indépendant</option><option>Fonctionnaire</option><option>Étudiant</option><option>Retraité</option></select><input id="cd-rev" type="number" inputmode="numeric" placeholder="Revenus nets / mois (€)" required></div>
+        <div class="row2"><select id="cd-gar"><option value="none">Sans garant</option><option value="phys">Garant personne physique</option><option value="visale">Garantie Visale</option><option value="gli">Assurance loyers impayés (bailleur)</option></select><input id="cd-garrev" type="number" inputmode="numeric" placeholder="Revenus du garant (€)" hidden></div>
+        <p class="hint" id="cd-solv"></p>
+      </div>
+      <div class="np"><b>Pièces (prises en photo dans l'appli ou importées)</b>
+        <div class="shots" id="cd-docs"></div>
+        <p class="hint">Vérification automatique des documents (cohérence des montants, filigrane anti-réutilisation « Bienvu · candidature n°… »).</p>
+      </div>
+      <label class="opt" style="border:0"><input type="checkbox" id="cd-ok" required><span class="l">Je certifie l'exactitude de mon dossier<small>Un faux document entraîne la fermeture du compte.</small></span></label>
+      <div class="row2"><button class="btn cta" type="submit">Envoyer ma candidature</button><button class="btn ghost" type="button" id="cd-cancel">Annuler</button></div>
+    </form>
+    <form class="offer" id="notaires" hidden>
+      <h3>Notaires et transmission du dossier</h3>
+      <p class="hint">Chaque partie choisit librement son notaire ; un seul notaire peut aussi intervenir pour les deux. Bienvu leur transmet le dossier complet et horodaté, et suit l'avancement jusqu'à l'acte.</p>
+      <div class="np"><b>Votre notaire (acheteur)</b>
+        <div class="row2"><input id="na-nom" placeholder="Maître Nom Prénom" required><input id="na-etude" placeholder="Étude / office notarial" required></div>
+        <input id="na-adr" placeholder="Adresse de l'étude" required>
+        <div class="row2"><input id="na-mail" type="email" placeholder="E-mail de l'étude" required><input id="na-tel" inputmode="tel" placeholder="Téléphone"></div>
+        <input id="na-crpcen" placeholder="N° CRPCEN (facultatif, pour l'échange sécurisé)">
+        <p class="hint">Pas de notaire ? <a href="#" id="na-find" style="color:var(--copper);font-weight:700;text-decoration:none">Annuaire des notaires près de chez vous</a> ou notaire partenaire Bienvu à Montpellier.</p>
+      </div>
+      <div class="np"><b>Notaire du vendeur</b>
+        <div class="hint" id="nv-info">Renseigné par le vendeur dans son espace · <span id="nv-state" style="color:var(--warn);font-weight:700">en attente</span></div>
+        <label class="opt" style="border:0;padding:6px 0"><input type="checkbox" id="nv-same"><span class="l">Proposer au vendeur un notaire unique (le mien)<small>Les émoluments sont identiques avec un ou deux notaires ; ils se partagent entre eux.</small></span></label>
+      </div>
+      <div class="np"><b>Dossier transmis par Bienvu</b>
+        <ul class="docs" id="docs-list"></ul>
+      </div>
+      <div class="row2"><button class="btn cta" type="submit">Transmettre le dossier aux notaires</button><button class="btn ghost" type="button" id="no-later">Plus tard</button></div>
+    </form>
+  </div>
+</section>
+
+<!-- ESPACE VENDEUR -->
+<section class="view" id="v-vendeur" hidden></section>
+
+<!-- NDA PRESTIGE -->
+<section class="view" id="v-nda" hidden>
+  <button class="back" id="back-nda" type="button">← Retour au bien</button>
+  <span class="eyebrow" style="color:var(--gold);margin-top:12px;display:block">Bienvu Prestige · accès au dossier confidentiel</span>
+  <h2 style="margin:6px 0 10px" id="nda-title">Accord de confidentialité</h2>
+  <div class="steps">
+    <div class="step"><h3><span class="n">1</span>Votre capacité financière</h3>
+      <p class="hint">Faites compléter le <b>formulaire Bienvu</b> par votre banque (tranche de capacité : 1, 2, 3, 5 M€ ou plus, sans détail de vos comptes). Bienvu vérifie l'attestation par contre-appel de votre agence au numéro officiel de l'établissement, sous 24 h ouvrées. Validité 30 jours pour tous les biens Prestige. Le propriétaire ne voit que « capacité attestée ».</p>
+      <div class="row2"><button type="button" class="btn ghost sm" id="nda-form">Télécharger le formulaire pour ma banque</button><label class="btn ghost sm" style="display:inline-block;cursor:pointer;text-align:center">Joindre l'attestation complétée<input type="file" id="nda-cap" accept=".pdf,image/*" style="display:none"></label></div>
+      <p class="hint">Bientôt : vérification instantanée par connexion bancaire sécurisée (DSP2), avec votre accord, qui ne transmet que « seuil atteint : oui / non ».</p>
+      <span class="hint" id="nda-cap-st"></span></div>
+    <div class="step"><h3><span class="n">2</span>L'accord</h3>
+      <div class="nda-text" id="nda-text"></div>
+      <p class="hint">Texte intégral, 13 articles. Clause pénale de 10 000 € par manquement, durée 2 ans, signature électronique avec identité vérifiée.</p></div>
+    <div class="step"><h3><span class="n">3</span>Signature</h3>
+      <label class="opt" style="border:0"><input type="checkbox" id="nda-read"><span class="l">J'ai lu l'intégralité de l'accord<small>Le texte doit avoir été déroulé jusqu'à l'article 13.</small></span></label>
+      <label class="opt" style="border:0"><input type="checkbox" id="nda-ok"><span class="l">Je signe l'accord de confidentialité et m'engage à le respecter<small>Mention : « Lu et approuvé, bon pour engagement de confidentialité ».</small></span></label>
+      <button class="btn gold" type="button" id="nda-sign">Signer électroniquement</button></div>
+  </div>
+</section>
+
+<!-- SUIVI NOTARIAL -->
+<section class="view" id="v-dossier" hidden></section>
+
+<!-- VISITE EN VISIO -->
+<section class="view" id="v-live" hidden>
+  <div id="live-consent">
+    <span class="eyebrow">Visite en visio</span>
+    <h2 style="margin:6px 0 10px" id="live-title">Visite en direct</h2>
+    <div class="step">
+      <h3>Avant de rejoindre</h3>
+      <p class="hint">Le vendeur filme le bien avec son téléphone, vous le guidez pièce par pièce. La visite est enregistrée et horodatée, conservée 3 ans et jointe au dossier. En rejoignant, chaque partie accepte que cette visite vaut visite du bien au sens des règles Bienvu : elle ouvre le droit de faire une offre et engage le vendeur sur ce qu'il montre.</p>
+      <ul class="hint" style="margin:0;padding-left:18px;display:grid;gap:4px">
+        <li>Le vendeur s'engage à montrer tout ce que l'acheteur demande, y compris les 15 points de la déclaration.</li>
+        <li>L'acheteur peut demander à tout moment un arrêt sur image : la capture est conservée.</li>
+        <li>Une visite sur place reste possible et recommandée avant le compromis.</li>
+      </ul>
+      <label class="opt" style="border:0"><input type="checkbox" id="live-ok"><span class="l">J'accepte que cette visite soit enregistrée et qu'elle vaille visite du bien<small>Le vendeur a donné le même accord en proposant le créneau.</small></span></label>
+      <button class="btn cta" type="button" id="live-join">Rejoindre la visite</button>
+    </div>
+  </div>
+  <div id="live-room" hidden>
+    <div class="cams">
+      <div class="cam main"><span>Caméra du vendeur</span><small id="live-room-name">Façade</small><em id="live-timer">00:00</em><b class="rec">● REC</b></div>
+      <div class="cam me"><span>Vous</span></div>
+    </div>
+    <div class="tour"><b style="font-size:14px">Parcours guidé</b><div class="tour-list" id="tour-list"></div></div>
+    <div class="row2"><button class="btn ghost sm" type="button" id="live-snap">Arrêt sur image</button><button class="btn cta sm" type="button" id="live-end">Terminer la visite</button></div>
+    <p class="hint">Son et vidéo chiffrés. Le vendeur voit la même liste et avance au fur et à mesure.</p>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="view" id="v-tarifs" hidden>
+  <span class="eyebrow">Tarifs</span>
+  <h2 style="margin:6px 0 6px">Chercher est gratuit. Vendre ou louer coûte des services, jamais une commission.</h2>
+  <p class="hint" style="margin-bottom:14px">Bienvu facture à l'acte, jamais au résultat : aucun pourcentage sur votre vente, aucune commission d'agence. Sur un bien à 250 000 €, c'est 12 500 à 25 000 € qui restent chez vous.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="toolbar"><h3>Acheteur et locataire</h3><span class="pricetag">0 €</span></div>
+      <p class="hint">Recherche, alertes, visite 3D, messagerie, offre d'achat, dossier locataire : tout est gratuit, sans abonnement.</p>
+    </div>
+    <div class="step">
+      <div class="toolbar"><h3>Annonce vente ou location</h3><span class="pricetag">0 €</span></div>
+      <p class="hint">Gratuite pendant le lancement en Occitanie. Ensuite 49 € pour 60 jours (vente), 29 € pour 30 jours (location). Vérification d'identité et de propriété incluse.</p>
+    </div>
+    <div class="step">
+      <h3>Options de visibilité</h3>
+      <table>
+        <tr><td>Remontée en tête de liste (7 jours)</td><td>9 €</td></tr>
+        <tr><td>Badge Urgent</td><td>9 €</td></tr>
+        <tr><td>Boost réseaux sociaux (Facebook, Instagram locaux)</td><td>19 €</td></tr>
+        <tr><td>Photos retouchées par un pro (jusqu'à 20)</td><td>29 €</td></tr>
+        <tr><td>Pack Vérifié+ (badge, photos retouchées, plan 2D)</td><td>39 €</td></tr>
+      </table>
+    </div>
+    <div class="step">
+      <div class="toolbar"><h3>Visite virtuelle 3D</h3><span class="pricetag">99 à 149 €</span></div>
+      <p class="hint">Capture 360° de votre bien par un partenaire local sous 72 h, plan 2D généré, filtre « visite 3D » dans la recherche. Les biens avec visite 3D reçoivent en moyenne deux fois plus de contacts qualifiés.</p>
+    </div>
+    <div class="step">
+      <div class="toolbar"><h3>Pack Transaction</h3><span class="pricetag">99 € vente · 49 € location</span></div>
+      <p class="hint">Offre d'achat horodatée, compromis ou bail sur modèle conforme, signature électronique, état des lieux photo, acompte séquestré chez le notaire ou dépôt de garantie chez un prestataire agréé. Payé par le vendeur ou le bailleur, jamais par l'acheteur ou le locataire.</p>
+    </div>
+    <div class="step">
+      <h3>Partenaires, sans frais pour vous</h3>
+      <p class="hint">Courtier en prêt, diagnostiqueur, assurance loyers impayés, déménageur : Bienvu vous met en relation avec des partenaires sélectionnés et est rémunéré par eux. Vous restez libre de choisir le vôtre.</p>
+    </div>
+  </div>
+  <p class="note">Ce que Bienvu ne fait jamais : commission sur la vente, abonnement acheteur, revente de vos données, publicité d'agences immobilières.</p>
+</section>
+
+<!-- GUIDE -->
+<section class="view" id="v-guide" hidden>
+  <span class="eyebrow">Comment ça marche</span>
+  <h2 style="margin:6px 0 14px">Une transaction sécurisée, sans agence</h2>
+  <div class="steps">
+    <div class="step"><h3><span class="n">1</span>Vérification et déclaration</h3><p>Identité et propriété contrôlées avant toute mise en ligne. Le vendeur ou le bailleur photographie son bien dans l'appli (horodaté, géolocalisé) et répond à un questionnaire qu'il signe : c'est la déclaration jointe à l'annonce, puis au compromis ou au bail. Les annonces sans DPE ou sans déclaration sont refusées.</p></div>
+    <div class="step"><h3><span class="n">2</span>Prix juste</h3><p>Le baromètre compare votre bien aux ventes notariées des 12 derniers mois dans le quartier (données DVF publiques).</p></div>
+    <div class="step"><h3><span class="n">3</span>Visite</h3><p>Visite 3D en ligne, puis créneaux de visite réelle confirmés par SMS. Numéros masqués, messagerie interne qui bloque toute demande d'acompte, de RIB ou de frais avant la visite. Après la visite, l'acheteur confirme « conforme » ou signale « non conforme » : deux signalements suspendent l'annonce, relecture humaine sous 24 h, compte fermé en cas de fraude.</p></div>
+    <div class="step"><h3><span class="n">4</span>Actes</h3><p>Offre d'achat horodatée, compromis ou bail sur modèle conforme, signature électronique. La déclaration signée du vendeur est jointe à l'acte : une photo ou une réponse mensongère devient une preuve écrite en cas de vice caché. L'acompte est séquestré chez le notaire après la visite, le dépôt de garantie chez un prestataire agréé, libéré à l'état des lieux signé. Protection juridique incluse dans le Pack Transaction. Bienvu ne détient jamais vos fonds.</p></div>
+    <div class="step"><h3><span class="n">5</span>Ce que ça coûte</h3><p>Rien pour l'acheteur ou le locataire. Pour le vendeur ou le bailleur : annonce gratuite, options de visibilité de 9 à 39 €, visite 3D 99 à 149 €, Pack Transaction 99 € (vente) ou 49 € (location). Jamais de pourcentage sur le prix.</p></div>
+  </div>
+  <p class="note">Bienvu est un support de diffusion d'annonces et d'outils pour particuliers. Il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</p>
+</section>
+</main>
+
+<nav class="nav" aria-label="Navigation">
+  <button type="button" data-nav="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Rechercher</button>
+  <button type="button" data-nav="calc"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2M16 16h0"/></svg>Prêt immo</button>
+  <button type="button" data-nav="post"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Déposer</button>
+  <button type="button" data-nav="tarifs"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-8-8V4h8z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>Tarifs</button>
+  <button type="button" data-nav="msg"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Messages</button>
+</nav>
+
+<script>
+// Données d'exemple (Occitanie). Prix DVF indicatifs, à remplacer par l'API DVF.
+const DVF = {"Montpellier":{"v":3650,"l":15.2},"Nîmes":{"v":2350,"l":11.8},"Uzès":{"v":3250,"l":12.5},"Sète":{"v":3900,"l":13.9},"Alès":{"v":1600,"l":9.4},"Castelnau-le-Lez":{"v":4100,"l":15},"Lunel":{"v":2700,"l":12.1},"Béziers":{"v":1750,"l":10.2},"Perpignan":{"v":1900,"l":10.8},"Toulouse":{"v":3550,"l":14.1},"Carcassonne":{"v":1650,"l":9.6},"Narbonne":{"v":2600,"l":11.4},"Agde":{"v":3300,"l":12.8},"Palavas-les-Flots":{"v":5200,"l":16.5},"La Grande-Motte":{"v":4900,"l":16},"Saint-Gilles":{"v":1700,"l":9.8},"Beaucaire":{"v":1650,"l":9.5},"Anduze":{"v":1950,"l":9.9},"Sommières":{"v":2600,"l":11.2},"Pézenas":{"v":2400,"l":10.9},"Juvignac":{"v":3700,"l":14.6},"Saint-Jean-de-Védas":{"v":3800,"l":14.4},"Mauguio":{"v":3500,"l":13.8},"Frontignan":{"v":3400,"l":12.9},"Bagnols-sur-Cèze":{"v":1600,"l":9.2},"Villeneuve-lès-Avignon":{"v":3400,"l":12.6},"Le Grau-du-Roi":{"v":4700,"l":15.4},"Vauvert":{"v":1900,"l":9.9},"Marsillargues":{"v":2300,"l":10.4},"Saint-Just-et-Vacquières":{"v":1900,"l":9}};
+const BIENS = [{"id": 1, "op": "vente", "type": "Appartement", "ville": "Montpellier", "quartier": "Antigone", "prix": 327000, "surface": 78, "pieces": 3, "dpe": "D", "visite3d": true, "vendeur": "Pierre-Yves L.", "etage": "Rez-de-jardin", "desc": "Rénové en 2023, électricité aux normes, salle d'eau neuve.", "img": "photos/apt-moderne.jpg"}, {"id": 2, "op": "vente", "type": "Maison", "ville": "Uzès", "quartier": "Les Cordeliers", "prix": 601000, "surface": 165, "pieces": 6, "dpe": "C", "visite3d": true, "vendeur": "Jean-Pierre R.", "etage": "Plain-pied", "desc": "Villa de plain-pied sur terrain arboré, piscine, abri voiture.", "img": "photos/mas.jpg"}, {"id": 3, "op": "vente", "type": "Appartement", "ville": "Nîmes", "quartier": "Les Amoureux", "prix": 190000, "surface": 92, "pieces": 4, "dpe": "E", "visite3d": false, "vendeur": "Marie-Laure P.", "etage": "2e avec ascenseur", "desc": "Appartement traversant, parquet, cuisine équipée, cave.", "img": "photos/apt-ancien.jpg"}, {"id": 4, "op": "vente", "type": "Maison", "ville": "Alès", "quartier": "Village", "prix": 172000, "surface": 110, "pieces": 5, "dpe": "D", "visite3d": false, "vendeur": "Camille F.", "etage": "Plain-pied", "desc": "Maison contemporaine 2019, pompe à chaleur, domotique, jardin clos. Charges 150 €/mois.", "img": "photos/toulousaine.jpg"}, {"id": 5, "op": "vente", "type": "Appartement", "ville": "Sète", "quartier": "Mont Saint-Clair", "prix": 455000, "surface": 84, "pieces": 3, "dpe": "C", "visite3d": false, "vendeur": "Sophie L.", "etage": "3e sans ascenseur", "desc": "Rénové en 2023, électricité aux normes, salle d'eau neuve. Charges 90 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 6, "op": "vente", "type": "Terrain", "ville": "Lunel", "quartier": "Périphérie", "prix": 117000, "surface": 620, "pieces": 0, "dpe": "", "visite3d": false, "vendeur": "Antoine V.", "etage": "Terrain non viabilisé", "desc": "Terrain plat viabilisé, libre de constructeur, zone UB.", "img": "photos/terrain.jpg"}, {"id": 7, "op": "location", "type": "Appartement", "ville": "Montpellier", "quartier": "Antigone", "prix": 1050, "surface": 62, "pieces": 3, "dpe": "B", "visite3d": false, "vendeur": "Isabelle Q.", "etage": "Dernier étage", "desc": "Vue dégagée, balcon, cellier, proche tram et commerces. Loyer charges comprises.", "img": "photos/apt-moderne.jpg"}, {"id": 8, "op": "location", "type": "Maison", "ville": "Castelnau-le-Lez", "quartier": "Village", "prix": 1680, "surface": 118, "pieces": 5, "dpe": "C", "visite3d": true, "vendeur": "Pierre-Yves L.", "etage": "Plain-pied", "desc": "Maison contemporaine 2019, pompe à chaleur, domotique, jardin clos. Loyer charges comprises.", "img": "photos/toulousaine.jpg"}, {"id": 9, "op": "location", "type": "Studio", "ville": "Nîmes", "quartier": "Écusson", "prix": 330, "surface": 24, "pieces": 1, "dpe": "D", "visite3d": true, "vendeur": "Claire M.", "etage": "1er", "desc": "Studio rénové, lumineux, placards, cave. Loyer charges comprises.", "img": "photos/studio.jpg"}, {"id": 10, "op": "location", "type": "Appartement", "ville": "Uzès", "quartier": "Boulevard Gambetta", "prix": 760, "surface": 58, "pieces": 3, "dpe": "D", "visite3d": false, "vendeur": "Thomas W.", "etage": "4e avec ascenseur", "desc": "Vue dégagée, balcon, cellier, proche tram et commerces. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/apt-ancien.jpg"}, {"id": 11, "op": "vente", "type": "Appartement", "ville": "Toulouse", "quartier": "Côte Pavée", "prix": 199000, "surface": 55, "pieces": 2, "dpe": "C", "visite3d": true, "vendeur": "Antoine V.", "etage": "1er", "desc": "Vue dégagée, balcon, cellier, proche tram et commerces.", "img": "photos/apt-ancien.jpg"}, {"id": 12, "op": "vente", "type": "Maison", "ville": "Toulouse", "quartier": "Saint-Cyprien", "prix": 537000, "surface": 140, "pieces": 6, "dpe": "D", "visite3d": false, "vendeur": "Famille T.", "etage": "Sur 2 niveaux", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Charges 70 €/mois.", "img": "photos/toulousaine.jpg"}, {"id": 13, "op": "location", "type": "Appartement", "ville": "Toulouse", "quartier": "Saint-Cyprien", "prix": 990, "surface": 70, "pieces": 3, "dpe": "C", "visite3d": true, "vendeur": "Nicolas P.", "etage": "3e sans ascenseur", "desc": "Dernier étage avec ascenseur, terrasse plein sud, double vitrage. Loyer charges comprises.", "img": "photos/apt-moderne.jpg"}, {"id": 14, "op": "location", "type": "Studio", "ville": "Toulouse", "quartier": "Côte Pavée", "prix": 320, "surface": 19, "pieces": 1, "dpe": "E", "visite3d": true, "vendeur": "Claire M.", "etage": "Rez-de-chaussée sur cour", "desc": "Studio meublé, idéal étudiant, kitchenette, proche fac. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/studio.jpg"}, {"id": 15, "op": "vente", "type": "Maison", "ville": "Béziers", "quartier": "Centre", "prix": 153000, "surface": 95, "pieces": 4, "dpe": "E", "visite3d": false, "vendeur": "Léa R.", "etage": "Maison de village sur 3 niveaux", "desc": "Mas restauré, poutres apparentes, 2 000 m² de terrain, forage.", "img": "photos/mas.jpg"}, {"id": 16, "op": "vente", "type": "Appartement", "ville": "Béziers", "quartier": "Périphérie", "prix": 101000, "surface": 68, "pieces": 3, "dpe": "D", "visite3d": true, "vendeur": "Claire M.", "etage": "2e avec ascenseur", "desc": "Résidence récente, parking en sous-sol, faibles charges. Charges 170 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 17, "op": "location", "type": "Appartement", "ville": "Béziers", "quartier": "Village", "prix": 740, "surface": 75, "pieces": 3, "dpe": "D", "visite3d": false, "vendeur": "Sophie L.", "etage": "Dernier étage", "desc": "Résidence récente, parking en sous-sol, faibles charges. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/apt-moderne.jpg"}, {"id": 18, "op": "vente", "type": "Appartement", "ville": "Perpignan", "quartier": "Centre", "prix": 159000, "surface": 88, "pieces": 4, "dpe": "D", "visite3d": true, "vendeur": "Mathieu B.", "etage": "Rez-de-jardin", "desc": "Résidence récente, parking en sous-sol, faibles charges.", "img": "photos/apt-moderne.jpg"}, {"id": 19, "op": "vente", "type": "Maison", "ville": "Perpignan", "quartier": "Périphérie", "prix": 237000, "surface": 120, "pieces": 5, "dpe": "C", "visite3d": false, "vendeur": "Karim A.", "etage": "Plain-pied", "desc": "Maison de village sur 3 niveaux, terrasse tropézienne, cave voûtée. Charges 160 €/mois.", "img": "photos/mas.jpg"}, {"id": 20, "op": "location", "type": "Maison", "ville": "Perpignan", "quartier": "Périphérie", "prix": 1100, "surface": 100, "pieces": 4, "dpe": "D", "visite3d": false, "vendeur": "Patrick S.", "etage": "Plain-pied", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/mas.jpg"}, {"id": 21, "op": "vente", "type": "Maison", "ville": "Carcassonne", "quartier": "Périphérie", "prix": 193000, "surface": 130, "pieces": 5, "dpe": "D", "visite3d": false, "vendeur": "Claire M.", "etage": "Maison de village sur 3 niveaux", "desc": "Maison contemporaine 2019, pompe à chaleur, domotique, jardin clos.", "img": "photos/toulousaine.jpg"}, {"id": 22, "op": "location", "type": "Appartement", "ville": "Carcassonne", "quartier": "Périphérie", "prix": 500, "surface": 52, "pieces": 2, "dpe": "E", "visite3d": true, "vendeur": "Camille F.", "etage": "4e avec ascenseur", "desc": "Dernier étage avec ascenseur, terrasse plein sud, double vitrage. Loyer charges comprises.", "img": "photos/apt-moderne.jpg"}, {"id": 23, "op": "vente", "type": "Appartement", "ville": "Narbonne", "quartier": "Centre", "prix": 165000, "surface": 60, "pieces": 3, "dpe": "C", "visite3d": true, "vendeur": "Nicolas P.", "etage": "4e avec ascenseur", "desc": "Dernier étage avec ascenseur, terrasse plein sud, double vitrage.", "img": "photos/apt-moderne.jpg"}, {"id": 24, "op": "vente", "type": "Maison", "ville": "Narbonne", "quartier": "Centre", "prix": 429000, "surface": 150, "pieces": 6, "dpe": "B", "visite3d": false, "vendeur": "Pierre-Yves L.", "etage": "Plain-pied", "desc": "Maison en pierre avec patio, garage, chaudière à condensation.", "img": "photos/mas.jpg"}, {"id": 25, "op": "vente", "type": "Appartement", "ville": "Agde", "quartier": "Village", "prix": 178000, "surface": 45, "pieces": 2, "dpe": "D", "visite3d": false, "vendeur": "Antoine V.", "etage": "Rez-de-jardin", "desc": "Vue dégagée, balcon, cellier, proche tram et commerces. Charges 60 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 26, "op": "location", "type": "Appartement", "ville": "Agde", "quartier": "Centre", "prix": 560, "surface": 40, "pieces": 2, "dpe": "D", "visite3d": true, "vendeur": "Camille F.", "etage": "2e avec ascenseur", "desc": "Rénové en 2023, électricité aux normes, salle d'eau neuve. Loyer charges comprises.", "img": "photos/apt-moderne.jpg"}, {"id": 27, "op": "vente", "type": "Appartement", "ville": "Palavas-les-Flots", "quartier": "Centre", "prix": 247000, "surface": 38, "pieces": 2, "dpe": "E", "visite3d": true, "vendeur": "Karim A.", "etage": "1er", "desc": "Vue dégagée, balcon, cellier, proche tram et commerces. Charges 160 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 28, "op": "vente", "type": "Appartement", "ville": "La Grande-Motte", "quartier": "Centre", "prix": 285000, "surface": 52, "pieces": 2, "dpe": "D", "visite3d": false, "vendeur": "Nadia B.", "etage": "Rez-de-jardin", "desc": "Dernier étage avec ascenseur, terrasse plein sud, double vitrage. Charges 120 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 29, "op": "location", "type": "Appartement", "ville": "Le Grau-du-Roi", "quartier": "Périphérie", "prix": 800, "surface": 48, "pieces": 2, "dpe": "D", "visite3d": false, "vendeur": "Thomas W.", "etage": "Rez-de-jardin", "desc": "Résidence récente, parking en sous-sol, faibles charges. Loyer charges comprises.", "img": "photos/apt-moderne.jpg"}, {"id": 30, "op": "vente", "type": "Maison", "ville": "Saint-Gilles", "quartier": "Périphérie", "prix": 170000, "surface": 105, "pieces": 4, "dpe": "D", "visite3d": false, "vendeur": "Pierre-Yves L.", "etage": "Sur 2 niveaux", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Charges 160 €/mois.", "img": "photos/village.jpg"}, {"id": 31, "op": "vente", "type": "Maison", "ville": "Beaucaire", "quartier": "Périphérie", "prix": 203000, "surface": 140, "pieces": 5, "dpe": "E", "visite3d": false, "vendeur": "Pierre-Yves L.", "etage": "Maison de village sur 3 niveaux", "desc": "Maison contemporaine 2019, pompe à chaleur, domotique, jardin clos.", "img": "photos/toulousaine.jpg"}, {"id": 32, "op": "vente", "type": "Maison", "ville": "Anduze", "quartier": "Centre", "prix": 312000, "surface": 160, "pieces": 6, "dpe": "D", "visite3d": true, "vendeur": "Julien C.", "etage": "Plain-pied", "desc": "Maison de village sur 3 niveaux, terrasse tropézienne, cave voûtée.", "img": "photos/mas.jpg"}, {"id": 33, "op": "vente", "type": "Maison", "ville": "Sommières", "quartier": "Périphérie", "prix": 345000, "surface": 125, "pieces": 5, "dpe": "C", "visite3d": false, "vendeur": "Bruno H.", "etage": "Sur 2 niveaux", "desc": "Maison en pierre avec patio, garage, chaudière à condensation.", "img": "photos/village.jpg"}, {"id": 34, "op": "vente", "type": "Maison", "ville": "Pézenas", "quartier": "Périphérie", "prix": 445000, "surface": 180, "pieces": 7, "dpe": "D", "visite3d": true, "vendeur": "Nadia B.", "etage": "Plain-pied", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Charges 140 €/mois.", "img": "photos/mas.jpg"}, {"id": 35, "op": "vente", "type": "Appartement", "ville": "Juvignac", "quartier": "Centre", "prix": 244000, "surface": 66, "pieces": 3, "dpe": "B", "visite3d": true, "vendeur": "Isabelle Q.", "etage": "1er", "desc": "Appartement traversant, parquet, cuisine équipée, cave. Charges 70 €/mois.", "img": "photos/apt-ancien.jpg"}, {"id": 36, "op": "vente", "type": "Maison", "ville": "Saint-Jean-de-Védas", "quartier": "Village", "prix": 459000, "surface": 115, "pieces": 5, "dpe": "C", "visite3d": false, "vendeur": "Karim A.", "etage": "Sur 2 niveaux", "desc": "Mas restauré, poutres apparentes, 2 000 m² de terrain, forage. Charges 130 €/mois.", "img": "photos/mas.jpg"}, {"id": 37, "op": "location", "type": "Maison", "ville": "Mauguio", "quartier": "Village", "prix": 1790, "surface": 130, "pieces": 5, "dpe": "C", "visite3d": false, "vendeur": "Julien C.", "etage": "Plain-pied", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Loyer charges comprises.", "img": "photos/mas.jpg"}, {"id": 38, "op": "vente", "type": "Appartement", "ville": "Frontignan", "quartier": "Périphérie", "prix": 235000, "surface": 72, "pieces": 3, "dpe": "D", "visite3d": true, "vendeur": "Nadia B.", "etage": "Rez-de-jardin", "desc": "Rénové en 2023, électricité aux normes, salle d'eau neuve. Charges 70 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 39, "op": "vente", "type": "Maison", "ville": "Bagnols-sur-Cèze", "quartier": "Centre", "prix": 163000, "surface": 120, "pieces": 5, "dpe": "E", "visite3d": true, "vendeur": "Thomas W.", "etage": "Plain-pied", "desc": "Mas restauré, poutres apparentes, 2 000 m² de terrain, forage.", "img": "photos/mas.jpg"}, {"id": 40, "op": "vente", "type": "Maison", "ville": "Villeneuve-lès-Avignon", "quartier": "Périphérie", "prix": 624000, "surface": 170, "pieces": 6, "dpe": "C", "visite3d": false, "vendeur": "Marc D.", "etage": "Maison de village sur 3 niveaux", "desc": "Maison en pierre avec patio, garage, chaudière à condensation.", "img": "photos/village.jpg"}, {"id": 41, "op": "location", "type": "Appartement", "ville": "Villeneuve-lès-Avignon", "quartier": "Périphérie", "prix": 840, "surface": 65, "pieces": 3, "dpe": "D", "visite3d": false, "vendeur": "Hélène G.", "etage": "4e avec ascenseur", "desc": "Rénové en 2023, électricité aux normes, salle d'eau neuve. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/apt-ancien.jpg"}, {"id": 42, "op": "vente", "type": "Maison", "ville": "Vauvert", "quartier": "Centre", "prix": 196000, "surface": 110, "pieces": 4, "dpe": "D", "visite3d": true, "vendeur": "Léa R.", "etage": "Plain-pied", "desc": "Villa de plain-pied sur terrain arboré, piscine, abri voiture. Charges 130 €/mois.", "img": "photos/mas.jpg"}, {"id": 43, "op": "vente", "type": "Maison", "ville": "Marsillargues", "quartier": "Centre", "prix": 301000, "surface": 135, "pieces": 5, "dpe": "D", "visite3d": true, "vendeur": "Olivier N.", "etage": "Sur 2 niveaux", "desc": "Villa de plain-pied sur terrain arboré, piscine, abri voiture.", "img": "photos/mas.jpg"}, {"id": 44, "op": "vente", "type": "Maison", "ville": "Saint-Just-et-Vacquières", "quartier": "Périphérie", "prix": 271000, "surface": 150, "pieces": 6, "dpe": "E", "visite3d": true, "vendeur": "Bruno H.", "etage": "Maison de village sur 3 niveaux", "desc": "Maison contemporaine 2019, pompe à chaleur, domotique, jardin clos. Charges 160 €/mois.", "img": "photos/toulousaine.jpg"}, {"id": 45, "op": "vente", "type": "Loft", "ville": "Montpellier", "quartier": "Figuerolles", "prix": 482000, "surface": 120, "pieces": 3, "dpe": "D", "visite3d": false, "vendeur": "Bruno H.", "etage": "Rez-de-chaussée", "desc": "Ancien atelier transformé, 4 m sous plafond, verrière, parking.", "img": "photos/loft.jpg"}, {"id": 46, "op": "vente", "type": "Parking", "ville": "Montpellier", "quartier": "Antigone", "prix": 22000, "surface": 12, "pieces": 0, "dpe": "", "visite3d": false, "vendeur": "Antoine V.", "etage": "Sous-sol -1", "desc": "Place de parking sécurisée en sous-sol, accès badge."}, {"id": 47, "op": "location", "type": "Parking", "ville": "Nîmes", "quartier": "Costières", "prix": 100, "surface": 14, "pieces": 0, "dpe": "", "visite3d": false, "vendeur": "Jean-Pierre R.", "etage": "Sous-sol -1", "desc": "Garage fermé 18 m², porte motorisée. Loyer charges comprises."}, {"id": 48, "op": "vente", "type": "Immeuble", "ville": "Nîmes", "quartier": "Écusson", "prix": 519000, "surface": 320, "pieces": 0, "dpe": "E", "visite3d": false, "vendeur": "Sophie L.", "etage": "R+2", "desc": "Immeuble de rapport, 4 lots loués, toiture refaite 2021, rendement 6 %.", "img": "photos/hotel-particulier.jpg"}, {"id": 49, "op": "vente", "type": "Local", "ville": "Sète", "quartier": "Île de Thau", "prix": 176000, "surface": 60, "pieces": 0, "dpe": "F", "visite3d": false, "vendeur": "Olivier N.", "etage": "Rez-de-chaussée", "desc": "Local commercial avec vitrine, 2 pièces, sanitaires, cave, libre."}, {"id": 50, "op": "location", "type": "Local", "ville": "Montpellier", "quartier": "Antigone", "prix": 660, "surface": 45, "pieces": 0, "dpe": "D", "visite3d": false, "vendeur": "Thomas W.", "etage": "Rez-de-chaussée", "desc": "Local commercial avec vitrine, 2 pièces, sanitaires, cave, libre. Loyer hors charges, dépôt de garantie 1 mois."}, {"id": 51, "op": "location", "type": "Studio", "ville": "Montpellier", "quartier": "Port-Marianne", "prix": 390, "surface": 22, "pieces": 1, "dpe": "D", "visite3d": false, "vendeur": "Nadia B.", "etage": "Rez-de-chaussée sur cour", "desc": "Studio meublé, idéal étudiant, kitchenette, proche fac. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/studio.jpg"}, {"id": 52, "op": "location", "type": "Appartement", "ville": "Montpellier", "quartier": "Les Arceaux", "prix": 1270, "surface": 85, "pieces": 4, "dpe": "C", "visite3d": true, "vendeur": "Claire M.", "etage": "2e avec ascenseur", "desc": "Résidence récente, parking en sous-sol, faibles charges. Loyer hors charges, dépôt de garantie 1 mois.", "img": "photos/apt-moderne.jpg"}, {"id": 53, "op": "vente", "type": "Appartement", "ville": "Montpellier", "quartier": "Beaux-Arts", "prix": 422000, "surface": 110, "pieces": 5, "dpe": "C", "visite3d": true, "vendeur": "Hélène G.", "etage": "3e sans ascenseur", "desc": "Dernier étage avec ascenseur, terrasse plein sud, double vitrage. Charges 100 €/mois.", "img": "photos/apt-moderne.jpg"}, {"id": 54, "op": "vente", "type": "Maison", "ville": "Montpellier", "quartier": "Beaux-Arts", "prix": 689000, "surface": 160, "pieces": 6, "dpe": "D", "visite3d": false, "vendeur": "Élodie J.", "etage": "Maison de village sur 3 niveaux", "desc": "Maison en pierre avec patio, garage, chaudière à condensation. Charges 90 €/mois.", "img": "photos/village.jpg"}, {"id": 55, "op": "location", "type": "Studio", "ville": "Uzès", "quartier": "Centre historique", "prix": 360, "surface": 26, "pieces": 1, "dpe": "E", "visite3d": false, "vendeur": "Nadia B.", "etage": "1er", "desc": "Studio rénové, lumineux, placards, cave. Loyer charges comprises.", "img": "photos/studio.jpg"}, {"id": 56, "op": "vente", "type": "Terrain", "ville": "Anduze", "quartier": "Périphérie", "prix": 206000, "surface": 1500, "pieces": 0, "dpe": "", "visite3d": false, "vendeur": "Fatima Z.", "etage": "Terrain viabilisé", "desc": "Terrain constructible avec vue, étude de sol G1 disponible, CU positif.", "img": "photos/terrain.jpg"}, {"id": 57, "op": "vente", "type": "Terrain", "ville": "Sommières", "quartier": "Centre", "prix": 146000, "surface": 800, "pieces": 0, "dpe": "", "visite3d": false, "vendeur": "Marc D.", "etage": "Terrain non viabilisé", "desc": "Terrain constructible avec vue, étude de sol G1 disponible, CU positif. Charges 150 €/mois.", "img": "photos/terrain.jpg"}, {"op": "vente", "type": "Maison", "ville": "Uzès", "quartier": "Campagne uzétienne", "prix": 1850000, "surface": 420, "pieces": 12, "dpe": "C", "visite3d": true, "vendeur": "Famille de V.", "etage": "Mas du XVIIe sur 4 ha", "desc": "Mas en pierre restauré avec piscine à débordement, pool house, oliveraie de 300 arbres et dépendance indépendante. Vue sur le Duché. Forage et source.", "premium": true, "prive": false, "drone": true, "id": 58, "img": "photos/mas.jpg"}, {"op": "vente", "type": "Maison", "ville": "Sète", "quartier": "Mont Saint-Clair", "prix": 2400000, "surface": 260, "pieces": 8, "dpe": "B", "visite3d": true, "vendeur": "Nadia B.", "etage": "Villa contemporaine, 3 niveaux", "desc": "Villa d'architecte face à la mer, baies vitrées toute hauteur, piscine chauffée, ascenseur, garage 3 voitures. Prestations haut de gamme.", "premium": true, "prive": true, "drone": true, "id": 59, "img": "photos/villa-mer.jpg"}, {"op": "vente", "type": "Appartement", "ville": "Montpellier", "quartier": "Écusson", "prix": 1290000, "surface": 215, "pieces": 6, "dpe": "D", "visite3d": true, "vendeur": "Claire M.", "etage": "Étage noble d'un hôtel particulier", "desc": "Appartement de réception dans un hôtel particulier du XVIIIe : plafonds à la française, gypseries classées, cour intérieure, cave voûtée. Rare.", "premium": true, "prive": false, "drone": false, "id": 60, "img": "photos/apt-ancien.jpg"}, {"op": "vente", "type": "Maison", "ville": "Toulouse", "quartier": "Côte Pavée", "prix": 1650000, "surface": 310, "pieces": 9, "dpe": "C", "visite3d": true, "vendeur": "Pierre-Yves L.", "etage": "Toulousaine rénovée", "desc": "Maison toulousaine en briques foraines entièrement rénovée, jardin paysager de 1 200 m², piscine, studio indépendant, garage double.", "premium": true, "prive": false, "drone": true, "id": 61, "img": "photos/toulousaine.jpg"}, {"op": "vente", "type": "Maison", "ville": "Anduze", "quartier": "Vallée des Gardons", "prix": 1150000, "surface": 380, "pieces": 11, "dpe": "D", "visite3d": true, "vendeur": "Olivier N.", "etage": "Domaine sur 12 ha", "desc": "Ancienne magnanerie et ses dépendances sur 12 ha de châtaigniers, 2 gîtes en activité, piscine, rivière en limite de propriété. Idéal projet d'accueil.", "premium": true, "prive": true, "drone": true, "id": 62, "img": "photos/mas.jpg"}, {"op": "vente", "type": "Maison", "ville": "Le Grau-du-Roi", "quartier": "Port Camargue", "prix": 1980000, "surface": 190, "pieces": 6, "dpe": "C", "visite3d": true, "vendeur": "Isabelle Q.", "etage": "Marina, ponton privé", "desc": "Villa en marina avec ponton privé de 15 m, terrasse sur l'eau, piscine, 4 suites. Accès direct au Ponant.", "premium": true, "prive": false, "drone": true, "id": 63, "img": "photos/villa-mer.jpg"}, {"op": "vente", "type": "Immeuble", "ville": "Nîmes", "quartier": "Écusson", "prix": 2150000, "surface": 640, "pieces": 0, "dpe": "D", "visite3d": false, "vendeur": "Bruno H.", "etage": "Hôtel particulier, R+3", "desc": "Hôtel particulier du XVIIe à deux pas de la Maison Carrée, 640 m² sur 4 niveaux, escalier d'honneur, cour pavée. Usage résidentiel ou de prestige.", "premium": true, "prive": true, "drone": false, "id": 64, "img": "photos/hotel-particulier.jpg"}, {"op": "location", "type": "Maison", "ville": "Montpellier", "quartier": "Les Arceaux", "prix": 5800, "surface": 280, "pieces": 8, "dpe": "C", "visite3d": true, "vendeur": "Sandrine D.", "etage": "Folie montpelliéraine", "desc": "Folie du XVIIIe dans son parc d'un hectare en pleine ville, piscine, maison de gardien. Location longue durée, bail 3 ans.", "premium": true, "prive": false, "drone": true, "id": 65, "img": "photos/toulousaine.jpg"}, {"op": "vente", "type": "Maison", "ville": "Pézenas", "quartier": "Vignoble", "prix": 3200000, "surface": 900, "pieces": 0, "dpe": "E", "visite3d": true, "vendeur": "Domaine S.", "etage": "Domaine viticole 28 ha", "desc": "Château viticole, 28 ha en AOP Languedoc dont 22 plantés, chai équipé, caveau de vente, 900 m² habitables et de réception. Transmission complète.", "premium": true, "prive": true, "drone": true, "id": 66, "img": "photos/domaine.jpg"}];
+const COPRO=['Appartement','Studio','Loft','Parking','Local'];
+const findB = id => BIENS.find(x=>String(x.id)===String(id));
+const eur = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(n));
+let mode='vente';
+
+function ecart(b){ const ref=DVF[b.ville]; if(!ref) return null; const m2=b.prix/b.surface; const r=b.op==='vente'?ref.v:ref.l; return {pct:(m2-r)/r*100, m2, ref:r}; }
+function ecartBadge(e){ if(!e) return ''; const p=e.pct; const cls=p<-3?'good':p<=8?'good':p<=15?'warn':'bad'; const txt=p<-3?`${Math.abs(p).toFixed(0)} % sous le marché`:p<=8?'Prix du marché':`${p.toFixed(0)} % au-dessus du marché`; return `<span class="badge ${cls}">${txt}</span>`; }
+function card(b){ const e=ecart(b); return `<button class="card" type="button" data-id="${b.id}" aria-label="${b.type} ${b.ville}">
+  <div class="ph">${b.img?`<img src="${b.img}" alt="" loading="lazy">`:''}${b.visite3d?'<span class="tag3d">3D</span>':''}</div>
+  <div class="body"><span class="price">${eur(b.prix)}${b.op==='location'?' <span class="meta">/ mois</span>':''}</span>
+  <span><b>${b.type} ${b.pieces?b.pieces+' p. · ':''}${fmt(b.surface)} m²</b></span>
+  <span class="meta">${b.ville} · ${b.quartier}</span>
+  <div class="badges"><span class="badge ok">Vérifié</span><span class="badge decl">Déclaré</span>${ecartBadge(e)}${b.dpe?`<span class="badge">DPE ${b.dpe}</span>`:''}</div></div></button>`; }
+
+function show(id){ document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.nav)));
+document.getElementById('hdr-deposer').addEventListener('click',()=>show('post'));
+document.getElementById('back-home').addEventListener('click',()=>show('home'));
+document.getElementById('lnk-tarifs').addEventListener('click',e=>{e.preventDefault();show('tarifs')});
+document.getElementById('lnk-guide').addEventListener('click',e=>{e.preventDefault();show('guide')});
+
+// segment
+document.getElementById('seg-vente').addEventListener('click',()=>setMode('vente'));
+document.getElementById('seg-location').addEventListener('click',()=>setMode('location'));
+function setMode(m){ mode=m; document.getElementById('seg-vente').setAttribute('aria-pressed',m==='vente'); document.getElementById('seg-location').setAttribute('aria-pressed',m==='location'); const bud=document.getElementById('budget'); bud.innerHTML = m==='vente' ? '<option value="">Budget max</option><option value="150000">150 000 €</option><option value="250000">250 000 €</option><option value="400000">400 000 €</option><option value="700000">700 000 €</option><option value="1500000">1 500 000 €</option>' : '<option value="">Loyer max</option><option value="700">700 €</option><option value="1000">1 000 €</option><option value="1500">1 500 €</option><option value="2500">2 500 €</option>'; renderHome(); }
+
+function pcard(b){ return `<button class="pcard" type="button" data-id="${b.id}"><div class="ph">${b.img?`<img src="${b.img}" alt="" loading="lazy">`:''}<span>${b.prive?'Diffusion confidentielle · adresse et extérieurs masqués':(b.drone?'Photos, drone et visite 3D':'Photos et visite 3D')}</span><span class="tag">Prestige</span></div><div class="body"><span class="price">${b.prive&&b.op==='vente'?'Prix sur demande':eur(b.prix)+(b.op==='location'?' <span class="meta">/ mois</span>':'')}</span><span><b>${b.etage}</b> · ${fmt(b.surface)} m²${b.pieces?' · '+b.pieces+' p.':''}</span><span class="meta">${b.ville} · ${b.quartier}</span><div class="badges"><span class="badge gold">Vérifié · Déclaré</span>${b.prive?'<span class="badge">Off-market</span>':''}<span class="badge">${b.op==='vente'?'À vendre':'À louer'}</span></div></div></button>`; }
+function renderHome(){ document.getElementById('home-list').innerHTML = BIENS.filter(b=>b.op===mode&&!b.premium).slice(0,6).map(card).join(''); document.getElementById('prestige-list').innerHTML = BIENS.filter(b=>b.premium&&b.op===mode).slice(0,2).map(pcard).join(''); }
+let pf='all';
+function renderPrestige(){ const L=BIENS.filter(b=>b.premium).filter(b=>pf==='all'?true:pf==='prive'?b.prive:pf==='mer'?['Sète','Le Grau-du-Roi','Palavas-les-Flots','La Grande-Motte','Agde'].includes(b.ville):pf==='mas'?/mas|domaine|magnanerie|château/i.test(b.etage+b.desc)&&!['Sète','Le Grau-du-Roi'].includes(b.ville):/hôtel particulier|toulousaine|folie|appartement/i.test(b.etage+b.desc)); document.getElementById('prestige-full').innerHTML=L.length?L.map(pcard).join(''):'<p style="color:var(--prestige-muted)">Aucun bien dans cette catégorie pour le moment.</p>'; }
+document.getElementById('go-prestige').addEventListener('click',()=>{ renderPrestige(); show('prestige'); });
+document.getElementById('back-prestige').addEventListener('click',()=>show('home'));
+document.querySelector('.pfilters').addEventListener('click',e=>{ const b=e.target.closest('.pf'); if(!b) return; pf=b.dataset.pf; document.querySelectorAll('.pf').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderPrestige(); });
+renderHome();
+
+document.getElementById('search').addEventListener('submit',e=>{ e.preventDefault(); const q=document.getElementById('q').value.trim().toLowerCase(); const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
+  const res=BIENS.filter(b=>b.op===mode && (!q || b.ville.toLowerCase().includes(q) || b.quartier.toLowerCase().includes(q) || (b.premium&&/prestige|exception|luxe/.test(q))) && (!t || b.type===t) && b.prix<=bud);
+  document.getElementById('res-title').textContent = mode==='vente'?'Biens à vendre':'Biens à louer';
+  document.getElementById('res-count').textContent = res.length+' bien'+(res.length>1?'s':'')+(q?' · '+document.getElementById('q').value:'');
+  document.getElementById('res-list').innerHTML = res.length?res.map(card).join(''):'<p class="hint">Aucun bien ne correspond. Essayez une autre ville ou un budget plus large.</p>';
+  show('results'); });
+
+document.addEventListener('click',e=>{ const c=e.target.closest('.card,.pcard'); if(c) openDetail(c.dataset.id); });
+
+function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.min(100,Math.max(0,50+e.pct*2.5)):50;
+  const notaire = b.op==='vente'? Math.round(b.prix*0.075):0;
+  document.getElementById('v-detail').innerHTML = `<div class="detail">
+  <button class="back" id="back-res" type="button">← Retour</button>
+  <div class="gallery">${b.img&&!(b.prive&&!NDAS[b.id])?`<img src="${b.img}" alt="">`:''}${b.visite3d?'<span>Visite virtuelle 3D</span><span style="font-family:var(--body);font-size:13px">Capture 360° · 12 pièces</span><button class="btn sm v3d" type="button" id="btn-3d">Lancer la visite</button>':'<span>Photos</span><span style="font-family:var(--body);font-size:13px">Visite 3D non disponible</span>'}</div>
+  ${b.premium?(b.prive&&!(NDAS[b.id])?`<div class="prestige" style="margin:0;padding:12px 14px;gap:8px"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige · diffusion confidentielle</span><span style="font-size:13px;color:var(--prestige-muted)">Adresse exacte, photos extérieures, prix et documents sont réservés aux candidats dont la capacité financière est attestée et qui ont signé l'accord de confidentialité.</span><button class="btn gold sm" type="button" id="btn-nda">Demander l'accès au dossier confidentiel</button></div>`:b.prive?`<div class="unlock"><b>Dossier confidentiel ouvert</b><div class="row"><span>Accord</span><span>${NDAS[b.id].num} · signé le ${NDAS[b.id].at}</span></div><div class="row"><span>Adresse</span><span>${NDAS[b.id].adr}</span></div><div class="row"><span>Prix demandé</span><span>${eur(b.prix)}</span></div><div class="row"><span>Documents</span><span>Titre, diagnostics, ${COPRO.includes(b.type)?'PV d\'AG, ':''}plans, drone, 3D · filigranés à votre nom</span></div><span class="hint" style="color:var(--prestige-muted)">Chaque consultation est journalisée. Visites sur rendez-vous via la messagerie.</span></div>`:`<div class="prestige" style="margin:0;padding:12px 14px;gap:4px"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><span style="font-size:13px;color:var(--prestige-muted)">Visites sur rendez-vous, attestation de capacité financière demandée avant la visite.</span></div>`):''}
+  <div><span class="eyebrow">${b.op==='vente'?'À vendre':'À louer'} · ${b.ville} · ${b.prive?'secteur confidentiel':b.quartier}</span>
+  <h2 style="margin-top:6px">${b.type} ${b.pieces?b.pieces+' pièces':''} de ${fmt(b.surface)} m²</h2>
+  <p class="price" style="font-size:28px;margin-top:6px">${b.prive&&!NDAS[b.id]&&b.op==='vente'?'Prix sur demande':eur(b.prix)+(b.op==='location'?' <span class="meta">/ mois</span>':'')}</p></div>
+  <div class="kv"><div><b>${fmt(b.surface)} m²</b><span>surface</span></div>${b.pieces?`<div><b>${b.pieces}</b><span>pièces</span></div>`:''}${b.dpe?`<div><b>${b.dpe}</b><span>DPE</span></div>`:''}<div><b>${fmt(b.prix/b.surface)} €</b><span>${b.op==='vente'?'par m²':'par m² / mois'}</span></div></div>
+  <p>${b.desc}</p><p class="meta">${b.etage}</p>
+  ${e?`<div class="baro"><div class="toolbar"><h3>Baromètre du prix</h3><span class="badge ${e.pct<=8?'good':e.pct<=15?'warn':'bad'}">${e.pct>=0?'+':''}${e.pct.toFixed(0)} % vs marché</span></div>
+    <div class="gauge"><i style="left:${pos}%"></i></div><div class="gauge-l"><span>−20 %</span><span>Prix du marché</span><span>+20 %</span></div>
+    <p class="hint">Référence ${fmt(e.ref)} €/m²${b.op==='location'?' par mois (observatoire des loyers)':' (ventes notariées DVF, 12 derniers mois)'} à ${b.ville}. Ce bien : ${fmt(e.m2)} €/m².</p></div>`:''}
+  ${b.op==='vente'?`<div class="kv"><div><b>${eur(notaire)}</b><span>frais de notaire estimés</span></div><div><b id="d-mens">—</b><span>mensualité sur 20 ans, 10 % d'apport</span></div></div>`:''}
+  <div class="trust">
+    <div class="trust-h"><span class="shield"></span><b>Comment ces photos sont contrôlées</b></div>
+    <ul>
+      <li>Prises sur place, dans l'appli Bienvu, le 12/10/2026 à 18:42 ; position GPS conforme à l'adresse.</li>
+      <li>Façade comparée à la vue de rue et au cadastre ; aucune photo réutilisée d'une autre annonce.</li>
+      <li>Focale standard imposée, pas de retouche ni de mise en scène virtuelle.</li>
+      <li>Surface déclarée ${fmt(b.surface)} m² ${COPRO.includes(b.type)?'· Carrez '+fmt(b.surface-1)+' m² (écart < 5 %)':'· plan 2D cohérent'}.</li>
+      <li><b>Aucun paiement ne vous sera demandé avant la visite.</b> Toute demande d'acompte ou de RIB dans la messagerie est bloquée.</li>
+    </ul>
+    <div class="conf"><span>Vous avez visité ce bien ?</span><button type="button" class="btn ghost sm" id="c-ok">Conforme aux photos</button><button type="button" class="btn ghost sm warnb" id="c-ko">Non conforme</button></div>
+  </div>
+  <div class="decl"><div class="toolbar"><h3>Déclaration du ${b.op==='vente'?'vendeur':'bailleur'}</h3><span class="badge decl">Signée le 12/10/2026 à 18:42</span></div>
+    <div class="row"><span>Photos horodatées et géolocalisées (intérieur, façades, rue)</span><b>15 / 15</b></div>
+    <div class="row"><span>Traces d'humidité ou infiltrations</span><b>${b.id%3===0?'Oui, cave (traité 2024)':'Non'}</b></div>
+    <div class="row"><span>Fissures visibles</span><b>Non</b></div>
+    <div class="row"><span>Travaux de moins de 10 ans</span><b>${b.id%2===0?'Oui, électricité 2021':'Non'}</b></div>
+    <div class="row"><span>Nuisances connues (bruit, odeurs)</span><b>${b.quartier==='Écusson'?'Oui, rue animée le soir':'Non'}</b></div>
+    <div class="row"><span>Procédure en cours en copropriété</span><b>${COPRO.includes(b.type)?'Non':'Sans objet'}</b></div>
+    <div class="row"><span>Servitudes ou litige de voisinage</span><b>Je ne sais pas</b></div>
+    <p class="hint">Déclaration signée électroniquement par le ${b.op==='vente'?'vendeur':'bailleur'}, jointe à l'annonce et au ${b.op==='vente'?'compromis':'bail'}. Elle l'engage.</p>
+    ${COPRO.includes(b.type)&&b.op==='vente'?PV_AI:''}
+  </div>
+  <div class="seller"><div class="avatar">${b.vendeur[0]}</div><div style="min-width:0"><b>${b.vendeur}</b><span class="badge ok" style="margin-left:6px">Identité et propriété vérifiées</span><p class="rel">Particulier · répond en moins de 24 h · <b>fiabilité 100 %</b> (${b.id%4+1} visite${b.id%4?'s':''} confirmée${b.id%4?'s':''} conforme${b.id%4?'s':''}, 0 signalement)</p></div></div>
+  <div class="row2"><button class="btn cta" type="button" id="btn-msg">Envoyer un message</button><button class="btn ghost" type="button" id="btn-visite">Demander une visite</button></div>
+  <div class="kv"><div><b>0 €</b><span>de frais pour ${b.op==='vente'?"l'acheteur":'le locataire'}</span></div><div><b>0 %</b><span>de commission d'agence</span></div></div>
+  <p class="hint">${b.op==='vente'?"Offre d'achat en ligne, compromis et acompte séquestré chez le notaire":"Dossier locataire, bail et dépôt de garantie sécurisés en ligne"} : le Pack Transaction est pris en charge par ${b.op==='vente'?'le vendeur':'le bailleur'}.</p>
+  <p class="note">Numéro masqué. Les échanges passent par la messagerie Bienvu ; ne payez jamais hors plateforme.</p>
+  </div>`;
+  if(b.op==='vente'){ const r=mens(b.prix*0.9,20,3.4,0.30); document.getElementById('d-mens').textContent=eur(r.m)+' / mois'; }
+  document.getElementById('back-res').addEventListener('click',()=>{ const res=document.getElementById('v-results'); show(res.querySelector('#res-list').children.length?'results':'home'); });
+  const bn=document.getElementById('btn-nda'); if(bn) bn.addEventListener('click',()=>openNda(b));
+  document.getElementById('btn-msg').addEventListener('click',()=>{ if(b.prive&&!NDAS[b.id]){ toast('Signez d\'abord l\'accord de confidentialité'); openNda(b); return; } openThread(b.id,false); });
+  document.getElementById('c-ok').addEventListener('click',()=>toast('Merci, votre visite confirme la fiabilité de ce vendeur'));
+  document.getElementById('c-ko').addEventListener('click',()=>toast('Signalement reçu : relecture humaine sous 24 h'));
+  document.getElementById('btn-visite').addEventListener('click',()=>openThread(b.id,true));
+  const b3=document.getElementById('btn-3d'); if(b3) b3.addEventListener('click',()=>toast('Visite 3D : intégration Matterport prévue en V1'));
+  show('detail'); }
+
+// Messagerie
+const THREADS={}; let curT=null;
+const hhmm=()=>new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+const MONEY=/\b(acompte|arrhes|rib|iban|virement|western\s*union|paypal|lydia|frais\s+de\s+(dossier|r[ée]servation)|caution|d[ée]p[oô]t\s+de\s+garantie|mandat\s+cash|cl[ée]s?\s+par\s+(la\s+)?poste|r[ée]server\s+le\s+bien)\b|\d+\s?(€|euros?)\b/i;
+function thread(id){ if(!THREADS[id]){ const b=findB(id); THREADS[id]={id, visit:null, msgs:[{k:'sys',t:`Conversation ouverte avec ${b.vendeur}. Vos numéros restent masqués. Aucun paiement ne vous sera demandé avant la visite.`,h:hhmm()},{k:'them',t:`Bonjour, merci pour votre intérêt. Le bien est libre de toute occupation, les diagnostics sont à jour. Je peux vous recevoir cette semaine.`,h:hhmm()}]}; } return THREADS[id]; }
+function renderList(){ const el=document.getElementById('msg-list'); const ids=Object.keys(THREADS); el.innerHTML = `<span class="eyebrow">Messagerie</span><h2 style="margin:6px 0 10px">Mes conversations</h2>` + (ids.length? ids.map(id=>{ const b=findB(id); if(!b) return ""; const t=THREADS[id]; const last=t.msgs[t.msgs.length-1]; return `<button class="conv" type="button" data-t="${id}"><div class="ph">${b.img?`<img src="${b.img}" alt="">`:(b.visite3d?'3D':'Photo')}</div><div style="min-width:0"><b>${b.vendeur} · ${b.type} ${b.ville}</b><span>${t.visit?'Visite '+t.visit+' · ':''}${last.t}</span></div>${last.k==='them'?'<span class="dot"></span>':''}</button>`; }).join('') : '<p class="hint">Aucune conversation. Ouvrez une annonce et écrivez au vendeur ou au bailleur.</p>'); }
+function openThread(id,askVisit){ curT=thread(id); const b=findB(id); document.getElementById('msg-list').hidden=true; document.getElementById('msg-thread').hidden=false; document.getElementById('m-head').innerHTML=`<div class="ph">${b.img?`<img src="${b.img}" alt="">`:(b.visite3d?'3D':'Photo')}</div><div><b>${b.vendeur} <span class="badge ok" style="margin-left:4px">Vérifié</span></b><span>${b.type} ${b.pieces?b.pieces+' p. · ':''}${fmt(b.surface)} m² · ${b.ville} · ${eur(b.prix)}${b.op==='location'?'/mois':''}</span></div>`; renderThread(); document.getElementById('m-slots').hidden=!askVisit; if(askVisit) renderSlots(); show('msg'); }
+var renderThread=function(){ const el=document.getElementById('m-body'); el.innerHTML=curT.msgs.map(m=>m.k==='raw'?m.t:`<div class="bub ${m.k}">${m.t}<time>${m.h}</time></div>`).join(''); el.lastElementChild&&el.lastElementChild.scrollIntoView({block:'nearest'}); const b=findB(curT.id); document.getElementById('m-offer').hidden = b.op!=='vente' || !!curT.offer; document.getElementById('m-cand').hidden = b.op!=='location' || !!curT.cand; }
+function push(k,t){ curT.msgs.push({k,t,h:hhmm()}); renderThread(); }
+let slotMode='place';
+function renderSlots(){ const d=new Date(); const days=['dim','lun','mar','mer','jeu','ven','sam']; const opts=[1,2,3,5].map((n,i)=>{ const x=new Date(d); x.setDate(d.getDate()+n); return {lab:`${days[x.getDay()]} ${x.getDate()}/${String(x.getMonth()+1).padStart(2,'0')}`, h:['10:30','14:00','18:15','11:00'][i]}; }); const visio=slotMode==='visio'; document.getElementById('m-slots').innerHTML=`<b style="font-size:14px">Créneaux proposés par le vendeur</b><div class="mode"><button type="button" data-m="place" aria-pressed="${!visio}">Sur place</button><button type="button" data-m="visio" aria-pressed="${visio}">En visio, maintenant ou plus tard</button></div>${visio?'<button type="button" class="s" data-s="maintenant" data-v="1" style="border-color:var(--copper)">Le vendeur est disponible<b>Démarrer la visite en visio maintenant</b></button>':''}<div class="sg">${opts.map(o=>`<button type="button" class="s" data-s="${o.lab} à ${o.h}" ${visio?'data-v="1"':''}>${o.lab}<b>${o.h} · ${visio?'20 min en visio':'30 min'}</b></button>`).join('')}</div><p class="hint">${visio?'Visite filmée par le vendeur depuis son téléphone, enregistrée et horodatée. Avec l\'accord des deux parties, elle vaut visite du bien.':'Confirmation par SMS aux deux parties. Adresse exacte communiquée 2 h avant la visite.'}</p>`; }
+document.getElementById('m-slots').addEventListener('click',e=>{ const mb=e.target.closest('[data-m]'); if(mb){ slotMode=mb.dataset.m; renderSlots(); return; } const b=e.target.closest('.s'); if(!b) return; document.getElementById('m-slots').hidden=true;
+  if(b.dataset.v){ if(b.dataset.s==='maintenant'){ startLive(); return; } curT.visit=b.dataset.s+' (visio)'; push('me',`Je propose une visite en visio ${b.dataset.s}.`); setTimeout(()=>{ push('them','D\'accord, je vous ferai visiter en direct.'); push('ok',`Visite en visio confirmée ${b.dataset.s} · lien envoyé par SMS aux deux parties`); push('sys','Pour tester tout de suite : Demander une visite → En visio → Démarrer maintenant.'); },900); return; }
+  curT.visit=b.dataset.s; push('me',`Je souhaite visiter ${b.dataset.s}.`); setTimeout(()=>{ push('them','Parfait, c\'est noté.'); push('ok',`Visite confirmée ${b.dataset.s} · SMS envoyé aux deux parties · adresse exacte 2 h avant`); push('sys','Après la visite, vous pourrez indiquer si le bien est conforme aux photos et à la déclaration.'); },900); });
+
+// Visite en visio
+let liveT=null, liveSec=0, liveIdx=0, liveSnaps=0;
+function startLive(){ const b=findB(curT.id); document.getElementById('live-title').textContent=`Visite en direct · ${b.type} ${b.ville}`; document.getElementById('live-consent').hidden=false; document.getElementById('live-room').hidden=true; document.getElementById('live-ok').checked=false; show('live'); }
+document.getElementById('live-join').addEventListener('click',()=>{ if(!document.getElementById('live-ok').checked){ toast('Acceptez les conditions pour rejoindre'); return; } document.getElementById('live-consent').hidden=true; document.getElementById('live-room').hidden=false; liveSec=0; liveIdx=0; liveSnaps=0; renderTour(); clearInterval(liveT); liveT=setInterval(()=>{ liveSec++; document.getElementById('live-timer').textContent=String(Math.floor(liveSec/60)).padStart(2,'0')+':'+String(liveSec%60).padStart(2,'0'); if(liveSec%6===0 && liveIdx<SHOTS.length-1){ liveIdx++; renderTour(); } },1000); });
+function renderTour(){ document.getElementById('live-room-name').textContent=SHOTS[liveIdx]; document.getElementById('tour-list').innerHTML=SHOTS.map((s,i)=>`<button type="button" data-i="${i}" class="${i<liveIdx?'seen':i===liveIdx?'now':''}">${s}</button>`).join(''); }
+document.getElementById('tour-list').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; liveIdx=+b.dataset.i; renderTour(); toast('Demande envoyée au vendeur : '+SHOTS[liveIdx]); });
+document.getElementById('live-snap').addEventListener('click',()=>{ liveSnaps++; toast('Arrêt sur image conservé · '+SHOTS[liveIdx]+' · '+document.getElementById('live-timer').textContent); });
+document.getElementById('live-end').addEventListener('click',()=>{ clearInterval(liveT); const dur=document.getElementById('live-timer').textContent; const stamp=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); curT.visit=`en visio le ${stamp}`; push('ok',`Visite en visio effectuée le ${stamp} · ${dur} · ${liveIdx+1} / ${SHOTS.length} points vus · ${liveSnaps} arrêt${liveSnaps>1?'s':''} sur image · enregistrement conservé 3 ans`); push('sys','Les deux parties ont accepté que cette visite vaille visite du bien. Elle sera mentionnée dans votre offre d\'achat ; une visite sur place reste recommandée avant le compromis.'); renderThread(); show('msg'); });
+document.getElementById('m-visit').addEventListener('click',()=>{ const s=document.getElementById('m-slots'); s.hidden=false; renderSlots(); });
+function sendMsg(){ const i=document.getElementById('m-input'); const t=i.value.trim(); if(!t) return; i.value='';
+  if(MONEY.test(t)){ push('block','Message bloqué : aucune demande ou promesse d\'argent n\'est autorisée avant la visite. Les acomptes passent uniquement par le notaire, les dépôts de garantie par le prestataire agréé, après signature.'); return; }
+  push('me',t); setTimeout(()=>{ const r=/visite|voir|dispo/i.test(t)?'Avec plaisir, choisissez un créneau ci-dessous.':/charges|copro|syndic/i.test(t)?'Les charges sont de 110 € par mois, le PV de la dernière AG est joint à l\'annonce.':/prix|n[ée]goci/i.test(t)?'Le prix est aligné sur le baromètre, je reste ouvert à une offre écrite après visite.':'Bien reçu, je vous réponds dans la journée.'; push('them',r); if(/visite|voir|dispo/i.test(t)){ document.getElementById('m-slots').hidden=false; renderSlots(); } },1000); }
+// Offre d'achat
+const ofForm=document.getElementById('offer');
+function ofBaro(){ const b=findB(curT.id); const p=+document.getElementById('of-prix').value||0; const e=ecart({...b,prix:p}); const el=document.getElementById('of-baro'); if(!p){ el.textContent=''; return; } const vsAff=(p-b.prix)/b.prix*100; el.innerHTML=`${vsAff===0?'Au prix affiché':(vsAff>0?'+':'')+vsAff.toFixed(1)+' % par rapport au prix affiché'}${e?` · ${e.pct>=0?'+':''}${e.pct.toFixed(0)} % vs marché (${fmt(e.ref)} €/m² à ${b.ville})`:''}. ${vsAff<-10?'Une offre à plus de 10 % sous le prix est rarement acceptée sans argument écrit.':'Offre cohérente.'}`; }
+document.getElementById('of-prix').addEventListener('input',ofBaro);
+document.getElementById('of-fin').addEventListener('change',()=>{ document.getElementById('of-pretrow').hidden=document.getElementById('of-fin').value==='comptant'; });
+document.getElementById('m-offer').addEventListener('click',()=>{ const b=findB(curT.id); document.getElementById('of-prix').value=b.prix; ofBaro(); const base=document.getElementById('of-base'); base.innerHTML = curT.visit ? `<div class="hint" style="padding:10px 12px;background:var(--accent-soft);border-radius:var(--r);color:var(--accent)"><b>Base de l'offre :</b> visite ${curT.visit}${curT.visit.includes('visio')?', enregistrée':''} · déclaration signée du vendeur · ${b.type==='Appartement'?"PV d'AG analysé":'diagnostics'}.</div>` : `<label class="opt" style="border:1px solid var(--warn);border-radius:var(--r);padding:10px"><input type="checkbox" id="of-nov" required><span class="l">J'achète sur dossier, sans avoir visité<small>Je me fonde sur les 15 photos horodatées, la déclaration signée du vendeur${b.type==='Appartement'?", l'analyse du PV d'AG":''} et les diagnostics. Je conserve le délai de rétractation de 10 jours après le compromis${document.getElementById('of-fin').value==='pret'?' et la condition suspensive de prêt':''}. Une visite en visio reste possible avant le compromis.</small></span></label>`; ofForm.hidden=false; ofForm.scrollIntoView({block:'start'}); });
+document.getElementById('of-cancel').addEventListener('click',()=>{ ofForm.hidden=true; });
+ofForm.addEventListener('submit',e=>{ e.preventDefault(); const b=findB(curT.id); const p=+document.getElementById('of-prix').value; const fin=document.getElementById('of-fin').value; const ap=+document.getElementById('of-apport').value||0; const val=+document.getElementById('of-val').value; const sig=document.getElementById('of-sig').value; const d=new Date(); const exp=new Date(d); exp.setDate(d.getDate()+val); const num='OA-'+d.getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000); const stamp=d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); const hash=Array.from({length:12},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
+  curT.offer={num,p,status:'envoyée'}; ofForm.hidden=true;
+  const basis = curT.visit ? `Visite ${curT.visit}` : 'Sur dossier, sans visite (reconnu par l\'acheteur)';
+  const card=(st)=>`<div class="offer-card"><div class="t"><span>Offre d'achat ${num}</span><b>${eur(p)}</b></div><span class="st ${st==='Acceptée'?'acc':''}">${st}</span><div class="r"><span>Bien</span><b>${b.type} ${fmt(b.surface)} m², ${b.ville}</b></div><div class="r"><span>Base</span><b>${basis}</b></div><div class="r"><span>Financement</span><b>${fin==='pret'?`Prêt immobilier, apport ${eur(ap)}, condition suspensive d'obtention du prêt`:'Comptant, justificatif de fonds à fournir'}</b></div><div class="r"><span>Validité</span><b>jusqu'au ${exp.toLocaleDateString('fr-FR')}</b></div><div class="r"><span>Signature</span><b>${sig}</b></div><time>Signée électroniquement le ${stamp} · empreinte ${hash}</time></div>`;
+  curT.msgs.push({k:'raw',t:card('Envoyée au vendeur')}); push('sys','Le vendeur a '+val+' jours pour accepter, refuser ou faire une contre-proposition. Aucune somme ne vous est demandée.');
+  setTimeout(()=>{ curT.offer.status='acceptée'; curT.msgs.push({k:'raw',t:card('Acceptée')}); push('them','J\'accepte votre offre. Rendez-vous chez le notaire.'); curT.msgs.push({k:'raw',t:`<div class="next"><b>Offre acceptée, et maintenant ?</b><span>1. Renseignez votre notaire ci-dessous ; le vendeur renseigne le sien. Bienvu leur transmet le dossier complet.</span><span>2. Compromis sous 2 à 3 semaines ; acompte de 5 à 10 % séquestré chez le notaire, jamais chez le vendeur ni chez Bienvu.</span><span>3. Délai de rétractation de 10 jours après le compromis.</span><span>4. Prêt : nos courtiers partenaires vous rappellent sans frais.</span><span class="hint">Pack Transaction pris en charge par le vendeur : modèles, signature, suivi jusqu'à l'acte.</span></div>`}); renderThread(); openNotaires(); },2200); renderThread(); });
+
+// Notaires et dossier
+const notForm=document.getElementById('notaires');
+function docsFor(b){ const d=[['Offre d\'achat signée et acceptée','horodatée'],['Déclaration du vendeur signée','15 photos horodatées'],['Diagnostics techniques (DPE '+(b.dpe||'—')+', amiante, plomb, électricité, ERP)','fournis par le vendeur'],['Titre de propriété et taxe foncière','vérifiés par Bienvu'],['Identités des parties','vérifiées (KYC)']]; if(COPRO.includes(b.type)){ d.push(['PV de la dernière AG + analyse','joint'],['Règlement de copropriété, pré-état daté','à demander au syndic']); } if(curT.visit&&curT.visit.includes('visio')) d.push(['Enregistrement de la visite en visio','conservé 3 ans']); d.push(['Plan de financement de l\'acheteur','prêt / apport déclarés']); return d; }
+function openNotaires(){ const b=findB(curT.id); document.getElementById('docs-list').innerHTML=docsFor(b).map(x=>`<li><span>${x[0]}</span><span>${x[1]}</span></li>`).join(''); notForm.hidden=false; notForm.scrollIntoView({block:'start'}); setTimeout(()=>{ const s=document.getElementById('nv-state'); s.textContent='Me Laurent Fabre, office notarial du Peyrou, Montpellier · renseigné'; s.style.color='var(--good)'; curT.nv='Me Laurent Fabre, office du Peyrou, Montpellier'; },2500); }
+document.getElementById('no-later').addEventListener('click',()=>{ notForm.hidden=true; toast('Vous pourrez renseigner votre notaire depuis cette conversation'); });
+document.getElementById('na-find').addEventListener('click',e=>{ e.preventDefault(); toast('Annuaire notaires.fr : ouverture dans l\'application finale'); });
+notForm.addEventListener('submit',e=>{ e.preventDefault(); const b=findB(curT.id); const na={nom:document.getElementById('na-nom').value,etude:document.getElementById('na-etude').value,adr:document.getElementById('na-adr').value,mail:document.getElementById('na-mail').value,tel:document.getElementById('na-tel').value}; const same=document.getElementById('nv-same').checked; notForm.hidden=true; const stamp=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); const docs=docsFor(b);
+  curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dossier transmis aux notaires</span></div><span class="st acc">Envoyé le ${stamp}</span><div class="r"><span>Notaire acheteur</span><b>${na.nom}, ${na.etude}<br>${na.adr}<br>${na.mail}${na.tel?' · '+na.tel:''}</b></div><div class="r"><span>Notaire vendeur</span><b>${same?'Notaire unique proposé : '+na.nom+' (en attente d\'accord du vendeur)':(curT.nv||'En attente du vendeur')}</b></div><ul class="docs" style="margin-top:6px">${docs.map(x=>`<li class="ok"><span>${x[0]}</span><span>transmis</span></li>`).join('')}</ul><time>Envoi sécurisé, accusé de réception demandé aux études. Les originaux restent consultables par les notaires dans l'espace Bienvu pendant 5 ans.</time></div>`});
+  curT.msgs.push({k:'raw',t:`<div class="track"><b style="font-size:14px">Suivi jusqu'à l'acte</b><div class="s"><i class="d"></i><span>Offre acceptée<small>${stamp}</small></span></div><div class="s"><i class="d"></i><span>Dossier transmis aux notaires<small>${stamp}</small></span></div><div class="s"><i class="c"></i><span>Rédaction du compromis par le notaire<small>Objectif : sous 15 jours · Bienvu relance les études à J+7</small></span></div><div class="s"><i></i><span>Signature du compromis, acompte séquestré chez le notaire<small>Puis 10 jours de rétractation</small></span></div><div class="s"><i></i><span>Obtention du prêt<small>Condition suspensive, 45 à 60 jours</small></span></div><div class="s"><i></i><span>Acte authentique et remise des clés<small>Objectif : 3 mois après le compromis</small></span></div></div>`});
+  curT.dossier={na, same, t0:new Date(), pieces:{ach:{pret:false,apport:false,id:true},ven:{charges:true,predate:false,diag:true,titre:true}}, fin:1, log:[[stamp,'Dossier transmis aux deux études, accusé de réception demandé']]};
+  curT.msgs.push({k:'raw',t:`<div class="bub ok" style="align-self:stretch;max-width:100%"><button type="button" class="btn cta sm" id="open-dossier" style="width:100%">Ouvrir le suivi notarial complet</button></div>`});
+  push('sys','Les deux notaires et les deux parties reçoivent le même dossier. Vous serez notifié à chaque étape.'); renderThread(); });
+document.getElementById('m-body').addEventListener('click',e=>{ if(e.target.closest('#open-dossier')) openDossier(); });
+
+// Espace vendeur (simulé : vous êtes Claire M., vendeuse du bien n°1)
+const SELL={ id:1, vues:{s:412,d:+38}, contacts:14, favoris:27, visites:[{who:'Thomas R.',when:'mar 20/10 à 10:30',mode:'Sur place',st:'Confirmée'},{who:'Inès B.',when:'mer 21/10 à 18:15',mode:'En visio',st:'Confirmée'},{who:'Karim A.',when:'proposition en attente',mode:'Sur place',st:'À confirmer'}],
+  offres:[{num:'OA-2026-4821',who:'Thomas R.',p:322000,fin:'Prêt, apport 60 000 €, accord de principe reçu',base:'Visite sur place le 15/10',val:'jusqu\'au 25/10',st:'reçue',fiab:'3 visites confirmées conformes'},{num:'OA-2026-4877',who:'Inès B.',p:315000,fin:'Comptant, justificatif de fonds fourni',base:'Sur dossier, sans visite (reconnu)',val:'jusqu\'au 22/10',st:'reçue',fiab:'nouvelle sur Bienvu, identité vérifiée'}],
+  pieces:{charges:true,predate:false,diag:true,titre:true,pvag:true}, options:{top:false,boost:false,v3d:true} };
+document.getElementById('hdr-vendeur').addEventListener('click',openVendeur);
+var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=SELL.offres.find(o=>o.st==='acceptée');
+  const ofr=o=>`<div class="ofr ${o.p===Math.max(...SELL.offres.map(x=>x.p))&&o.st!=='refusée'?'best':''}"><div class="t"><b>${eur(o.p)}</b><span class="${o.st==='acceptée'?'acc':o.st==='refusée'?'ref':''}">${o.st}${o.st==='reçue'?' · '+o.val:''}</span></div><div class="d"><span>${o.who} · <b>${o.fiab}</b></span><span>${o.fin}</span><span>Base : <b>${o.base}</b></span><span>${((o.p-b.prix)/b.prix*100).toFixed(1)} % vs prix affiché · ${e?((o.p/b.surface-e.ref)/e.ref*100>=0?'+':'')+((o.p/b.surface-e.ref)/e.ref*100).toFixed(0)+' % vs marché':''}</span>${o.cp?`<span>Votre contre-proposition : <b>${eur(o.cp)}</b> · en attente de l'acheteur</span>`:''}</div>${o.st==='reçue'&&!acc?`<div class="acts"><button type="button" class="a" data-acc="${o.num}">Accepter</button><button type="button" class="c" data-cp="${o.num}">Contre-proposer</button><button type="button" data-ref="${o.num}">Refuser</button></div><div class="cp" id="cp-${o.num}" hidden><input type="number" inputmode="numeric" step="1000" placeholder="Prix (€)" id="cpv-${o.num}"><button type="button" class="btn cta sm" data-cps="${o.num}">Envoyer</button></div>`:''}${o.st==='acceptée'?`<div class="hint">Offre signée par les deux parties. Les autres offres ont été déclinées automatiquement. Renseignez votre notaire ci-dessous.</div>`:''}</div>`;
+  document.getElementById('v-vendeur').innerHTML=`<span class="eyebrow">Espace vendeur</span><h2 style="margin:6px 0 0">Bonjour ${b.vendeur.split(' ')[0]}</h2>
+  <div class="kpis"><div class="kpi"><b>${SELL.vues.s}</b><span>vues 7 jours</span><small>+${SELL.vues.d} %</small></div><div class="kpi"><b>${SELL.contacts}</b><span>contacts</span></div><div class="kpi"><b>${SELL.favoris}</b><span>favoris</span></div><div class="kpi"><b>${e?(e.pct>=0?'+':'')+e.pct.toFixed(0)+' %':'—'}</b><span>vs marché</span></div></div>
+  <div class="list" style="margin-top:0">${card(b)}</div>
+  <div class="pane" style="margin-top:12px"><h3>Offres reçues <small>${SELL.offres.filter(o=>o.st==='reçue').length} en attente</small></h3>${SELL.offres.map(ofr).join('')}<p class="hint">Accepter une offre vous engage : c'est l'acheteur qui dispose ensuite de 10 jours de rétractation après le compromis, pas vous. Une contre-proposition annule l'offre initiale.</p></div>
+  ${acc?`<div class="pane"><h3>Votre notaire</h3><div class="row2"><input placeholder="Maître Nom Prénom" id="vn-nom"><input placeholder="Étude" id="vn-etude"></div><input placeholder="Adresse de l'étude" id="vn-adr"><div class="row2"><input type="email" placeholder="E-mail" id="vn-mail"><input placeholder="Téléphone" id="vn-tel"></div><button type="button" class="btn cta" id="vn-send">Transmettre mon dossier aux notaires</button><p class="hint">Bienvu envoie aux deux études : offre signée, votre déclaration et vos photos, diagnostics, titre, PV d'AG et analyse, identités vérifiées.</p></div>
+  <div class="pane"><h3>Pièces attendues de vous <small>${Object.values(SELL.pieces).filter(x=>x).length} / 5</small></h3>
+    <div class="piece"><div><span>Relevé de charges 12 mois</span></div><span class="st ok">Reçu</span></div>
+    <div class="piece"><div><span>Pré-état daté du syndic</span><small>Délai habituel 10 jours · Bienvu a envoyé la demande à votre syndic</small></div>${SELL.pieces.predate?'<span class="st ok">Reçu</span>':'<button type="button" id="vp-predate">Joindre</button>'}</div>
+    <div class="piece"><div><span>Diagnostics complets</span></div><span class="st ok">Reçu</span></div>
+    <div class="piece"><div><span>Titre de propriété</span></div><span class="st ok">Vérifié</span></div>
+    <div class="piece"><div><span>PV d'AG et analyse</span></div><span class="st ok">Joint</span></div></div>
+  <div class="pane"><h3>Financement de l'acheteur <small>mis à jour par lui</small></h3><div class="fin"><div class="b"><i style="width:60%"></i></div><b style="font-size:14px">Accord de principe reçu</b><span class="hint">Prochaine étape : offre de prêt. Butoir de la condition suspensive : 60 jours après le compromis.</span></div></div>`:''}
+  <div class="pane"><h3>Visites <small>${SELL.visites.length}</small></h3>${SELL.visites.map(v=>`<div class="vis"><div>${v.who}<small>${v.when} · ${v.mode}</small></div><span class="st">${v.st}</span></div>`).join('')}</div>
+  <div class="pane"><h3>Votre annonce</h3>
+    <div class="upsell"><div>Remontée en tête de liste<small>7 jours · vos vues ont baissé de 12 % cette semaine</small></div>${SELL.options.top?'<span class="st ok" style="font-size:11.5px;font-weight:700;color:var(--good)">Active</span>':'<button type="button" data-opt="top">9 €</button>'}</div>
+    <div class="upsell"><div>Boost réseaux sociaux<small>Groupes locaux Montpellier</small></div>${SELL.options.boost?'<span style="font-size:11.5px;font-weight:700;color:var(--good)">Actif</span>':'<button type="button" data-opt="boost">19 €</button>'}</div>
+    <div class="upsell"><div>Visite virtuelle 3D<small>2× plus de contacts qualifiés</small></div><span style="font-size:11.5px;font-weight:700;color:var(--good)">Active</span></div>
+    <p class="hint">Facturé à l'acte, jamais au résultat. Aucune commission sur votre vente.</p></div>`;
+  show('vendeur');
+  document.getElementById('v-vendeur').addEventListener('click',ev=>{ const t=ev.target; const num=t.dataset.acc||t.dataset.ref||t.dataset.cp||t.dataset.cps;
+    if(t.dataset.acc){ SELL.offres.forEach(o=>o.st=o.num===num?'acceptée':'refusée'); toast('Offre acceptée · acheteur et notaires informés'); openVendeur(); }
+    else if(t.dataset.ref){ SELL.offres.find(o=>o.num===num).st='refusée'; openVendeur(); }
+    else if(t.dataset.cp){ document.getElementById('cp-'+num).hidden=false; }
+    else if(t.dataset.cps){ const v=+document.getElementById('cpv-'+num).value; if(!v){ toast('Indiquez un prix'); return; } const o=SELL.offres.find(x=>x.num===num); o.cp=v; o.st='contre-proposée'; o.st='reçue'; toast('Contre-proposition envoyée, horodatée et signée'); openVendeur(); }
+    else if(t.dataset.opt){ SELL.options[t.dataset.opt]=true; toast('Option activée · '+(t.dataset.opt==='top'?'9 €':'19 €')+' réglés par carte'); openVendeur(); }
+    else if(t.id==='vp-predate'){ SELL.pieces.predate=true; toast('Pré-état daté joint et transmis aux notaires'); openVendeur(); }
+    else if(t.id==='vn-send'){ if(!document.getElementById('vn-nom').value){ toast('Renseignez votre notaire'); return; } toast('Dossier transmis aux deux études · suivi notarial ouvert'); }
+  },{once:true}); }
+
+// Location : candidature, bail, dépôt de garantie, état des lieux
+const CDOCS=['Pièce d\'identité','3 derniers bulletins de salaire','Contrat de travail ou attestation','Dernier avis d\'imposition','3 dernières quittances ou attestation d\'hébergement','Justificatif de domicile'];
+const candForm=document.getElementById('cand');
+const PROFILE={done:false, sit:'CDI', rev:0, gar:'none', garrev:0, docs:[]};
+function solv(){ const b=findB(curT.id); const rev=+document.getElementById('cd-rev').value||0; const gar=document.getElementById('cd-gar').value; const grev=+document.getElementById('cd-garrev').value||0; document.getElementById('cd-garrev').hidden = gar!=='phys'; const el=document.getElementById('cd-solv'); if(!rev){ el.textContent=''; return; } const ratio=b.prix/rev; const ok=ratio<=1/3*1.0001||ratio<=0.34; const gok=gar==='phys'?grev>=b.prix*3:gar!=='none'; el.innerHTML=`Loyer ${eur(b.prix)} = <b>${(ratio*100).toFixed(0)} % de vos revenus</b> ${ok?'· dossier solide (≤ 33 %)':gok?'· au-dessus de 33 %, compensé par la garantie':'· au-dessus de 33 % : ajoutez un garant ou Visale pour rassurer le bailleur'}.`; }
+['cd-rev','cd-gar','cd-garrev'].forEach(id=>document.getElementById(id).addEventListener('input',solv));
+document.getElementById('cd-docs').innerHTML=CDOCS.map((d,i)=>`<button type="button" class="shot" data-d="${i}"><span>${d}</span><small>À joindre</small></button>`).join('');
+document.getElementById('cd-docs').addEventListener('click',e=>{ const s=e.target.closest('.shot'); if(!s||s.classList.contains('done')) return; s.classList.add('done'); s.querySelector('small').textContent='Vérifié · filigrané'; });
+document.getElementById('m-cand').addEventListener('click',()=>{ const b=findB(curT.id); if(PROFILE.done){ sendCand(); return; } candForm.hidden=false; solv(); candForm.scrollIntoView({block:'start'}); });
+document.getElementById('cd-cancel').addEventListener('click',()=>{ candForm.hidden=true; });
+candForm.addEventListener('submit',e=>{ e.preventDefault(); const n=document.querySelectorAll('#cd-docs .done').length; if(n<CDOCS.length){ toast(`Il manque ${CDOCS.length-n} pièce${CDOCS.length-n>1?'s':''}`); return; } PROFILE.done=true; PROFILE.sit=document.getElementById('cd-sit').value; PROFILE.rev=+document.getElementById('cd-rev').value; PROFILE.gar=document.getElementById('cd-gar').options[document.getElementById('cd-gar').selectedIndex].text; candForm.hidden=true; sendCand(); });
+function sendCand(){ const b=findB(curT.id); const stamp=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); const num='CL-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000); curT.cand={num}; const ratio=(b.prix/PROFILE.rev*100).toFixed(0);
+  const card=st=>`<div class="offer-card"><div class="t"><span>Candidature ${num}</span><b>${eur(b.prix)}<span class="meta" style="font-size:12px"> /mois</span></b></div><span class="st ${st==='Retenue'?'acc':''}">${st}</span><div class="r"><span>Profil</span><b>${PROFILE.sit}, ${eur(PROFILE.rev)} net/mois, loyer = ${ratio} % des revenus</b></div><div class="r"><span>Garantie</span><b>${PROFILE.gar}</b></div><div class="r"><span>Pièces</span><b>${CDOCS.length} / ${CDOCS.length} vérifiées, filigranées</b></div><div class="r"><span>Visite</span><b>${curT.visit||'Non visité (candidature sur dossier)'}</b></div><time>Envoyée le ${stamp} · le bailleur ne voit les pièces qu'après présélection</time></div>`;
+  curT.msgs.push({k:'raw',t:card('Envoyée au bailleur')}); push('sys','Le bailleur compare les dossiers sur des critères objectifs. Aucun paiement ne vous sera demandé avant la signature du bail.'); renderThread();
+  setTimeout(()=>{ curT.msgs.push({k:'raw',t:card('Retenue')}); push('them','Votre dossier est retenu. Je vous propose le bail ci-dessous.'); renderBail(b); renderThread(); },2200); }
+function renderBail(b){ const meuble=/meubl/i.test(b.desc); const dep=b.prix*(meuble?2:1); const d=new Date(); const enc = b.ville==='Montpellier' ? `<div class="r"><span>Encadrement des loyers</span><b>Montpellier · loyer de référence majoré ${fmt(Math.round(b.prix/b.surface*1.08))} €/m² : conforme</b></div>` : '';
+  const stamp=d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  curT.msgs.push({k:'raw',t:`<div class="offer-card" id="bail-card"><div class="t"><span>Bail d'habitation ${meuble?'meublé':'vide'}</span><b>${eur(b.prix)}<span class="meta" style="font-size:12px"> /mois</span></b></div><span class="st">À signer</span><div class="r"><span>Modèle</span><b>Bail type loi du 6 juillet 1989, décret 2015-587, notice d'information jointe</b></div><div class="r"><span>Durée</span><b>${meuble?'1 an renouvelable':'3 ans renouvelables'}</b></div><div class="r"><span>Dépôt de garantie</span><b>${eur(dep)} (${meuble?'2 mois':'1 mois'}, maximum légal), séquestré chez le prestataire agréé, versé au bailleur après l'état des lieux d'entrée signé</b></div><div class="r"><span>Charges</span><b>${/charges comprises/i.test(b.desc)?'Comprises':'Provision mensuelle, régularisation annuelle'}</b></div>${enc}<div class="r"><span>Diagnostics annexés</span><b>DPE ${b.dpe}, ERP, électricité, surface</b></div><div class="r"><span>Pack Transaction</span><b>49 €, pris en charge par le bailleur</b></div><div class="acts" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"><button type="button" class="btn cta sm" id="bail-sign">Signer le bail électroniquement</button></div><time>Généré le ${stamp} · relu par les deux parties avant signature</time></div>`}); }
+document.getElementById('m-body').addEventListener('click',e=>{ const b=findB(curT.id); const meuble=/meubl/i.test(b.desc); const dep=b.prix*(meuble?2:1); const now=()=>new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  if(e.target.closest('#bail-sign')){ push('ok',`Bail signé électroniquement par les deux parties le ${now()} · exemplaires envoyés par e-mail`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dépôt de garantie</span><b>${eur(dep)}</b></div><span class="st">À régler</span><div class="r"><span>Où va l'argent</span><b>Compte de cantonnement du prestataire de paiement agréé (jamais chez Bienvu, jamais chez le bailleur avant l'état des lieux)</b></div><div class="r"><span>Libération</span><b>Au bailleur dès l'état des lieux d'entrée signé ; restitué sous 1 mois (2 mois si retenues) à la sortie, retenues justifiées par l'état des lieux comparatif</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="dep-pay">Régler ${eur(dep)} par carte ou virement</button></div></div>`}); renderThread(); }
+  if(e.target.closest('#dep-pay')){ push('ok',`Dépôt de garantie ${eur(dep)} séquestré le ${now()} · reçu envoyé aux deux parties`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>État des lieux d'entrée</span></div><span class="st">À planifier avec le bailleur</span><div class="r"><span>Comment</span><b>Dans l'appli, pièce par pièce, photos horodatées des deux côtés, compteurs relevés, signé sur place par les deux parties</b></div><div class="r"><span>Effet</span><b>Libère le dépôt de garantie au bailleur et sert de référence pour la sortie</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="edl-done">Simuler l'état des lieux signé</button></div></div>`}); renderThread(); }
+  if(e.target.closest('#edl-done')){ push('ok',`État des lieux d'entrée signé le ${now()} · 42 photos · compteurs relevés · dépôt de garantie libéré au bailleur · clés remises`); curT.msgs.push({k:'raw',t:`<div class="next"><b>Bienvenue chez vous</b><span>Quittances mensuelles générées automatiquement, rappel de l'assurance habitation (obligatoire), révision annuelle du loyer calculée sur l'IRL, préavis et état des lieux de sortie gérés ici le moment venu.</span></div>`}); renderThread(); } });
+
+// NDA Prestige
+const NDAS={}; let ndaB=null;
+const NDA_HTML=`<h4>Entre les soussignés</h4><p><b>Le Propriétaire</b>, identité et titre de propriété vérifiés par Bienvu, et <b>le Candidat acquéreur</b>, identité vérifiée par Bienvu, capacité financière attestée. <b>En présence de</b> Bienvu SAS, tiers technique non partie : signatures, horodatage, preuve, ouverture de l'accès.</p>
+<h4>Préambule</h4><p>Le Propriétaire envisage de céder le Bien, désigné publiquement par sa commune et ses caractéristiques générales seulement, et souhaite que l'adresse, l'apparence extérieure, le prix, les documents et son identité ne soient communiqués qu'à des candidats identifiés, solvables et engagés à la discrétion. Bienvu n'exerce aucune activité d'entremise au sens de la loi du 2 janvier 1970.</p>
+<h4>Article 1 – Objet</h4><p>Conditions de réception, d'usage et de protection des Informations confidentielles en vue exclusivement d'étudier l'acquisition du Bien. Ni promesse, ni exclusivité, ni mandat.</p>
+<h4>Article 2 – Informations confidentielles</h4><ol><li>Adresse exacte, références cadastrales, localisation.</li><li>Photographies, vidéos, drone, visites virtuelles, plans.</li><li>Prix demandé, conditions financières, historique des offres.</li><li>Identité, coordonnées et situation du Propriétaire.</li><li>Titre, diagnostics, déclaration, PV d'AG, règlement, baux, urbanisme, documents d'exploitation.</li><li>Enregistrements de visites en visio et échanges Bienvu.</li><li>Le fait même que le Bien soit à vendre.</li></ol>
+<h4>Article 3 – Exclusions</h4><p>Informations publiques sans faute du Candidat, détenues légitimement avant signature, ou reçues d'un tiers autorisé ; divulgation exigée par la loi ou une autorité, après information préalable du Propriétaire lorsque possible.</p>
+<h4>Article 4 – Obligations du Candidat</h4><ol><li>Usage limité à la Finalité.</li><li>Aucune divulgation, publication, reproduction ou transmission hors du cercle autorisé, y compris réseaux sociaux, messageries, sites d'annonces, professionnels de l'immobilier.</li><li>Aucune copie ou capture hors des fonctions Bienvu ; documents filigranés au nom du Candidat et horodatés.</li><li>Pas de visite sur place, survol, observation ni enquête de voisinage sans accord écrit du Propriétaire.</li><li>Pas d'usage pour acquérir un bien voisin ou concurrencer une exploitation.</li><li>Protection raisonnable et signalement immédiat de toute fuite.</li></ol>
+<h4>Article 5 – Cercle autorisé</h4><p>Conjoint ou co-acquéreur déclaré, notaire, banque ou courtier, avocat, expert-comptable, architecte, expert mandaté. Le Candidat se porte fort de leur respect de l'accord.</p>
+<h4>Article 6 – Non-contournement</h4><ol><li>Aucun contact avec le Propriétaire ou ses mandataires hors de la messagerie Bienvu.</li><li>Aucune transmission à un agent, mandataire, marchand de biens, promoteur ou apporteur d'affaires ; aucune offre présentée par l'un d'eux.</li><li>Aucune présentation du Bien à un tiers, aucune rémunération à ce titre.</li></ol>
+<h4>Article 7 – Visites</h4><p>Exclusivement via Bienvu, sur rendez-vous confirmé. Pas de photo ni d'enregistrement sur place sans accord exprès. L'enregistrement d'une visio est réalisé et conservé par Bienvu.</p>
+<h4>Article 8 – Durée et restitution</h4><p>Deux ans à compter de la signature, même en cas de renonciation ; confidentialité de l'identité du Propriétaire sans limitation. Destruction des copies à première demande ou dès renonciation, confirmée par écrit ; Bienvu ferme l'accès.</p>
+<h4>Article 9 – Sanctions</h4><p>Clause pénale (art. 1231-5 C. civ.) : <b>10 000 € par manquement</b>, sans préjudice de la réparation intégrale du dommage et de toute mesure judiciaire. Fermeture immédiate de l'accès et suspension du compte Bienvu.</p>
+<h4>Article 10 – Données personnelles</h4><p>Bienvu, responsable de traitement, traite les identités, l'attestation de capacité, la preuve de signature et le journal des accès pour l'exécution de l'accord, la preuve et la prévention de la fraude ; conservation 5 ans après la fin de l'accord ; droits RGPD exerçables auprès du DPO.</p>
+<h4>Article 11 – Signature électronique et preuve</h4><p>Signature électronique (règlement eIDAS, art. 1367 C. civ.) après vérification d'identité. Le fichier de preuve Bienvu (identité, horodatage, empreinte, journal des consultations filigranées) fait foi entre les Parties.</p>
+<h4>Article 12 – Dispositions générales</h4><p>Droit français ; intégralité ; modification par écrit ; nullité partielle sans effet sur le reste ; incessibilité ; règlement amiable d'un mois puis tribunaux du lieu de situation du Bien.</p>
+<h4>Article 13 – Signatures</h4><p>Propriétaire et Candidat, horodatage Bienvu, identités vérifiées, empreinte SHA-256, mention « Lu et approuvé, bon pour engagement de confidentialité ».</p>`;
+function openNda(b){ ndaB=b; document.getElementById('nda-title').textContent=`Accord de confidentialité · ${b.etage}, ${b.ville}`; document.getElementById('nda-text').innerHTML=NDA_HTML; document.getElementById('nda-text').scrollTop=0; document.getElementById('nda-read').checked=false; document.getElementById('nda-ok').checked=false; document.getElementById('nda-cap-st').textContent=''; ndaCap=false; ndaScrolled=false; show('nda'); }
+let ndaCap=false, ndaScrolled=false;
+document.getElementById('nda-cap').addEventListener('change',e=>{ if(!e.target.files.length) return; const st=document.getElementById('nda-cap-st'); st.textContent='Vérification…'; setTimeout(()=>{ st.textContent='Formulaire reçu · contre-appel de l\'agence en cours…'; },1000); setTimeout(()=>{ ndaCap=true; st.textContent='Capacité attestée par Crédit Agricole du Languedoc, agence Montpellier Comédie, jusqu\'à 3 M€ · vérifiée par Bienvu le '+new Date().toLocaleDateString('fr-FR')+' · valable 30 jours'; st.style.color='var(--good)'; },2600); });
+document.getElementById('nda-form').addEventListener('click',()=>toast('Formulaire ACF-2026-xxxx généré à votre nom, à remettre à votre conseiller'));
+document.getElementById('nda-text').addEventListener('scroll',e=>{ const t=e.target; if(t.scrollTop+t.clientHeight>=t.scrollHeight-8) ndaScrolled=true; });
+document.getElementById('back-nda').addEventListener('click',()=>openDetail(ndaB.id));
+document.getElementById('nda-sign').addEventListener('click',()=>{ if(!ndaCap){ toast('Joignez votre attestation de capacité financière'); return; } if(!ndaScrolled||!document.getElementById('nda-read').checked){ toast('Faites défiler l\'accord jusqu\'à l\'article 13 et cochez « j\'ai lu »'); return; } if(!document.getElementById('nda-ok').checked){ toast('Cochez la signature'); return; } const d=new Date(); const num='NDA-'+d.getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000); const adr=({'Sète':'12 chemin des Pierres Blanches, 34200 Sète','Anduze':'Mas de la Magnanerie, route de Mialet, 30140 Anduze','Nîmes':'7 rue de l\'Aspic, 30000 Nîmes','Pézenas':'Domaine de Saint-Siffret, 34120 Pézenas'})[ndaB.ville]||'Adresse communiquée'; NDAS[ndaB.id]={num,at:d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),adr}; toast('Accord '+num+' signé et horodaté · dossier ouvert'); persist(); openDetail(ndaB.id); });
+
+// Suivi notarial
+const addD=(d,n)=>{ const x=new Date(d); x.setDate(x.getDate()+n); return x; };
+const fr=d=>d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'});
+const inDays=d=>Math.ceil((d-new Date())/864e5);
+function openDossier(){ const b=findB(curT.id); const D=curT.dossier; const t0=D.t0; const dComp=addD(t0,15), dRet=addD(dComp,10), dPret=addD(dComp,60), dActe=addD(dComp,90);
+  const piece=(lab,sub,ok,who,key,late)=>`<div class="piece"><div><span>${lab}</span><small>${sub}</small></div>${ok?'<span class="st ok">Reçu</span>':who==='me'?`<button type="button" data-p="${key}">Joindre</button>`:`<span class="st ${late?'late':'wait'}">${late?'En retard · relancé':'Attendu du vendeur'}</span>`}</div>`;
+  const FIN=['Dossier à déposer','Demande déposée en banque','Accord de principe reçu','Offre de prêt reçue','Prêt accepté (délai de réflexion 10 j)'];
+  document.getElementById('v-dossier').innerHTML=`<button class="back" id="back-dossier" type="button">← Conversation</button>
+  <div class="dh"><span>Suivi notarial · dossier ${curT.offer.num}</span><b>${b.type} ${fmt(b.surface)} m², ${b.ville} · ${eur(curT.offer.p)}</b><span>Objectif : acte authentique le ${dActe.toLocaleDateString('fr-FR')}</span></div>
+  <div class="dates">
+    <div class="date ${inDays(dComp)<=7?'urg':''}"><b>${fr(dComp)}</b><span>Compromis (objectif)</span><small>J-${inDays(dComp)}</small></div>
+    <div class="date"><b>${fr(dRet)}</b><span>Fin de rétractation</span><small>10 j après compromis</small></div>
+    <div class="date"><b>${fr(dPret)}</b><span>Butoir condition de prêt</span><small>J-${inDays(dPret)}</small></div>
+  </div>
+  <div class="pane"><h3>Étapes <small>2 / 6</small></h3><div class="track" style="border:0;padding:0">
+    <div class="s"><i class="d"></i><span>Offre acceptée<small>${fr(t0)}</small></span></div>
+    <div class="s"><i class="d"></i><span>Dossier transmis aux notaires<small>${fr(t0)} · accusés de réception : ${D.na.etude} ✓ · notaire vendeur ✓</small></span></div>
+    <div class="s"><i class="c"></i><span>Rédaction du compromis<small>En cours chez ${D.same?D.na.nom:(curT.nv||'le notaire du vendeur')} · objectif ${fr(dComp)} · relance automatique à J+7 si rien reçu</small></span></div>
+    <div class="s"><i></i><span>Signature du compromis<small>Acompte ${eur(Math.round(curT.offer.p*0.05))} à ${eur(Math.round(curT.offer.p*0.10))} séquestré chez le notaire · rappel J-7 et J-2</small></span></div>
+    <div class="s"><i></i><span>Obtention du prêt<small>Butoir ${fr(dPret)}</small></span></div>
+    <div class="s"><i></i><span>Acte authentique et remise des clés<small>Objectif ${fr(dActe)}</small></span></div></div></div>
+  <div class="pane"><h3>Pièces attendues de vous <small>${Object.values(D.pieces.ach).filter(x=>x).length} / 3</small></h3>
+    ${piece('Attestation de dépôt de demande de prêt','Demandée par le notaire pour le compromis',D.pieces.ach.pret,'me','pret')}
+    ${piece('Justificatif d\'apport','Relevé ou attestation bancaire',D.pieces.ach.apport,'me','apport')}
+    ${piece('Pièce d\'identité et situation familiale','Transmises automatiquement (KYC)',D.pieces.ach.id,'me','id')}</div>
+  <div class="pane"><h3>Pièces attendues du vendeur <small>${Object.values(D.pieces.ven).filter(x=>x).length} / 4</small></h3>
+    ${piece('Relevé de charges et appels de fonds','12 derniers mois',D.pieces.ven.charges,'ven')}
+    ${piece('Pré-état daté du syndic','Demandé le '+fr(t0)+' · délai habituel 10 jours',D.pieces.ven.predate,'ven','',inDays(addD(t0,10))<0)}
+    ${piece('Dossier de diagnostics complet','DPE, amiante, plomb, électricité, ERP',D.pieces.ven.diag,'ven')}
+    ${piece('Titre de propriété','Vérifié par Bienvu',D.pieces.ven.titre,'ven')}</div>
+  <div class="pane"><h3>Votre financement <small>visible par le vendeur</small></h3><div class="fin"><div class="b"><i style="width:${(D.fin+1)/FIN.length*100}%"></i></div><b style="font-size:14px">${FIN[D.fin]}</b><span class="hint">Étape suivante : ${FIN[D.fin+1]||'terminé'}. Nos courtiers partenaires vous rappellent sans frais.</span><button type="button" class="btn ghost sm" id="fin-next" style="justify-self:start">Mettre à jour mon financement</button></div></div>
+  <div class="pane"><h3>Les parties</h3><div class="who">
+    <div><span>Acheteur</span><b>Vous · identité vérifiée</b></div>
+    <div><span>Vendeur</span><b>${b.vendeur} · identité et propriété vérifiées</b></div>
+    <div><span>Notaire acheteur</span><b>${D.na.nom}<br>${D.na.etude}, ${D.na.adr}<br>${D.na.mail}${D.na.tel?' · '+D.na.tel:''}</b></div>
+    <div><span>Notaire vendeur</span><b>${D.same?'Notaire unique : '+D.na.nom:(curT.nv||'En attente')}</b></div></div>
+    <p class="hint">Chaque étude dispose d'un accès sécurisé en lecture au dossier, sans compte à créer, pour cocher les étapes et demander les pièces manquantes.</p></div>
+  <div class="pane"><h3>Journal</h3><div class="log">${D.log.map(l=>`<div><time>${l[0].split(' ')[0]}</time><span>${l[1]}</span></div>`).join('')}</div></div>`;
+  document.getElementById('back-dossier').addEventListener('click',()=>show('msg'));
+  document.getElementById('v-dossier').addEventListener('click',e=>{ const p=e.target.closest('[data-p]'); if(p){ D.pieces.ach[p.dataset.p]=true; D.log.push([new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}),'Pièce reçue de l\'acheteur, transmise aux notaires']); openDossier(); toast('Pièce jointe au dossier et transmise aux notaires'); } if(e.target.closest('#fin-next')){ if(D.fin<FIN.length-1){ D.fin++; D.log.push([new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}),'Financement : '+FIN[D.fin]+' · vendeur et notaires informés']); openDossier(); } } },{once:true});
+  show('dossier'); }
+document.getElementById('m-send').addEventListener('click',sendMsg);
+document.getElementById('m-input').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); } });
+document.getElementById('back-msg').addEventListener('click',()=>{ document.getElementById('msg-thread').hidden=true; document.getElementById('msg-list').hidden=false; renderList(); });
+document.querySelector('[data-nav="msg"]').addEventListener('click',()=>{ document.getElementById('msg-thread').hidden=true; document.getElementById('msg-list').hidden=false; renderList(); });
+document.getElementById('msg-list').addEventListener('click',e=>{ const c=e.target.closest('.conv'); if(c) openThread(c.dataset.t,false); });
+renderList();
+
+function toast(t){ const el=document.createElement('div'); el.className='toast'; el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),2200); }
+
+// Calculette
+function mens(K,ans,taux,assu){ const n=ans*12, r=taux/100/12; const m0 = r>0 ? K*r/(1-Math.pow(1+r,-n)) : K/n; const a=K*assu/100/12; return {m:m0+a, interets:m0*n-K, assurance:a*n}; }
+function calc(){ const prix=+document.getElementById('c-prix').value||0, apport=+document.getElementById('c-apport').value||0, ans=+document.getElementById('c-duree').value||20, taux=+document.getElementById('c-taux').value||0, assu=+document.getElementById('c-assu').value||0; const neuf=document.getElementById('c-neuf').value==='neuf'; const notaire=prix*(neuf?0.025:0.075); const K=Math.max(0,prix+notaire-apport); const r=mens(K,ans,taux,assu);
+  document.getElementById('c-mens').textContent=eur(r.m); document.getElementById('c-sub').textContent=`${ans} ans à ${taux.toLocaleString('fr-FR')} % + assurance ${assu.toLocaleString('fr-FR')} %`;
+  document.getElementById('c-notaire').textContent=eur(notaire); document.getElementById('c-emprunt').textContent=eur(K); document.getElementById('c-cout').textContent=eur(r.interets+r.assurance); document.getElementById('c-revenu').textContent=eur(r.m/0.35); }
+['c-prix','c-apport','c-duree','c-taux','c-assu','c-neuf'].forEach(id=>document.getElementById(id).addEventListener('input',calc)); calc();
+
+// Dépôt d'annonce — déclaration du bien
+const SHOTS=['Façade principale','Façade arrière / toiture','Rue et environnement','Entrée de l\'immeuble','Séjour','Cuisine','Salle de bain','Chambre','Tableau électrique','Chauffage','Compteurs','Fenêtres','Cave / annexes','Parties communes','Vue'];
+const QS=["Traces d'humidité ou infiltrations","Fissures visibles","Travaux de moins de 10 ans","Nuisances connues (bruit, odeurs)","Procédure en cours en copropriété","Servitudes ou litige de voisinage"];
+const shotsEl=document.getElementById('shots'); shotsEl.innerHTML=SHOTS.map((s,i)=>`<button type="button" class="shot" data-i="${i}"><span>${s}</span><small>À prendre</small></button>`).join('');
+shotsEl.addEventListener('click',e=>{ const b=e.target.closest('.shot'); if(!b||b.classList.contains('done')) return; const d=new Date(); b.classList.add('done'); b.querySelector('small').textContent='Prise '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' · GPS ok'; });
+const qsEl=document.getElementById('qs'); qsEl.innerHTML=QS.map((q,i)=>`<div class="q"><span>${q}</span><span class="a" data-q="${i}"><button type="button" aria-pressed="false">Oui</button><button type="button" aria-pressed="false">Non</button><button type="button" aria-pressed="false">?</button></span></div>`).join('');
+qsEl.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; b.parentElement.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false')); b.setAttribute('aria-pressed','true'); });
+const PV_AI=`<div class="ai"><div class="t">Analyse automatique du PV <small>AG du 14 mars 2026 · 1 min 12</small></div>
+<div class="f"><i class="b"></i><span>Ravalement de façade voté : 184 000 € pour la copropriété, appels de fonds à partir de janvier 2027<small>Résolution 12, adoptée à la majorité de l'article 25. Quote-part estimée pour ce lot à faire confirmer par le syndic.</small></span></div>
+<div class="f"><i class="w"></i><span>Impayés de charges : 6,8 % du budget<small>Résolution 4, un copropriétaire en procédure de recouvrement.</small></span></div>
+<div class="f"><i class="w"></i><span>Fonds travaux : 11 200 € (3,1 % du budget annuel)<small>Sous le minimum légal de 5 % ; abondement voté.</small></span></div>
+<div class="f"><i class="g"></i><span>Aucune procédure judiciaire en cours contre ou par le syndicat</span></div>
+<div class="f"><i class="g"></i><span>Ascenseur : contrat d'entretien renouvelé, pas de travaux signalés</span></div>
+<div class="f"><i class="g"></i><span>DPE collectif réalisé, classe D ; plan pluriannuel de travaux en cours d'élaboration</span></div>
+<small style="color:var(--muted)">Lecture automatique à titre d'information, sans valeur juridique. Le PV complet reste consultable par l'acheteur ; le pré-état daté du syndic fait foi.</small></div>`;
+document.getElementById('p-pv').addEventListener('change',e=>{ if(!e.target.files.length) return; const r=document.getElementById('pv-result'); r.hidden=false; r.innerHTML='<p class="hint">Analyse du document en cours…</p>'; setTimeout(()=>{ r.innerHTML=PV_AI; },1400); });
+function copro(){ const t=document.getElementById('p-type').value; document.getElementById('pv-block').hidden = !COPRO.includes(t); }
+document.getElementById('p-type').addEventListener('change',copro); copro();
+function declOk(){ const shots=shotsEl.querySelectorAll('.shot.done').length; const answered=qsEl.querySelectorAll('.a button[aria-pressed="true"]').length; if(shots<SHOTS.length) return `Il manque ${SHOTS.length-shots} photo${SHOTS.length-shots>1?'s':''} à la déclaration`; if(answered<QS.length) return 'Répondez à toutes les questions (« ? » accepté)'; if(!document.getElementById('p-cert').checked) return 'Certifiez votre déclaration pour publier'; return ''; }
+function baro(){ const v=document.getElementById('p-ville').value.trim(); const s=+document.getElementById('p-surface').value, p=+document.getElementById('p-prix').value; const op=document.getElementById('p-op').value; const key=Object.keys(DVF).find(k=>k.toLowerCase()===v.toLowerCase()); const el=document.getElementById('p-baro');
+  if(!key||!s||!p){ el.textContent='Saisissez ville, surface et prix : Bienvu compare au prix réel du marché.'; return; }
+  const ref=op==='Vente'?DVF[key].v:DVF[key].l; const m2=p/s; const pct=(m2-ref)/ref*100; el.innerHTML=`Votre bien : <b>${fmt(m2)} €/m²</b> ${op==='Vente'?'':'par mois'} · marché à ${key} : ${fmt(ref)} €/m² → <b style="color:var(--${pct>15?'bad':pct>8?'warn':'good'})">${pct>=0?'+':''}${pct.toFixed(0)} %</b>. ${pct>15?'Au-dessus de 15 %, les acheteurs ne vous contacteront pas : baissez ou justifiez (terrasse, vue, rénovation).':pct>8?'Un peu au-dessus du marché, prévoyez une marge de négociation.':'Prix cohérent, votre annonce sera bien positionnée.'}`; }
+['p-ville','p-surface','p-prix','p-op'].forEach(id=>document.getElementById(id).addEventListener('input',baro));
+function optTotal(){ const loc=document.getElementById('p-op').value==='Location'; const pack=document.getElementById('o-pack'); pack.value=loc?49:99; document.getElementById('o-pack-p').textContent=(loc?49:99)+' €'; let t=0; document.querySelectorAll('.optc:checked').forEach(c=>t+=+c.value); document.getElementById('p-total').textContent=eur(t); document.getElementById('p-submit').textContent=t?'Publier et régler '+eur(t):'Publier gratuitement'; }
+document.querySelectorAll('.optc').forEach(c=>c.addEventListener('change',optTotal)); document.getElementById('p-op').addEventListener('change',optTotal); optTotal();
+document.getElementById('post').addEventListener('submit',e=>{ e.preventDefault(); if(!document.getElementById('p-dpe').value){ toast('Le DPE est obligatoire pour publier'); return; } const dm=declOk(); if(dm){ toast(dm); return; } const f=document.getElementById('post'); f.hidden=true; const ok=document.getElementById('post-ok'); ok.hidden=false; const tot=document.getElementById('p-total').textContent; const now=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); ok.innerHTML=`<div class="ok-msg">Annonce enregistrée${tot==='0 €'?' gratuitement':' · '+tot+' réglés par carte'}. Déclaration signée le ${now}. Prochaine étape : vérification d'identité.</div><div class="steps" style="margin-top:14px"><div class="step"><h3><span class="n">1</span>Vérifiez votre identité</h3><p class="hint">Pièce d'identité et selfie via notre partenaire agréé. 2 minutes.</p></div><div class="step"><h3><span class="n">2</span>Prouvez que le bien est à vous</h3><p class="hint">Photo du titre, de la taxe foncière ou attestation notariale.</p></div><div class="step"><h3><span class="n">3</span>En ligne sous 24 h</h3><p class="hint">Votre annonce porte le badge Vérifié et apparaît en Occitanie.</p></div></div><button class="btn" type="button" id="post-again" style="margin-top:14px">Retour à l'accueil</button>`; document.getElementById('post-again').addEventListener('click',()=>{ f.hidden=false; f.reset(); ok.hidden=true; show('home'); }); });
+
+try{ const v=localStorage.getItem('bienvu-view'); if(v && document.getElementById('v-'+v) && !['detail','results','msg','live','dossier','vendeur'].includes(v)) show(v); }catch(e){}
+
+// Persistance (base de données de l'artifact) : état privé par utilisateur + annonces partagées
+let DB=null, UID=null, stateRef=null, persistT=null, restoring=false;
+function reviveDates(){ Object.values(THREADS).forEach(t=>{ if(t.dossier&&typeof t.dossier.t0==='string') t.dossier.t0=new Date(t.dossier.t0); }); }
+function persist(){ if(!stateRef||restoring) return; clearTimeout(persistT); persistT=setTimeout(async()=>{ try{ await stateRef.set({threads:JSON.parse(JSON.stringify(THREADS)),profile:PROFILE,sell:SELL,ndas:NDAS,savedAt:new Date().toISOString()}); setSync('Enregistré'); }catch(e){ setSync('Non enregistré'); } },700); }
+function setSync(t){ const el=document.getElementById('sync'); if(el) el.textContent=t; }
+function listingFromForm(){ const op=document.getElementById('p-op').value==='Vente'?'vente':'location'; const ville=document.getElementById('p-ville').value.trim(); const surface=+document.getElementById('p-surface').value||0; const prix=+document.getElementById('p-prix').value||0; const pieces=+document.getElementById('p-pieces').value||0; const type=document.getElementById('p-type').value; const dpe=document.getElementById('p-dpe').value; const nom=(document.getElementById('p-prenom').value||'Vendeur').trim()+' '+(document.getElementById('p-nom').value||'').trim().charAt(0)+'.'; return {op,type,ville:ville.charAt(0).toUpperCase()+ville.slice(1),quartier:'Centre',prix,surface,pieces,dpe,visite3d:!!document.getElementById('o-3d').checked,vendeur:nom,etage:'',desc:`${type} ${pieces?pieces+' pièces ':''}de ${surface} m² à ${ville}. Déclaration du ${op==='vente'?'vendeur':'bailleur'} signée et horodatée.`,createdAt:new Date().toISOString()}; }
+async function initDb(){ try{ const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]); if(!db) { setSync('Essai local, non enregistré'); return; } DB=db; UID=user?await user.id():null;
+  // Annonces partagées
+  db.collection('annonces').orderBy('createdAt','desc').limit(200).onSnapshot(snap=>{ const extra=snap.docs.filter(d=>d.exists).map(d=>({...d.data(),id:'db-'+d.id})); for(let i=BIENS.length-1;i>=0;i--) if(String(BIENS[i].id).startsWith('db-')) BIENS.splice(i,1); BIENS.unshift(...extra); renderHome(); },()=>{});
+  if(!UID){ setSync('Connectez-vous pour enregistrer'); return; }
+  stateRef=db.doc('data/users/'+UID+'/state'); const snap=await stateRef.get(); if(snap.exists){ restoring=true; const s=snap.data(); if(s.threads){ Object.keys(THREADS).forEach(k=>delete THREADS[k]); Object.assign(THREADS,s.threads); reviveDates(); } if(s.profile) Object.assign(PROFILE,s.profile); if(s.sell) Object.assign(SELL,s.sell); if(s.ndas) Object.assign(NDAS,s.ndas); restoring=false; renderList(); setSync('Enregistré'); } else setSync('Prêt à enregistrer'); }catch(e){ setSync('Essai local, non enregistré'); } }
+initDb();
+// Déclencheurs de sauvegarde
+const _renderThread=renderThread; renderThread=function(){ _renderThread(); persist(); };
+const _openVendeur=openVendeur; openVendeur=function(){ _openVendeur(); persist(); };
+document.getElementById('post').addEventListener('submit',async()=>{ if(!document.getElementById('post').hidden) return; const L=listingFromForm(); if(!L.prix||!L.surface||!L.ville) return; if(DB&&UID){ try{ await DB.collection('annonces').add({...L,owner:UID}); }catch(e){ BIENS.unshift({...L,id:'local-'+Date.now()}); renderHome(); } } else { BIENS.unshift({...L,id:'local-'+Date.now()}); renderHome(); } });
+</script>
+
+</body>
+</html>
