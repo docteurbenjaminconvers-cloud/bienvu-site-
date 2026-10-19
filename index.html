@@ -1301,7 +1301,7 @@ function card(b){ const e=ecart(b); return `<button class="card" type="button" d
   <span class="meta">${b.ville} · ${b.quartier}</span>
   <div class="badges"><span class="badge ok">Vérifié</span><span class="badge decl">Déclaré</span>${b.pack?'<span class="badge pk">Parcours sécurisé</span>':''}${ecartBadge(e)}${b.dpe?`<span class="badge">DPE ${b.dpe}</span>`:''}</div></div></button>`; }
 
-function show(id){ if(id==='prix'&&typeof pxMapInit==='function') setTimeout(()=>{ pxMapInit(); pxRender(); },0); if(id==='prestige'&&typeof renderPrestige==='function'){ renderPrestige(); renderPrestigeHome(); } document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
+function show(id){ if(id==='home'){ setTimeout(()=>{ const mm=document.getElementById('mini-map'); if(mm&&mm._fit) mm._fit(); },30); } if(id==='prix'&&typeof pxMapInit==='function') setTimeout(()=>{ pxMapInit(); pxRender(); },0); if(id==='prestige'&&typeof renderPrestige==='function'){ renderPrestige(); renderPrestigeHome(); } document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.nav)));
 document.getElementById('hdr-deposer').addEventListener('click',()=>show('post'));
 document.getElementById('back-home').addEventListener('click',()=>show('home'));
@@ -1406,7 +1406,7 @@ function miniMapInit(){ const el=document.getElementById('mini-map'); if(!window
   const show=['Toulouse','Montpellier','Nîmes','Perpignan','Uzès','Béziers','Carcassonne'];
   Object.keys(GEO).filter(c=>DVF[c]).forEach(c=>{ const k=L.circleMarker(GEO[c],{radius:show.includes(c)?8:6,weight:2.5,color:'#fff',fillColor:pxColor(DVF[c].v),fillOpacity:.95}).addTo(m);
     if(show.includes(c)) k.bindTooltip(`<b>${c}</b> ${fmt(DVF[c].v)} €/m²`,{permanent:true,direction:c==='Toulouse'||c==='Carcassonne'?'left':'right',className:'mini-tt',offset:[c==='Toulouse'||c==='Carcassonne'?-8:8,0]}); });
-  const fit=()=>{ m.invalidateSize(); m.fitBounds(Object.values(GEO),{padding:[28,28]}); }; fit(); setTimeout(fit,200);
+  const fit=()=>{ m.invalidateSize(); if(el.offsetWidth) m.fitBounds(Object.values(GEO),{padding:[28,28]}); else m.setView([43.75,3.1],7); }; fit(); setTimeout(fit,200); el._fit=fit;
   m.on('click',()=>openPrix('carte')); el._bv=m; }catch(e){ el._bv=null; pxSvg(el,true); } }
 miniMapInit();
 window.addEventListener('resize',()=>{ const el=document.getElementById('mini-map'); if(el._bv) el._bv.invalidateSize(); });
