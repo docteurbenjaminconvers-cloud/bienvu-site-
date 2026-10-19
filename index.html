@@ -1335,7 +1335,7 @@ renderHome();
 // ===== Carte des prix, estimation, recherche intelligente =====
 const GEO={"Montpellier":[43.611,3.877],"Nîmes":[43.837,4.360],"Uzès":[44.012,4.420],"Sète":[43.403,3.697],"Alès":[44.125,4.081],"Castelnau-le-Lez":[43.633,3.900],"Lunel":[43.676,4.136],"Béziers":[43.344,3.216],"Perpignan":[42.699,2.895],"Toulouse":[43.605,1.444],"Carcassonne":[43.213,2.351],"Narbonne":[43.184,3.004],"Agde":[43.310,3.476],"Palavas-les-Flots":[43.528,3.931],"La Grande-Motte":[43.561,4.085],"Saint-Gilles":[43.678,4.432],"Beaucaire":[43.808,4.644],"Anduze":[44.052,3.985],"Sommières":[43.785,4.090],"Pézenas":[43.459,3.423],"Juvignac":[43.613,3.810],"Saint-Jean-de-Védas":[43.577,3.826],"Mauguio":[43.616,4.008],"Frontignan":[43.448,3.756],"Bagnols-sur-Cèze":[44.162,4.620],"Villeneuve-lès-Avignon":[43.966,4.796],"Le Grau-du-Roi":[43.537,4.136],"Vauvert":[43.694,4.277],"Marsillargues":[43.664,4.178],"Saint-Just-et-Vacquières":[44.004,4.217]};
 const PXC=['#8FA89A','#C9B98E','#D9A066','#B8743F','#8E4A2A'];
-let pxOp='vente', pxCity='Montpellier', pxMap=null, pxMarkers={};
+let pxOp='vente', pxCity='Montpellier', pxMap=null, pxMarkers={}, pxFail=false;
 const pxVal=c=>pxOp==='vente'?DVF[c].v:DVF[c].l;
 function pxBins(){ return pxOp==='vente'?[2000,2600,3300,4200]:[10,11.5,13,14.5]; }
 function pxColor(v){ const b=pxBins(); let i=0; while(i<b.length&&v>=b[i]) i++; return PXC[i]; }
@@ -1357,9 +1357,9 @@ function pxSvg(el,mini){ const xs=c=>(GEO[c][1]-1.1)/(5.0-1.1)*1000, ys=c=>(44.3
 function pxMapInit(){ const el=document.getElementById('px-map');
   if(window.L&&!pxMap){ try{ el.innerHTML=''; pxMap=L.map(el,{scrollWheelZoom:false,attributionControl:false}).setView([43.75,3.6],8); L.control.attribution({prefix:false}).addTo(pxMap); L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd',attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(pxMap);
       Object.keys(GEO).filter(c=>DVF[c]).forEach(c=>{ pxMarkers[c]=L.circleMarker(GEO[c],{radius:10,weight:3,color:'#fff',fillOpacity:.95}).addTo(pxMap).on('click',()=>pxSelect(c)); });
-      pxMap.fitBounds(Object.values(GEO),{padding:[20,20]}); }catch(e){ pxMap=null; } }
+      pxMap.fitBounds(Object.values(GEO),{padding:[20,20]}); }catch(e){ pxMap=null; pxFail=true; } }
   pxPaint(); }
-function pxPaint(){ if(!pxMap&&window.L&&document.body.dataset.view==='prix'){ pxMapInit(); return; } if(pxMap){ document.querySelectorAll('#px-map > svg').forEach(x=>x.remove()); Object.entries(pxMarkers).forEach(([c,m])=>{ m.setStyle({fillColor:pxColor(pxVal(c)),color:c===pxCity?'#1F2730':'#fff',weight:c===pxCity?4:3}); m.setRadius(c===pxCity?14:10); m.bindTooltip(`<span class="pxpop"><b>${c}</b><br>${pxFmt(pxVal(c))}${pxOp==='vente'?'/m²':'/m²/mois'}</span>`); }); setTimeout(()=>pxMap.invalidateSize(),60); }
+function pxPaint(){ if(!pxMap&&!pxFail&&window.L&&document.body.dataset.view==='prix'){ pxMapInit(); return; } if(pxMap){ document.querySelectorAll('#px-map > svg').forEach(x=>x.remove()); Object.entries(pxMarkers).forEach(([c,m])=>{ m.setStyle({fillColor:pxColor(pxVal(c)),color:c===pxCity?'#1F2730':'#fff',weight:c===pxCity?4:3}); m.setRadius(c===pxCity?14:10); m.bindTooltip(`<span class="pxpop"><b>${c}</b><br>${pxFmt(pxVal(c))}${pxOp==='vente'?'/m²':'/m²/mois'}</span>`); }); setTimeout(()=>pxMap.invalidateSize(),60); }
   else pxSvg(document.getElementById('px-map'),false); }
 function pxRender(){ pxCard(); pxTypes(); pxTable(); pxLegend(); pxPaint(); }
 function pxSelect(c){ if(!DVF[c]) return; pxCity=c; document.getElementById('px-city').value=c; pxRender(); if(pxMap) pxMap.panTo(GEO[c]); }
