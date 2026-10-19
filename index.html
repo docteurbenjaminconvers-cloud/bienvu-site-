@@ -713,6 +713,53 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 }
 .nav .nav-d{display:none}
 @media (min-width:900px){.nav .nav-d{display:flex}}
+
+/* ===== Tarifs en colonnes ===== */
+.plans-seg{max-width:320px;margin:0 auto 18px}
+.plans{display:grid;gap:16px;align-items:stretch}
+.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--r)*2);display:flex;flex-direction:column;overflow:visible}
+.plan-h{padding:22px 20px 18px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.plan-h h3{margin:0;font-size:21px}
+.plan-h p{margin:0;color:var(--muted);font-size:14px;line-height:1.45;min-height:2.9em}
+.plan-p{display:grid;gap:2px}
+.plan-p b{font-family:var(--display);font-size:38px;line-height:1.1;font-variant-numeric:tabular-nums}
+.plan-p span{font-size:13px;color:var(--muted)}
+.plan-h .btn{width:100%;margin-top:4px}
+.plan-f{list-style:none;margin:0;padding:14px 20px 20px;display:grid;gap:9px}
+.plan-f li{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:start;font-size:14px;line-height:1.4}
+.plan-f li.off{color:#A3AAB2}
+.ck-y{width:20px;height:20px;fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ck-n{display:inline-block;width:20px;text-align:center;color:#C3C8CE}
+.plan.best{border:2px solid var(--copper);box-shadow:0 10px 30px rgba(168,98,47,.14)}
+.plan.best .plan-h{background:#FBF6F1;border-radius:calc(var(--r)*2) calc(var(--r)*2) 0 0}
+.plan.best .ck-y{stroke:var(--copper)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--copper);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.plan.prem{background:var(--prestige-bg);color:var(--prestige-ink);border-color:#3A4552}
+.plan.prem .plan-h{border-bottom-color:rgba(255,255,255,.12)}
+.plan.prem h3{color:var(--prestige-ink)}
+.plan.prem p,.plan.prem .plan-p span{color:var(--prestige-muted)}
+.plan.prem .plan-p b{color:var(--gold)}
+.plan.prem .pdia{color:var(--gold);font-size:.8em}
+.plan.prem .ck-y{stroke:var(--gold)}
+.plan.prem li.off{color:#6E7884}
+.plan.prem .ck-n{color:#55606B}
+.sub-h{margin:36px 0 8px;font-size:21px}
+.opts{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.opt-c{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center}
+.opt-c b{font-size:14.5px}
+.opt-c span{grid-column:1;font-size:13px;color:var(--muted)}
+.opt-c i{grid-column:2;grid-row:1/3;font-style:normal;font-family:var(--display);font-weight:700;font-size:17px;color:var(--copper);white-space:nowrap}
+.plans-foot{display:grid;gap:12px;margin-top:22px}
+.plans-foot>div{background:#EDEBE6;border-radius:var(--r);padding:14px 16px;display:grid;gap:4px}
+.plans-foot b{font-family:var(--display)}
+@media (max-width:899px){.plan-f li.off{display:none}.plan.best{margin-top:10px}}
+.plans-foot span{color:var(--muted);font-size:14px}
+@media (min-width:900px){
+  .plans{grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
+  .plan.best{transform:translateY(-8px)}
+  .opts{grid-template-columns:repeat(3,1fr);gap:14px}
+  .plans-foot{grid-template-columns:1fr 1fr}
+}
 </style>
 
 <button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
@@ -1143,47 +1190,80 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 <section class="view" id="v-tarifs" hidden>
   <span class="eyebrow">Tarifs</span>
   <h2 style="margin:6px 0 6px">L'annonce est gratuite. L'accompagnement se paie à l'avance. Rien à l'acte.</h2>
-  <p class="hint" style="margin-bottom:14px">Seule l'annonce est gratuite. Les options et le Pack Accompagnement se paient au moment où vous les choisissez, jamais au résultat : aucun frais à la signature, aucun pourcentage, aucune commission d'agence. Sur un bien à 250 000 €, c'est 12 500 à 25 000 € qui restent chez vous.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="toolbar"><h3>Acheteur et locataire</h3><span class="pricetag">0 €</span></div>
-      <p class="hint">Recherche, alertes, visite 3D, messagerie, offre d'achat, dossier locataire : tout est gratuit, sans abonnement. L'offre en ligne et le dossier locataire sont disponibles sur les annonces au parcours sécurisé.</p>
+  <p class="hint" style="margin-bottom:18px">Aucun pourcentage, aucune commission d'agence, aucun frais à la signature. Sur un bien à 250 000 €, ce sont 12 500 à 25 000 € qui restent chez vous. Pour l'acheteur et le locataire, tout est gratuit.</p>
+  <div class="seg plans-seg" role="group" aria-label="Vente ou location"><button type="button" id="pl-v" aria-pressed="true">Je vends</button><button type="button" id="pl-l" aria-pressed="false">Je loue</button></div>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-h"><h3>Annonce</h3><p>Pour publier et échanger avec des acheteurs ou locataires vérifiés.</p><div class="plan-p"><b>0 €</b><span>pour toujours</span></div><button type="button" class="btn ghost" data-go="post">Publier gratuitement</button></div>
+      <ul class="plan-f"><li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Annonce en ligne, sans limite de durée</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Vérification d'identité et de propriété</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Prix comparé aux ventes réelles (DVF)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Photos guidées, horodatées et géolocalisées</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Messagerie protégée, numéro masqué</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Offre d'achat en ligne / dossier locataire vérifié</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Visite en visio valant visite</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Coordonnées et dossier transmis aux deux notaires</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Compromis ou bail sur modèle conforme, signature électronique</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Acompte séquestré chez le notaire / dépôt de garantie séquestré</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Caution, état des lieux photo et quittances (location)</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Suivi jusqu'à l'acte, protection juridique</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Reportage photo professionnel, drone et visite 3D</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Diffusion confidentielle (off-market)</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Acheteurs à capacité financière attestée, accord de confidentialité</span></li></ul>
     </div>
-    <div class="step">
-      <div class="toolbar"><h3>Annonce vente ou location</h3><span class="pricetag">0 €</span></div>
-      <p class="hint">Toujours gratuite, sans limite de durée. Vérification d'identité et de propriété incluse.</p>
+    <div class="plan best">
+      <span class="plan-badge">Le plus choisi</span>
+      <div class="plan-h"><h3>Accompagnement</h3><p>Tout le parcours sécurisé, de l'offre jusqu'à l'acte ou à l'état des lieux.</p><div class="plan-p"><b class="pv">299 €</b><span>une fois, payé à l'avance · rien à l'acte</span></div><button type="button" class="btn cta" data-go="post">Choisir l'Accompagnement</button></div>
+      <ul class="plan-f"><li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Annonce en ligne, sans limite de durée</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Vérification d'identité et de propriété</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Prix comparé aux ventes réelles (DVF)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Photos guidées, horodatées et géolocalisées</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Messagerie protégée, numéro masqué</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Offre d'achat en ligne / dossier locataire vérifié</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Visite en visio valant visite</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Coordonnées et dossier transmis aux deux notaires</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Compromis ou bail sur modèle conforme, signature électronique</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Acompte séquestré chez le notaire / dépôt de garantie séquestré</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Caution, état des lieux photo et quittances (location)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Suivi jusqu'à l'acte, protection juridique</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Reportage photo professionnel, drone et visite 3D</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Diffusion confidentielle (off-market)</span></li>
+<li class="off"><span class="ck-n" aria-label="non inclus">—</span><span>Acheteurs à capacité financière attestée, accord de confidentialité</span></li></ul>
     </div>
-    <div class="step">
-      <h3>Options de visibilité</h3>
-      <table>
-        <tr><td>Remontée en tête de liste (7 jours)</td><td>9 €</td></tr>
-        <tr><td>Badge Urgent</td><td>9 €</td></tr>
-        <tr><td>Boost réseaux sociaux (Facebook, Instagram locaux)</td><td>19 €</td></tr>
-        <tr><td>Photos retouchées par un pro (jusqu'à 20)</td><td>29 €</td></tr>
-        <tr><td>Pack Vérifié+ (badge, photos retouchées, plan 2D)</td><td>39 €</td></tr>
-      </table>
+    <div class="plan prem">
+      <div class="plan-h"><h3><span class="pdia">◆</span> Prestige</h3><p>Pour les biens d'exception, à partir de 1 M€ ou 4 000 € de loyer.</p><div class="plan-p"><b>990 €</b><span>par bien, quel que soit le prix</span></div><button type="button" class="btn gold" data-go="prestige">Découvrir Prestige</button></div>
+      <ul class="plan-f"><li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Annonce en ligne, sans limite de durée</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Vérification d'identité et de propriété</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Prix comparé aux ventes réelles (DVF)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Photos guidées, horodatées et géolocalisées</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Messagerie protégée, numéro masqué</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Offre d'achat en ligne / dossier locataire vérifié</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Visite en visio valant visite</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Coordonnées et dossier transmis aux deux notaires</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Compromis ou bail sur modèle conforme, signature électronique</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Acompte séquestré chez le notaire / dépôt de garantie séquestré</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Caution, état des lieux photo et quittances (location)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Suivi jusqu'à l'acte, protection juridique</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Reportage photo professionnel, drone et visite 3D</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Diffusion confidentielle (off-market)</span></li>
+<li class="on"><svg class="ck-y" viewBox="0 0 20 20" aria-label="inclus"><path d="M5 10.5l3 3 7-7"/></svg><span>Acheteurs à capacité financière attestée, accord de confidentialité</span></li></ul>
     </div>
-    <div class="step">
-      <div class="toolbar"><h3>Visite virtuelle 3D</h3><span class="pricetag">99 à 149 €</span></div>
-      <p class="hint">Capture 360° de votre bien par un partenaire local sous 72 h, plan 2D généré, filtre « visite 3D » dans la recherche. Les biens avec visite 3D reçoivent en moyenne deux fois plus de contacts qualifiés.</p>
-    </div>
-    <div class="step">
-      <div class="toolbar"><h3>Pack Accompagnement</h3><span class="pricetag">299 € vente · 99 € location</span></div>
-      <p class="hint">Optionnel, payé à l'avance (à la publication ou à tout moment), jamais à l'acte. Sans le pack, l'annonce reste en ligne et la messagerie fonctionne ; avec le pack, tout le parcours sécurisé s'ouvre :</p>
-      <table>
-        <tr><td><b>Vente</b> · offre d'achat horodatée, visite en visio valant visite, coordonnées et dossier transmis aux deux notaires, compromis sur modèle conforme, acompte séquestré chez le notaire, suivi jusqu'à l'acte, protection juridique</td><td>299 €</td></tr>
-        <tr><td><b>Location</b> · dossier locataire vérifié, bail conforme, signature électronique, dépôt de garantie séquestré chez un prestataire agréé, caution en ligne, état des lieux photo, quittances</td><td>99 €</td></tr>
-      </table>
-      <p class="hint">Payé par le vendeur ou le bailleur, jamais par l'acheteur ou le locataire.</p>
-    </div>
-    <div class="step" style="border-top:2px solid var(--gold)">
-      <div class="toolbar"><h3>Bienvu Prestige</h3><span class="pricetag" style="color:#8C6A35">990 € par bien</span></div>
-      <p class="hint">Pour les biens à partir de 1 M€ (ou 4 000 € de loyer) : reportage photo, drone et visite 3D, diffusion confidentielle possible, acheteurs à capacité financière attestée, accord de confidentialité, Pack Accompagnement et suivi notarial inclus. Forfait unique, quel que soit le prix de vente.</p>
-    </div>
-    <div class="step">
-      <h3>Partenaires, sans frais pour vous</h3>
-      <p class="hint">Courtier en prêt, diagnostiqueur, assurance loyers impayés, déménageur : Bienvu vous met en relation avec des partenaires sélectionnés et est rémunéré par eux. Vous restez libre de choisir le vôtre.</p>
-    </div>
+  </div>
+
+  <h3 class="sub-h">Options à la carte</h3>
+  <p class="hint" style="margin:-4px 0 12px">Avec n'importe quelle formule, à la publication ou plus tard.</p>
+  <div class="opts">
+    <div class="opt-c"><b>Remontée en tête de liste</b><span>7 jours, renouvelable</span><i>9 €</i></div>
+    <div class="opt-c"><b>Badge Urgent</b><span>Mise en avant dans les résultats</span><i>9 €</i></div>
+    <div class="opt-c"><b>Boost réseaux sociaux</b><span>Facebook et Instagram locaux</span><i>19 €</i></div>
+    <div class="opt-c"><b>Photos retouchées par un pro</b><span>Jusqu'à 20 photos</span><i>29 €</i></div>
+    <div class="opt-c"><b>Pack Vérifié+</b><span>Badge, photos retouchées, plan 2D</span><i>39 €</i></div>
+    <div class="opt-c"><b>Visite virtuelle 3D</b><span>Capture 360° par un partenaire sous 72 h</span><i>99 à 149 €</i></div>
+  </div>
+
+  <div class="plans-foot">
+    <div><b>Acheteur et locataire</b><span>Recherche, alertes, visite 3D, messagerie, offre et dossier locataire : toujours gratuit, sans abonnement.</span></div>
+    <div><b>Partenaires, sans frais pour vous</b><span>Courtier, diagnostiqueur, assurance loyers impayés, déménageur : rémunérés par eux, jamais imposés.</span></div>
   </div>
   <p class="note">Ce que Bienvu ne fait jamais : commission sur la vente, abonnement acheteur, revente de vos données, publicité d'agences immobilières.</p>
 </section>
@@ -1423,6 +1503,13 @@ function smartParse(){ const q=document.getElementById('q'); const raw=q.value.t
   if(city){ q.value=city; got.unshift(city); } else if(got.length) q.value='';
   const h=document.getElementById('smart-hint'); if(got.length>1||(got.length&&!city)){ h.hidden=false; h.textContent='Compris : '+got.join(' · '); setTimeout(()=>toast('Compris : '+got.join(' · ')),50); } else h.hidden=true; }
 document.getElementById('search').addEventListener('submit',smartParse);
+// Tarifs : bascule vente / location
+function plMode(loc){ document.getElementById('pl-v').setAttribute('aria-pressed',!loc); document.getElementById('pl-l').setAttribute('aria-pressed',loc);
+  document.querySelector('#v-tarifs .pv').textContent=loc?'99 €':'299 €';
+  document.querySelectorAll('#v-tarifs .plan-f li').forEach(li=>{ const t=li.dataset.t||(li.dataset.t=li.querySelector('span').textContent); li.querySelector('span').textContent=loc?t.replace("Offre d'achat en ligne / dossier locataire vérifié",'Dossier locataire vérifié').replace('Coordonnées et dossier transmis aux deux notaires','Bail et annexes conformes, prêts à signer').replace('Compromis ou bail sur modèle conforme, signature électronique','Bail sur modèle conforme, signature électronique').replace('Acompte séquestré chez le notaire / dépôt de garantie séquestré','Dépôt de garantie séquestré chez un prestataire agréé').replace("Suivi jusqu'à l'acte, protection juridique",'Suivi jusqu\'à l\'entrée dans les lieux, protection juridique'):t.replace('Caution, état des lieux photo et quittances (location)','Caution, état des lieux photo et quittances (location)'); }); }
+document.getElementById('pl-v').addEventListener('click',()=>plMode(false));
+document.getElementById('pl-l').addEventListener('click',()=>plMode(true));
+
 window.addEventListener('load',()=>{ if(document.body.dataset.view==='prix'){ pxMapInit(); pxRender(); } });
 
 document.getElementById('search').addEventListener('submit',e=>{ e.preventDefault(); const q=document.getElementById('q').value.trim().toLowerCase(); const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
