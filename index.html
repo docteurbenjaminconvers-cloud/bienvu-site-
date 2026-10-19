@@ -481,6 +481,65 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   .card{grid-template-columns:1fr;grid-template-rows:auto 1fr}
   .card .ph,.card img{width:100%;aspect-ratio:4/3;height:auto}
 }
+
+/* ===== Grand écran : typographie plus grande, pleine largeur, fiche sur deux colonnes ===== */
+@media (min-width:1100px){
+  body{font-size:17px;line-height:1.55}
+  main{max-width:min(94vw,1760px)}
+  .hint{font-size:15px}
+  .note{font-size:14px}
+  .meta{font-size:15px}
+  .badge{font-size:12.5px;padding:4px 9px}
+  .eyebrow{font-size:13.5px}
+  h1{font-size:52px;line-height:1.1}
+  h2{font-size:30px}
+  h3{font-size:21px}
+  .price{font-size:24px}
+  .brand{font-size:34px}
+  .brand small{font-size:13.5px}
+  .header{padding-block:16px}
+  .header .btn.sm{font-size:15px;padding:10px 20px}
+  .btn{font-size:16px;padding:13px 24px}
+  .btn.sm{font-size:14.5px;padding:9px 16px}
+  input,select,textarea{font-size:16px;padding:13px 15px}
+  .nav button{font-size:16px;padding:17px 24px}
+  .nav button svg{width:22px;height:22px}
+  .nav .nav-p{font-size:14px}
+  .pbar{padding-block:11px}
+  .pbar .pname{font-size:14.5px}
+  .pbar .ptag,.pbar .pgo{font-size:13.5px}
+  .hero p{font-size:19px;max-width:56ch}
+  #v-home{column-gap:56px}
+  #v-home>.search{padding:28px;gap:14px}
+  .proofs{gap:18px}
+  .proofs>*{padding:20px}
+  .proofs>*{font-size:15.5px !important;line-height:1.55}
+  .proofs b,.proofs strong{font-size:17px}
+  .card .body{padding:16px 18px;gap:6px}
+  .card .ph{min-height:0}
+  .kv b{font-size:20px}
+  .kv span{font-size:14px}
+  .pane{padding:20px}
+  .step{padding:22px;align-content:start}
+  .steps{align-items:start}
+  .pricetag{font-size:17px}
+  .step table td{font-size:15.5px;padding-block:9px}
+  /* fiche du bien : contenu à gauche, prix et contact à droite */
+  .detail.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,440px);column-gap:48px;align-items:start}
+  .detail.two>.back{grid-column:1/-1}
+  .detail.two .dmain{display:flex;flex-direction:column;gap:22px;min-width:0}
+  .detail.two .dside{position:sticky;top:76px;display:flex;flex-direction:column;gap:16px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--copper);border-radius:var(--r);padding:24px}
+  .detail.two .dside h2{font-size:28px}
+  .detail.two .dside .price{font-size:34px !important}
+  .detail.two .dside .row2{grid-template-columns:1fr}
+  .detail.two .dside .kv{grid-template-columns:1fr 1fr}
+  .detail.two .gallery{max-height:none;aspect-ratio:16/10}
+}
+@media (min-width:1500px){
+  .list{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+  h1{font-size:58px}
+  .detail.two{grid-template-columns:minmax(0,1fr) 460px}
+}
 </style>
 
 <button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
@@ -972,6 +1031,15 @@ document.getElementById('search').addEventListener('submit',e=>{ e.preventDefaul
 
 document.addEventListener('click',e=>{ const c=e.target.closest('.card,.pcard'); if(c) openDetail(c.dataset.id); });
 
+
+function detailLayout(){ const d=document.querySelector('#v-detail .detail'); if(!d||!window.matchMedia('(min-width:1100px)').matches) return;
+  const kids=[...d.children]; const side=document.createElement('aside'); side.className='dside'; const main=document.createElement('div'); main.className='dmain';
+  const title=kids.find(x=>x.querySelector(':scope > h2')); const seller=d.querySelector(':scope > .seller'); const row=d.querySelector(':scope > .row2');
+  const pack=d.querySelector(':scope > .packon, :scope > .packoff'); const note=[...d.querySelectorAll(':scope > .note')].pop();
+  const firstKv=d.querySelector(':scope > .kv'); const kvAfterRow=row&&row.nextElementSibling&&row.nextElementSibling.classList.contains('kv')?row.nextElementSibling:null;
+  const sideEls=[title,firstKv,row,kvAfterRow,pack,seller,note].filter(Boolean);
+  kids.forEach(k=>{ if(k.classList.contains('back')) return; if(!sideEls.includes(k)) main.appendChild(k); });
+  sideEls.forEach(k=>side.appendChild(k)); d.appendChild(main); d.appendChild(side); d.classList.add('two'); }
 function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.min(100,Math.max(0,50+e.pct*2.5)):50;
   const notaire = b.op==='vente'? Math.round(b.prix*0.075):0;
   document.getElementById('v-detail').innerHTML = `<div class="detail">
@@ -1016,6 +1084,7 @@ function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.m
   <p class="note">Numéro masqué. Les échanges passent par la messagerie Bienvu ; ne payez jamais hors plateforme.</p>
   </div>`;
   if(b.op==='vente'){ const r=mens(b.prix*0.9,20,3.4,0.30); document.getElementById('d-mens').textContent=eur(r.m)+' / mois'; }
+  detailLayout();
   document.getElementById('back-res').addEventListener('click',()=>{ const res=document.getElementById('v-results'); show(res.querySelector('#res-list').children.length?'results':'home'); });
   const bn=document.getElementById('btn-nda'); if(bn) bn.addEventListener('click',()=>openNda(b));
   document.getElementById('btn-msg').addEventListener('click',()=>{ if(b.prive&&!NDAS[b.id]){ toast('Signez d\'abord l\'accord de confidentialité'); openNda(b); return; } openThread(b.id,false); });
