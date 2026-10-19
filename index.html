@@ -141,6 +141,8 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 .step table td:last-child{white-space:nowrap;text-align:right;vertical-align:top;padding-left:10px}
 .row2 .btn{white-space:normal;min-width:0;line-height:1.25}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 </head>
 <body>
 <title>Bienvu</title>
@@ -540,6 +542,165 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   h1{font-size:58px}
   .detail.two{grid-template-columns:minmax(0,1fr) 460px}
 }
+
+/* ===== Inspirations « portail » : recherche intelligente, carte des prix, estimation, sections d'accueil ===== */
+#search .seg button{min-width:0}
+.smart-l{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:-4px}
+.smart-hint{font-size:13px;color:var(--accent);background:var(--tint,#EEF0F2);border-radius:var(--r);padding:7px 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 4px}
+.chips-l{font-weight:700;font-size:14px;margin-right:4px}
+@media (max-width:899px){.chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:2px 16px}.chips::-webkit-scrollbar{display:none}.chip{flex:none}}
+.chip{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13.5px;font-weight:700;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tagpill{display:inline-block;justify-self:start;background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.center{text-align:center}
+.wf{width:100%;height:auto;color:var(--accent)}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--copper);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+/* sections accueil */
+.hsplit{display:grid;gap:22px;margin-top:44px;align-items:center}
+.hsplit-txt{display:grid;gap:12px}
+.hsplit-txt h2{margin:0}
+.hsplit-txt p{margin:0;color:var(--muted)}
+.hsplit-cta{display:flex;gap:10px;flex-wrap:wrap}
+.pricemap-mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);aspect-ratio:16/10;overflow:hidden;position:relative}
+.pricemap-mini svg{width:100%;height:100%;display:block}
+.hband{margin-top:44px;background:var(--accent);border-radius:calc(var(--r)*3);padding:18px;display:grid;gap:16px;align-items:center}
+.hband-art{background:#DCE2E8;border-radius:calc(var(--r)*2);padding:24px 18px;display:flex;justify-content:center}
+.hband-art .wf{max-width:320px;color:var(--accent)}
+.hband-card{background:var(--surface);border-radius:calc(var(--r)*2);padding:22px;display:grid;gap:12px}
+.hband-card h2{margin:0}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.checks li{position:relative;padding-left:30px;line-height:1.45}
+.checks li::before{content:"";position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.hband-card .btn{justify-self:start}
+.hsteps{margin-top:52px;display:grid;gap:24px}
+.hsteps h2,.hguides h2,.hpartners h2{margin:0}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.timeline li{display:grid;grid-template-columns:44px 1fr;gap:14px;padding-bottom:26px;position:relative}
+.timeline li::before{content:"";position:absolute;left:21px;top:44px;bottom:0;border-left:2px dashed #D9B79B}
+.timeline li:last-child::before{display:none}
+.timeline .tn{width:44px;height:44px;border-radius:50%;background:#E9C6A8;color:#5A2E14;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:19px}
+.timeline li:first-child .tn{background:var(--copper);color:#fff}
+.timeline h3{margin:6px 0 6px}
+.timeline p{margin:0 0 6px;color:var(--muted)}
+.hguides{margin-top:44px;display:grid;gap:18px}
+.gcards{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.gcard{display:grid;gap:8px;align-content:start;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--r)*2);padding:18px;cursor:pointer}
+.gcard:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(31,39,48,.08)}
+.gcard b{font-family:var(--display);font-size:17px}
+.gcard span{color:var(--muted);font-size:14px;line-height:1.45}
+.gcard i{font-style:normal;font-weight:700;color:var(--accent);margin-top:4px}
+.hpartners{margin-top:44px;display:grid;gap:12px;background:#EDEBE6;border-radius:calc(var(--r)*3);padding:26px 18px}
+.pcards4{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:6px}
+.pc{background:var(--surface);border-radius:calc(var(--r)*2);padding:18px;display:grid;gap:8px;align-content:start}
+.pc svg{width:30px;height:30px;stroke:var(--copper);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.pc b{font-family:var(--display);font-size:16px}
+.pc span{color:var(--muted);font-size:14px;line-height:1.45}
+.happ{margin-top:44px;background:var(--accent);color:#fff;border-radius:calc(var(--r)*3);padding:26px 22px 0;display:grid;gap:18px;overflow:hidden}
+.happ h2{color:#fff;margin:0 0 8px}
+.happ p{margin:0;color:#D8DEE5}
+.happ-phone{justify-self:center;width:200px;height:170px;border:8px solid #1E2630;border-bottom:0;border-radius:30px 30px 0 0;background:#fff;transform:rotate(-6deg) translateY(10px)}
+.happ-phone .scr{padding:16px;display:grid;gap:8px}
+.happ-phone b{font-family:var(--display);color:var(--accent)}
+.happ-phone span{font-size:12px;color:var(--muted)}
+.happ-phone i{display:block;height:12px;border-radius:6px;background:#EEF0F2}
+.happ-phone i.s{width:60%;background:var(--copper);opacity:.75}
+/* pied de page */
+.foot{background:#EDEBE6;border-top:1px solid var(--line);padding:30px max(16px,env(safe-area-inset-left,0px)) 110px;display:grid;gap:26px;font-size:14px}
+.foot-tabs{display:grid;gap:10px}
+.foot-tabs b{font-family:var(--display);font-size:16px}
+.foot-cities{display:flex;flex-wrap:wrap;gap:6px 16px}
+.foot-cities button,.foot-cols button{background:none;border:0;padding:0;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+.foot-cities button{text-decoration:underline;text-underline-offset:3px}
+.foot-cities button::before{content:"› ";color:var(--copper)}
+.foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.foot-cols>div{display:grid;gap:9px;align-content:start}
+.foot-cols h4{margin:0 0 4px;font-size:15px}
+.foot-cols button{color:var(--muted)}
+.foot-cols button:hover,.foot-cities button:hover{color:var(--copper)}
+.foot-cols p{margin:0;color:var(--muted)}
+.store{display:inline-block;justify-self:start;border:1.5px solid var(--ink);border-radius:8px;padding:6px 12px;font-weight:700;font-size:13px}
+.foot-legal{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12.5px}
+.foot-legal span:first-child{font-family:var(--display);font-weight:700;color:var(--ink);font-size:14px}
+/* vue prix */
+.pxtabs{display:flex;background:var(--accent);border-radius:var(--r) var(--r) 0 0;overflow:hidden}
+.pxt{flex:1;border:0;background:transparent;color:#C9D1DA;font:inherit;font-weight:700;padding:14px 10px;cursor:pointer;border-bottom:3px solid transparent}
+.pxt[aria-pressed="true"]{color:#fff;border-bottom-color:var(--copper)}
+.pxwrap{display:grid;border:1px solid var(--line);border-top:0;background:var(--surface)}
+.pxpanel{padding:16px;display:grid;gap:12px;align-content:start;border-bottom:1px solid var(--line)}
+.pxpanel .btn{justify-self:center}
+.pxcard{text-align:center;display:grid;gap:4px}
+.pxcard .t1{font-size:16px}
+.pxcard .t2{font-family:var(--display);font-weight:700;font-size:19px}
+.pxcard .src{font-size:12px;color:var(--muted);margin-top:6px}
+.pxcard .lbl{font-size:13.5px}
+.pxcard .big{font-family:var(--display);font-weight:700;font-size:40px;line-height:1.1;font-variant-numeric:tabular-nums}
+.pxgauge{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#8FA89A,#C9B98E,#D9A066,#B8743F,#8E4A2A);margin:10px 4px 4px}
+.pxgauge i{position:absolute;top:-4px;width:26px;height:16px;margin-left:-13px;border-radius:8px;background:#fff;border:3px solid var(--ink)}
+.pxbl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.pxnote{margin:0;background:#F6EEE6;border-radius:var(--r);padding:10px 12px;font-size:13px;line-height:1.5;text-align:center}
+.pxmap{min-height:340px;position:relative;background:#E9ECEF}
+.pxmap svg{width:100%;height:100%;display:block}
+.pxlegend{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);padding:10px 2px}
+.pxlegend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:5px;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.pxsplit{display:grid;gap:16px;margin-top:16px}
+.pxtype{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:center;box-shadow:0 4px 14px rgba(31,39,48,.05)}
+.pxtype h3{margin:0 0 4px}
+.pxtype h3::after{content:"";display:block;width:28px;height:3px;background:var(--copper);margin-top:8px}
+.pxtype .v{font-family:var(--display);font-weight:700;font-size:30px}
+.pxtype .r{font-size:13.5px;color:var(--muted)}
+.pxtype .wf{width:120px}
+.pxtable-wrap{overflow-x:auto}
+.pxtable{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.pxtable th{text-align:left;font-size:12.5px;color:var(--muted);font-weight:700;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.pxtable td{padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.pxtable td:not(:first-child),.pxtable th:not(:first-child){text-align:right}
+.pxtable tr{cursor:pointer}
+.pxtable tbody tr:hover{background:#F6F4F0}
+.pxtable tr.sel{background:#F6EEE6}
+.pxtable .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.estim{display:grid;gap:16px;margin-top:16px}
+.estim-f{display:grid;gap:12px}
+.estim-f label{display:grid;gap:5px;font-size:13.5px;font-weight:700}
+.estim-f .row2 label{min-width:0}
+.optrow{display:flex;flex-wrap:wrap;gap:8px 16px}
+.ck{display:flex !important;align-items:center;gap:7px;font-weight:500 !important}
+.ck input{width:auto}
+.estim-f .btn{justify-self:start}
+.estim-r{display:grid;gap:12px;align-content:center;min-height:280px}
+.estim-empty{display:grid;justify-items:center;gap:10px;color:var(--muted);text-align:center}
+.estim-empty .wf{max-width:180px;color:#B7C0CA}
+.estim-r .big{font-family:var(--display);font-weight:700;font-size:40px;text-align:center}
+.estim-r .sub{text-align:center;color:var(--muted)}
+.leaflet-container{font:inherit}
+.pxpop b{font-family:var(--display)}
+@media (min-width:900px){
+  .hsplit{grid-template-columns:1fr 1fr;gap:48px}
+  .hband{grid-template-columns:1.05fr 1fr;padding:40px;gap:0}
+  .hband-art{padding:40px;margin-right:-24px}
+  .hband-card{padding:36px;position:relative}
+  .timeline{max-width:960px;margin:0 auto;width:100%}
+  .timeline li{grid-template-columns:1fr 60px 1fr;gap:28px;padding-bottom:34px}
+  .timeline li::before{left:50%;top:56px}
+  .timeline .tn{grid-column:2;width:56px;height:56px;font-size:22px}
+  .timeline li>div{grid-column:3}
+  .timeline li:nth-child(even)>div{grid-column:1;grid-row:1;text-align:right}
+  .gcards,.pcards4{grid-template-columns:repeat(4,1fr);gap:18px}
+  .hpartners{padding:40px}
+  .happ{grid-template-columns:1.4fr 1fr;padding:40px 48px 0;align-items:center}
+  .happ>div:first-child{padding-bottom:40px}
+  .happ-phone{width:240px;height:210px}
+  .foot{padding:44px max(32px,env(safe-area-inset-left,0px)) 40px}
+  .foot-cols{grid-template-columns:repeat(4,1fr)}
+  .pxwrap{grid-template-columns:400px 1fr}
+  .pxpanel{border-bottom:0;border-right:1px solid var(--line);padding:22px}
+  .pxmap{min-height:520px}
+  .pxsplit{grid-template-columns:1fr 1fr;gap:22px}
+  .estim{grid-template-columns:1fr 1fr;align-items:start}
+}
+.nav .nav-d{display:none}
+@media (min-width:900px){.nav .nav-d{display:flex}}
 </style>
 
 <button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
@@ -586,12 +747,22 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="seg" role="group" aria-label="Type de recherche">
       <button type="button" id="seg-vente" aria-pressed="true">Acheter</button>
       <button type="button" id="seg-location" aria-pressed="false">Louer</button>
+      <button type="button" id="seg-estimer" aria-pressed="false">Estimer</button>
     </div>
-    <input class="wide" id="q" placeholder="Ville ou code postal — ex. Montpellier, 30700" aria-label="Ville">
+    <label class="wide smart-l" for="q">Que recherchez-vous en quelques mots ?</label>
+    <input class="wide" id="q" placeholder="Ex. maison avec jardin à Uzès moins de 400 000 €" aria-label="Recherche" autocomplete="off">
+    <div class="wide smart-hint" id="smart-hint" hidden></div>
     <select id="type" aria-label="Type de bien"><option value="">Tous les biens</option><option>Appartement</option><option>Studio</option><option>Maison</option><option>Loft</option><option>Terrain</option><option>Parking</option><option>Immeuble</option><option>Local</option></select>
     <select id="budget" aria-label="Budget maximum"><option value="">Budget max</option><option value="150000">150 000 €</option><option value="250000">250 000 €</option><option value="400000">400 000 €</option><option value="700000">700 000 €</option></select>
     <button class="btn wide" type="submit">Voir les biens</button>
   </form>
+  <div class="chips" aria-label="Nos services">
+    <span class="chips-l">Nos services :</span>
+    <button type="button" class="chip" data-go="estimer"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h3M13 11h3M8 15h3M13 15h3"/></svg>Estimer votre bien</button>
+    <button type="button" class="chip" data-go="post"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Déposer une annonce</button>
+    <button type="button" class="chip" data-go="prix"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte des prix</button>
+    <button type="button" class="chip" data-go="calc"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9M11 16V5M16 16v-5"/></svg>Calculer mon prêt</button>
+  </div>
   <div class="proofs">
     <div class="proof"><b>Vérifié et déclaré</b><span>Identité et propriété contrôlées ; état du bien déclaré, photographié et signé par le vendeur.</span></div>
     <div class="proof"><b>Prix réels</b><span>Chaque annonce est comparée aux ventes notariées à moins de 500 m de l'adresse (DVF), pas à une moyenne de ville.</span></div>
@@ -604,6 +775,71 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <section class="prestige" id="prestige-band">
     <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><h2>Immobilier d'exception, entre nous aussi.</h2><p>Mas, hôtels particuliers, villas pieds dans l'eau, domaines : vendus directement par leurs propriétaires, avec la discrétion d'un cabinet et sans ses 5 %.</p><button class="btn gold sm" type="button" id="go-prestige">Voir la sélection</button></div>
     <div class="plist" id="prestige-list"></div>
+  </section>
+  <section class="hsplit" id="h-prix">
+    <div class="hsplit-art pricemap-mini" id="mini-map" aria-hidden="true"></div>
+    <div class="hsplit-txt">
+      <span class="tagpill">Restez informé</span>
+      <h2>Le vrai prix de l'immobilier, ville par ville</h2>
+      <p>La carte des prix Bienvu affiche le prix moyen au mètre carré et les loyers de chaque commune d'Occitanie, avec une fourchette basse et haute. Estimez votre bien en deux minutes avant de fixer votre prix.</p>
+      <div class="hsplit-cta"><button type="button" class="btn ghost" data-go="prix">Explorer la carte des prix →</button><button type="button" class="btn cta" data-go="estimer">Estimer mon bien</button></div>
+    </div>
+  </section>
+
+  <section class="hband">
+    <div class="hband-art"><svg class="wf big" viewBox="0 0 200 150" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M30 130 V40 a6 6 0 0 1 6-6 H80 l10 10 H150 a6 6 0 0 1 6 6 V130 Z"/><path d="M48 34 V18 H138 V44"/><path d="M60 26 H110 M60 34 H96"/><path d="M96 130 V92 L128 68 L160 92 V130"/><path d="M88 98 L128 62 L168 98"/><path d="M120 130 V110 H136 V130"/><rect x="104" y="96" width="10" height="10"/><rect x="142" y="96" width="10" height="10"/><path d="M20 130 H180"/></svg></div>
+    <div class="hband-card">
+      <span class="tagpill">100 % gratuit</span>
+      <h2>Vendez ou louez vous-même, en toute sécurité</h2>
+      <ul class="checks">
+        <li>Annonce gratuite, sans limite de durée, vérification d'identité incluse</li>
+        <li>Prix comparé aux ventes réelles du quartier avant publication</li>
+        <li>Contacts filtrés : numéro masqué, aucune demande d'argent possible dans la messagerie</li>
+        <li>Offre, notaires, bail et caution en ligne avec le Pack Accompagnement</li>
+      </ul>
+      <button type="button" class="btn cta" data-go="post">Déposer mon annonce →</button>
+    </div>
+  </section>
+
+  <section class="hsteps">
+    <h2 class="center">Bien préparer son annonce</h2>
+    <ol class="timeline">
+      <li><span class="tn">1</span><div><h3>Trouvez le bon prix</h3><p>Partez de l'estimation Bienvu, calculée sur les ventes notariées de votre commune. Un prix juste attire des acheteurs sérieux et évite des mois d'attente.</p><button type="button" class="lnk" data-go="estimer">Estimer mon bien →</button></div></li>
+      <li><span class="tn">2</span><div><h3>Photographiez dans l'appli</h3><p>Quinze prises guidées, horodatées et géolocalisées : intérieur, façades, rue, tableau électrique. Pas de retouche, pas de mise en scène virtuelle : c'est ce qui rassure.</p></div></li>
+      <li><span class="tn">3</span><div><h3>Déclarez l'état du bien</h3><p>Un questionnaire de 30 points, signé électroniquement. En copropriété, le PV de la dernière assemblée générale est analysé automatiquement pour signaler travaux et procédures.</p></div></li>
+      <li><span class="tn">4</span><div><h3>Publiez et répondez vite</h3><p>Votre annonce est en ligne après vérification. Les réponses rapides font la différence : proposez des créneaux de visite sur place ou en visio depuis la messagerie.</p></div></li>
+      <li><span class="tn">5</span><div><h3>Signez en sécurité</h3><p>Offre horodatée, dossier transmis aux deux notaires, acompte séquestré, suivi jusqu'à l'acte. Pour un bail : dossier locataire vérifié, bail conforme, dépôt de garantie séquestré.</p></div></li>
+    </ol>
+    <div class="center"><button type="button" class="btn cta" data-go="post">Déposer mon annonce →</button></div>
+  </section>
+
+  <section class="hguides">
+    <h2 class="center">Bienvu vous accompagne dans votre projet</h2>
+    <div class="gcards">
+      <button type="button" class="gcard" data-go="guide"><b>Guide de l'acheteur</b><span>Budget, visites, offre sans visite, rôle du notaire : les étapes d'un achat entre particuliers.</span><i>Découvrir →</i></button>
+      <button type="button" class="gcard" data-go="guide"><b>Guide du locataire</b><span>Un dossier réutilisable, un bail conforme, un dépôt de garantie qui ne disparaît pas.</span><i>Découvrir →</i></button>
+      <button type="button" class="gcard" data-go="estimer"><b>Guide du vendeur</b><span>Connaître le prix du marché, préparer ses diagnostics, vendre sans agence.</span><i>Découvrir →</i></button>
+      <button type="button" class="gcard" data-go="calc"><b>Calculer mon prêt</b><span>Mensualités, frais de notaire et capacité d'emprunt en quelques secondes.</span><i>Calculer →</i></button>
+    </div>
+  </section>
+
+  <section class="hpartners">
+    <h2 class="center">Les services utiles autour de votre projet</h2>
+    <p class="center hint">Partenaires en cours de sélection en Occitanie. Jamais imposés : vous choisissez.</p>
+    <div class="pcards4">
+      <div class="pc"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v9h14v-9M9 19v-5h6v5"/></svg><b>Courtier en crédit</b><span>Comparer les banques et obtenir l'attestation de financement.</span></div>
+      <div class="pc"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><b>Assurance emprunteur et loyers impayés</b><span>Des garanties adaptées, comparées en ligne.</span></div>
+      <div class="pc"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><b>Diagnostics immobiliers</b><span>DPE, amiante, plomb, électricité : un diagnostiqueur certifié près de chez vous.</span></div>
+      <div class="pc"><svg viewBox="0 0 24 24"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><b>Déménagement</b><span>Trois devis de déménageurs locaux, sans engagement.</span></div>
+    </div>
+  </section>
+
+  <section class="happ">
+    <div>
+      <h2>Les meilleures annonces partent vite. Soyez le premier.</h2>
+      <p>Alertes personnalisées, estimation, messagerie et suivi de vos démarches, sur votre téléphone. Applications iPhone et Android en préparation ; en attendant, ajoutez Bienvu à votre écran d'accueil depuis Safari ou Chrome.</p>
+    </div>
+    <div class="happ-phone" aria-hidden="true"><div class="scr"><b>Bienvu</b><span>Bonjour,</span><i></i><i></i><i class="s"></i></div></div>
   </section>
 </section>
 
@@ -941,6 +1177,50 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 </section>
 
 <!-- GUIDE -->
+
+<!-- PRIX & ESTIMATION -->
+<section class="view" id="v-prix" hidden>
+  <div class="pxtabs" role="tablist"><button type="button" class="pxt" data-px="carte" aria-pressed="true">Prix de vente au m²</button><button type="button" class="pxt" data-px="estim" aria-pressed="false">Estimation immobilière</button></div>
+  <div class="pxwrap">
+    <aside class="pxpanel">
+      <input id="px-city" list="px-cities" placeholder="Saisir une ville d'Occitanie" autocomplete="off" aria-label="Ville">
+      <datalist id="px-cities"></datalist>
+      <div class="seg pxseg" role="group"><button type="button" id="px-v" aria-pressed="true">Vente</button><button type="button" id="px-l" aria-pressed="false">Location</button></div>
+      <div class="pxcard" id="px-card"></div>
+      <button type="button" class="btn cta" id="px-estim">Estimer mon bien</button>
+      <p class="pxnote">N'oubliez pas : le prix dépend aussi de l'état du bien, de l'étage, de la vue et des travaux à prévoir. <button type="button" class="lnk" data-px="estim">Faire une estimation détaillée →</button></p>
+    </aside>
+    <div class="pxmap" id="px-map" role="img" aria-label="Carte des prix au mètre carré en Occitanie"></div>
+  </div>
+  <div class="pxlegend" id="px-legend"></div>
+
+  <div id="px-carte-body">
+    <div class="pxsplit" id="px-types"></div>
+    <div class="pane" style="margin-top:22px">
+      <div class="toolbar"><h3>Toutes les villes</h3><span class="hint">Cliquez une ligne pour l'afficher</span></div>
+      <div class="pxtable-wrap"><table class="pxtable" id="px-table"></table></div>
+      <p class="note">Données de démonstration, établies pour le prototype. En production : ventes notariées DVF des 12 derniers mois et observatoires locaux des loyers. Rendement brut = loyer annuel ÷ prix d'achat, avant charges et impôts.</p>
+    </div>
+  </div>
+
+  <div id="px-estim-body" hidden>
+    <div class="estim">
+      <form class="pane estim-f" id="estim-form">
+        <h3>Estimez votre bien en deux minutes</h3>
+        <label>Ville<input id="es-city" list="px-cities" required placeholder="Ex. Montpellier"></label>
+        <div class="row2"><label>Type<select id="es-type"><option>Appartement</option><option>Maison</option></select></label><label>Projet<select id="es-op"><option value="vente">Vendre</option><option value="location">Louer</option></select></label></div>
+        <div class="row2"><label>Surface (m²)<input id="es-surf" type="number" min="9" value="75" required></label><label>Pièces<input id="es-p" type="number" min="1" value="3"></label></div>
+        <label>État<select id="es-etat"><option value="0.88">À rénover</option><option value="1" selected>Bon état</option><option value="1.08">Refait à neuf</option></select></label>
+        <div class="optrow"><label class="ck"><input type="checkbox" id="es-ext"> Jardin ou terrasse</label><label class="ck"><input type="checkbox" id="es-park"> Parking ou garage</label><label class="ck"><input type="checkbox" id="es-vue"> Vue dégagée</label><label class="ck"><input type="checkbox" id="es-dpe"> DPE F ou G</label></div>
+        <button class="btn cta" type="submit">Voir l'estimation</button>
+      </form>
+      <div class="pane estim-r" id="estim-res">
+        <div class="estim-empty"><svg class="wf" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M10 84 H110"/><path d="M22 84 V44 L52 20 L82 44 V84"/><path d="M14 50 L52 18 L90 50"/><path d="M44 84 V62 H60 V84"/><rect x="30" y="50" width="10" height="10"/><rect x="64" y="50" width="10" height="10"/><path d="M70 30 V20 H78 V36"/><path d="M90 84 V58 H108 V84 M94 64 H104 M94 72 H104"/></svg><p>Renseignez votre bien : l'estimation s'affiche ici, avec une fourchette basse et haute.</p></div>
+      </div>
+    </div>
+    <p class="note">Estimation indicative, calculée sur les prix moyens de la commune et vos réponses. Elle ne remplace pas l'avis d'un notaire ni la visite du bien.</p>
+  </div>
+</section>
 <section class="view" id="v-guide" hidden>
   <span class="eyebrow">Comment ça marche</span>
   <h2 style="margin:6px 0 14px">Une transaction sécurisée, sans agence</h2>
@@ -954,6 +1234,16 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <p class="note">Bienvu est un support de diffusion d'annonces et d'outils pour particuliers. Il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</p>
 </section>
 </main>
+<footer class="foot">
+  <div class="foot-tabs"><b>Prix au m² par ville</b><div class="foot-cities" id="foot-cities"></div></div>
+  <div class="foot-cols">
+    <div><h4>Bienvu</h4><button type="button" data-go="guide">Comment ça marche</button><button type="button" data-go="tarifs">Tarifs</button><button type="button" data-go="prestige">Bienvu Prestige</button><button type="button" data-go="guide">Sécurité et confiance</button></div>
+    <div><h4>Outils</h4><button type="button" data-go="prix">Carte des prix</button><button type="button" data-go="estimer">Estimation immobilière</button><button type="button" data-go="calc">Calculer mon prêt</button><button type="button" data-go="post">Déposer une annonce</button></div>
+    <div><h4>Vous êtes</h4><button type="button" data-go="home">Acheteur</button><button type="button" data-go="home-loc">Locataire</button><button type="button" data-go="post">Vendeur</button><button type="button" data-go="post">Bailleur</button></div>
+    <div><h4>Application</h4><p>iPhone et Android en préparation.</p><span class="store">App Store · bientôt</span><span class="store">Google Play · bientôt</span></div>
+  </div>
+  <div class="foot-legal"><span>Bienvu — l'immobilier entre nous</span><span>Mentions légales · Données personnelles · Cookies · CGU · Fonctionnement du site</span><span>Bienvu est un support de diffusion d'annonces entre particuliers ; il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</span></div>
+</footer>
 
 <nav class="nav" aria-label="Navigation">
   <button type="button" data-nav="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Rechercher</button>
@@ -961,6 +1251,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <button type="button" data-nav="post"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Déposer</button>
   <button type="button" data-nav="tarifs"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-8-8V4h8z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>Tarifs</button>
   <button type="button" data-nav="msg"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Messages</button>
+  <button type="button" data-nav="prix" class="nav-d"><svg viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Prix au m²</button>
   <button type="button" data-nav="prestige" class="nav-p"><svg viewBox="0 0 12 12"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Prestige</button>
 </nav>
 
@@ -998,7 +1289,7 @@ function card(b){ const e=ecart(b); return `<button class="card" type="button" d
   <span class="meta">${b.ville} · ${b.quartier}</span>
   <div class="badges"><span class="badge ok">Vérifié</span><span class="badge decl">Déclaré</span>${b.pack?'<span class="badge pk">Parcours sécurisé</span>':''}${ecartBadge(e)}${b.dpe?`<span class="badge">DPE ${b.dpe}</span>`:''}</div></div></button>`; }
 
-function show(id){ if(id==='prestige'&&typeof renderPrestige==='function'){ renderPrestige(); renderPrestigeHome(); } document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
+function show(id){ if(id==='prix'&&typeof pxMapInit==='function') setTimeout(()=>{ pxMapInit(); pxRender(); },0); if(id==='prestige'&&typeof renderPrestige==='function'){ renderPrestige(); renderPrestigeHome(); } document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.nav)));
 document.getElementById('hdr-deposer').addEventListener('click',()=>show('post'));
 document.getElementById('back-home').addEventListener('click',()=>show('home'));
@@ -1036,6 +1327,79 @@ try{ const n=BIENS.filter(b=>b.premium).length; if(n) document.getElementById('p
 
 document.querySelector('.pfilters').addEventListener('click',e=>{ const b=e.target.closest('.pf'); if(!b) return; pf=b.dataset.pf; document.querySelectorAll('.pf').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderPrestige(); });
 renderHome();
+
+
+// ===== Carte des prix, estimation, recherche intelligente =====
+const GEO={"Montpellier":[43.611,3.877],"Nîmes":[43.837,4.360],"Uzès":[44.012,4.420],"Sète":[43.403,3.697],"Alès":[44.125,4.081],"Castelnau-le-Lez":[43.633,3.900],"Lunel":[43.676,4.136],"Béziers":[43.344,3.216],"Perpignan":[42.699,2.895],"Toulouse":[43.605,1.444],"Carcassonne":[43.213,2.351],"Narbonne":[43.184,3.004],"Agde":[43.310,3.476],"Palavas-les-Flots":[43.528,3.931],"La Grande-Motte":[43.561,4.085],"Saint-Gilles":[43.678,4.432],"Beaucaire":[43.808,4.644],"Anduze":[44.052,3.985],"Sommières":[43.785,4.090],"Pézenas":[43.459,3.423],"Juvignac":[43.613,3.810],"Saint-Jean-de-Védas":[43.577,3.826],"Mauguio":[43.616,4.008],"Frontignan":[43.448,3.756],"Bagnols-sur-Cèze":[44.162,4.620],"Villeneuve-lès-Avignon":[43.966,4.796],"Le Grau-du-Roi":[43.537,4.136],"Vauvert":[43.694,4.277],"Marsillargues":[43.664,4.178],"Saint-Just-et-Vacquières":[44.004,4.217]};
+const PXC=['#8FA89A','#C9B98E','#D9A066','#B8743F','#8E4A2A'];
+let pxOp='vente', pxCity='Montpellier', pxMap=null, pxMarkers={};
+const pxVal=c=>pxOp==='vente'?DVF[c].v:DVF[c].l;
+function pxBins(){ return pxOp==='vente'?[2000,2600,3300,4200]:[10,11.5,13,14.5]; }
+function pxColor(v){ const b=pxBins(); let i=0; while(i<b.length&&v>=b[i]) i++; return PXC[i]; }
+const pxFmt=v=>pxOp==='vente'?fmt(Math.round(v))+' €':(Math.round(v*10)/10).toString().replace('.',',')+' €';
+const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function pxLegend(){ const b=pxBins(); const u=pxOp==='vente'?' €':' €'; const lab=[`< ${pxFmt(b[0])}`,`${pxFmt(b[0])} – ${pxFmt(b[1])}`,`${pxFmt(b[1])} – ${pxFmt(b[2])}`,`${pxFmt(b[2])} – ${pxFmt(b[3])}`,`> ${pxFmt(b[3])}`];
+  document.getElementById('px-legend').innerHTML=`<b style="color:var(--ink)">${pxOp==='vente'?'Prix de vente au m²':'Loyer mensuel au m²'}</b>`+lab.map((l,i)=>`<span><i style="background:${PXC[i]}"></i>${l}</span>`).join(''); }
+function pxCard(){ const v=pxVal(pxCity), lo=v*0.68, hi=v*1.34, pos=Math.max(4,Math.min(96,(v-lo)/(hi-lo)*100));
+  document.getElementById('px-card').innerHTML=`<span class="t1">${pxOp==='vente'?"Prix de l'immobilier au m²":'Loyer moyen au m²'}</span><span class="t2">${pxCity}</span><span class="src">Données Bienvu de démonstration · octobre 2026</span><span class="lbl">${pxOp==='vente'?'Prix moyen au m²':'Loyer mensuel moyen au m²'}</span><span class="big">${pxFmt(v)}</span><div class="pxgauge"><i style="left:${pos}%"></i></div><div class="pxbl"><span>Prix bas : ${pxFmt(lo)}</span><span>Prix haut : ${pxFmt(hi)}</span></div>`; }
+function pxTypes(){ const v=DVF[pxCity].v, l=DVF[pxCity].l; const a=pxOp==='vente'?v*1.04:l*1.06, m=pxOp==='vente'?v*0.93:l*0.9;
+  const all=Object.keys(DVF).map(c=>pxVal(c)); const avg=all.reduce((x,y)=>x+y,0)/all.length;
+  const card=(t,val,art)=>`<div class="pxtype"><div><h3>Prix moyen ${t==='a'?'des appartements':'des maisons'} au m², ${pxCity}</h3><span class="r">Prix haut : ${pxFmt(val*1.3)}</span><div class="v">${pxFmt(val)}</div><span class="r">Prix bas : ${pxFmt(val*0.66)}</span><span class="r" style="display:block;margin-top:8px">Moyenne des villes suivies : <b>${pxFmt(avg*(t==='a'?1.04:0.93))}</b></span></div>${art}</div>`;
+  document.getElementById('px-types').innerHTML=card('a',a,ART_FLAT)+card('m',m,ART_HOUSE); }
+function pxTable(){ const rows=Object.keys(DVF).sort((x,y)=>DVF[y].v-DVF[x].v);
+  document.getElementById('px-table').innerHTML=`<thead><tr><th>Ville</th><th>Vente €/m²</th><th>Loyer €/m²/mois</th><th>Rendement brut</th></tr></thead><tbody>`+rows.map(c=>`<tr data-c="${c}" class="${c===pxCity?'sel':''}"><td><span class="dot" style="background:${pxColor(pxVal(c))}"></span>${c}</td><td>${fmt(DVF[c].v)} €</td><td>${String(DVF[c].l).replace('.',',')} €</td><td>${(DVF[c].l*12/DVF[c].v*100).toFixed(1).replace('.',',')} %</td></tr>`).join('')+'</tbody>'; }
+function pxSvg(el,mini){ const xs=c=>(GEO[c][1]-1.1)/(5.0-1.1)*1000, ys=c=>(44.35-GEO[c][0])/(44.35-42.55)*560;
+  const pts=Object.keys(GEO).filter(c=>DVF[c]);
+  el.innerHTML=`<svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet"><rect width="1000" height="560" fill="#EEF1F3"/><path d="M640 560 C 700 470 760 450 820 430 C 880 410 940 400 1000 395 L1000 560 Z M330 560 C 380 520 430 480 470 440 C 520 400 560 420 600 470 C 620 500 640 540 640 560 Z" fill="#D7E3EC"/><text x="760" y="520" font-size="22" fill="#8AA0B3" font-style="italic">Mer Méditerranée</text>${pts.map(c=>`<g class="pxpt" data-c="${c}" style="cursor:pointer"><circle cx="${xs(c)}" cy="${ys(c)}" r="${mini?12:(c===pxCity?16:11)}" fill="${pxColor(pxVal(c))}" stroke="${c===pxCity&&!mini?'#1F2730':'#fff'}" stroke-width="${c===pxCity&&!mini?4:3}"/>${!['Montpellier','Nîmes','Toulouse','Perpignan','Uzès','Sète','Béziers','Alès','Narbonne','Carcassonne','Agde','La Grande-Motte'].includes(c)&&(mini||c!==pxCity)?'':`<text x="${xs(c)+16}" y="${ys(c)+6}" font-size="${mini?22:17}" fill="#1F2730" font-weight="600">${c}${mini?' · '+fmt(DVF[c].v)+' €':''}</text>`}</g>`).join('')}</svg>`; }
+function pxMapInit(){ const el=document.getElementById('px-map');
+  if(window.L&&!pxMap){ try{ pxMap=L.map(el,{scrollWheelZoom:false}).setView([43.75,3.6],8); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap'}).addTo(pxMap);
+      Object.keys(GEO).filter(c=>DVF[c]).forEach(c=>{ pxMarkers[c]=L.circleMarker(GEO[c],{radius:10,weight:3,color:'#fff',fillOpacity:.95}).addTo(pxMap).on('click',()=>pxSelect(c)); });
+      pxMap.fitBounds(Object.values(GEO),{padding:[20,20]}); }catch(e){ pxMap=null; } }
+  pxPaint(); }
+function pxPaint(){ if(pxMap){ Object.entries(pxMarkers).forEach(([c,m])=>{ m.setStyle({fillColor:pxColor(pxVal(c)),color:c===pxCity?'#1F2730':'#fff',weight:c===pxCity?4:3}); m.setRadius(c===pxCity?14:10); m.bindTooltip(`<span class="pxpop"><b>${c}</b><br>${pxFmt(pxVal(c))}${pxOp==='vente'?'/m²':'/m²/mois'}</span>`); }); setTimeout(()=>pxMap.invalidateSize(),60); }
+  else pxSvg(document.getElementById('px-map'),false); }
+function pxRender(){ pxCard(); pxTypes(); pxTable(); pxLegend(); pxPaint(); }
+function pxSelect(c){ if(!DVF[c]) return; pxCity=c; document.getElementById('px-city').value=c; pxRender(); if(pxMap) pxMap.panTo(GEO[c]); }
+function pxTab(t){ document.querySelectorAll('.pxt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.px===t)); document.getElementById('px-carte-body').hidden=t!=='carte'; document.getElementById('px-estim-body').hidden=t!=='estim'; if(t==='estim'){ const ec=document.getElementById('es-city'); if(!ec.value) ec.value=pxCity; } }
+function openPrix(tab){ show('prix'); pxTab(tab||'carte'); pxMapInit(); pxRender(); }
+const ART_HOUSE=`<svg class="wf" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M10 84 H110"/><path d="M22 84 V44 L52 20 L82 44 V84"/><path d="M14 50 L52 18 L90 50"/><path d="M44 84 V62 H60 V84"/><rect x="30" y="50" width="10" height="10"/><rect x="64" y="50" width="10" height="10"/><path d="M70 30 V20 H78 V36"/><path d="M90 84 V58 H108 V84 M94 64 H104 M94 72 H104"/></svg>`, ART_FLAT=`<svg class="wf" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 84 H112"/><path d="M34 84 V14 H86 V84"/><path d="M42 24 H52 M68 24 H78 M42 38 H52 M68 38 H78 M42 52 H52 M68 52 H78 M42 66 H52 M68 66 H78"/><path d="M54 84 V72 H66 V84"/><path d="M16 84 V54 H34 M86 54 H104 V84"/></svg>`;
+document.getElementById('px-cities').innerHTML=Object.keys(DVF).sort().map(c=>`<option value="${c}">`).join('');
+document.getElementById('px-city').addEventListener('change',e=>{ const v=norm(e.target.value); const c=Object.keys(DVF).find(k=>norm(k)===v)||Object.keys(DVF).find(k=>norm(k).startsWith(v)); if(c) pxSelect(c); });
+document.getElementById('px-v').addEventListener('click',()=>{ pxOp='vente'; document.getElementById('px-v').setAttribute('aria-pressed','true'); document.getElementById('px-l').setAttribute('aria-pressed','false'); pxRender(); });
+document.getElementById('px-l').addEventListener('click',()=>{ pxOp='location'; document.getElementById('px-l').setAttribute('aria-pressed','true'); document.getElementById('px-v').setAttribute('aria-pressed','false'); pxRender(); });
+document.getElementById('px-estim').addEventListener('click',()=>pxTab('estim'));
+document.getElementById('px-table').addEventListener('click',e=>{ const r=e.target.closest('tr[data-c]'); if(r){ pxSelect(r.dataset.c); document.getElementById('v-prix').scrollIntoView({behavior:'smooth'}); } });
+document.getElementById('px-map').addEventListener('click',e=>{ const g=e.target.closest('.pxpt'); if(g) pxSelect(g.dataset.c); });
+document.querySelectorAll('[data-px]').forEach(b=>b.addEventListener('click',()=>pxTab(b.dataset.px)));
+document.getElementById('estim-form').addEventListener('submit',e=>{ e.preventDefault(); const v=norm(document.getElementById('es-city').value.trim()); const c=Object.keys(DVF).find(k=>norm(k)===v)||Object.keys(DVF).find(k=>norm(k).startsWith(v));
+  const box=document.getElementById('estim-res'); if(!c){ box.innerHTML='<p class="sub">Ville non couverte pour l\'instant. Villes disponibles : voir la carte des prix.</p>'; return; }
+  const op=document.getElementById('es-op').value, typ=document.getElementById('es-type').value, S=+document.getElementById('es-surf').value||0;
+  let k=(+document.getElementById('es-etat').value)*(typ==='Maison'?0.93:1.04);
+  if(document.getElementById('es-ext').checked) k*=1.05; if(document.getElementById('es-park').checked) k*=1.03; if(document.getElementById('es-vue').checked) k*=1.04; if(document.getElementById('es-dpe').checked) k*=0.9;
+  if(S<30) k*=1.08; if(S>150) k*=0.94;
+  const base=(op==='vente'?DVF[c].v:DVF[c].l)*S*k, lo=base*0.92, hi=base*1.08, unit=op==='vente'?'':' / mois';
+  const r=x=>op==='vente'?Math.round(x/1000)*1000:Math.round(x/10)*10;
+  box.innerHTML=`<span class="eyebrow" style="text-align:center">${typ} · ${fmt(S)} m² · ${c}</span><div class="sub">${op==='vente'?'Prix de vente estimé':'Loyer estimé hors charges'}</div><div class="big">${eur(r(base))}${unit}</div><div class="pxgauge"><i style="left:50%"></i></div><div class="pxbl"><span>Bas : ${eur(r(lo))}</span><span>Haut : ${eur(r(hi))}</span></div><p class="sub">Soit ${fmt(Math.round(base/S))} € le m²${op==='vente'?'':' par mois'}, pour une moyenne de ${pxOp==='vente'&&op==='vente'?fmt(DVF[c].v):String(op==='vente'?fmt(DVF[c].v):DVF[c].l).replace('.',',')} € à ${c}.</p>${op==='vente'?`<p class="sub">Avec Bienvu, vous gardez les ${eur(Math.round(base*0.05/100)*100)} qu'une agence aurait pris à 5 %.</p>`:''}<button type="button" class="btn cta" data-go="post" style="justify-self:center">Déposer gratuitement mon annonce</button>`; });
+// Raccourcis (boutons data-go)
+document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(!g) return; const t=g.dataset.go;
+  if(t==='prix') openPrix('carte'); else if(t==='estimer') openPrix('estim'); else if(t==='home-loc'){ show('home'); document.getElementById('seg-location').click(); } else show(t); });
+document.getElementById('seg-estimer').addEventListener('click',()=>openPrix('estim'));
+document.getElementById('foot-cities').innerHTML=Object.keys(DVF).filter(c=>GEO[c]).slice(0,16).map(c=>`<button type="button" data-city="${c}">Prix au m² à ${c}</button>`).join('');
+document.getElementById('foot-cities').addEventListener('click',e=>{ const b=e.target.closest('[data-city]'); if(b){ openPrix('carte'); pxSelect(b.dataset.city); } });
+pxSvg(document.getElementById('mini-map'),true);
+document.getElementById('mini-map').addEventListener('click',()=>openPrix('carte'));
+// Recherche en langage naturel : extrait ville, type, budget et achat/location
+function smartParse(){ const q=document.getElementById('q'); const raw=q.value.trim(); if(!raw) return; const t=norm(raw); const got=[];
+  if(/\b(louer|location|loyer|a louer)\b/.test(t)&&mode!=='location'){ document.getElementById('seg-location').click(); got.push('Location'); }
+  const types=[[/\b(maison|villa|mas|pavillon)s?\b/,'Maison'],[/\b(appartement|appart|t[1-6]|f[1-6])\b/,'Appartement'],[/\bstudio\b/,'Studio'],[/\bloft\b/,'Loft'],[/\bterrain\b/,'Terrain'],[/\b(parking|garage|box)\b/,'Parking'],[/\bimmeuble\b/,'Immeuble'],[/\b(local|commerce|boutique)\b/,'Local']];
+  for(const [re,ty] of types){ if(re.test(t)){ document.getElementById('type').value=ty; got.push(ty); break; } }
+  const city=Object.keys(DVF).sort((a,b)=>b.length-a.length).find(c=>t.includes(norm(c)))||(BIENS.map(b=>b.ville).sort((a,b)=>b.length-a.length).find(c=>t.includes(norm(c))));
+  const m=t.match(/(\d[\d\s.]*)\s*(k|m|mille|000|€|euros)?/g); let bud=0;
+  (m||[]).forEach(x=>{ const mm=x.match(/(\d[\d\s.]*)\s*(k|m|mille|000|€|euros)?/); let n=parseFloat(mm[1].replace(/[\s.]/g,'')); const u=mm[2]||''; if(u==='k'||u==='mille') n*=1000; if(u==='m') n*=1e6; if(n>=20000||(mode==='location'&&n>=200&&u&&u!=='k')) bud=Math.max(bud,n); });
+  if(bud){ const sel=document.getElementById('budget'); let o=[...sel.options].find(o=>+o.value===bud); if(!o){ o=new Option(fmt(bud)+' €',bud); sel.add(o); } sel.value=String(bud); got.push('≤ '+fmt(bud)+' €'); }
+  if(city){ q.value=city; got.unshift(city); } else if(got.length) q.value='';
+  const h=document.getElementById('smart-hint'); if(got.length>1||(got.length&&!city)){ h.hidden=false; h.textContent='Compris : '+got.join(' · '); setTimeout(()=>toast('Compris : '+got.join(' · ')),50); } else h.hidden=true; }
+document.getElementById('search').addEventListener('submit',smartParse);
 
 document.getElementById('search').addEventListener('submit',e=>{ e.preventDefault(); const q=document.getElementById('q').value.trim().toLowerCase(); const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
   const res=BIENS.filter(b=>b.op===mode && (!q || b.ville.toLowerCase().includes(q) || b.quartier.toLowerCase().includes(q) || (b.premium&&/prestige|exception|luxe/.test(q))) && (!t || b.type===t) && b.prix<=bud);
