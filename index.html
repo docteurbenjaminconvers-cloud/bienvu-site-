@@ -140,6 +140,7 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 .badge.pk{border-color:#D9C7A3;color:#8C6A35;background:#F7F2E8}
 .step table td:last-child{white-space:nowrap;text-align:right;vertical-align:top;padding-left:10px}
 .row2 .btn{white-space:normal;min-width:0;line-height:1.25}
+.p-submit{width:100%;margin-top:6px}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -995,6 +996,8 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <h3><span class="n">4</span>Votre prix</h3>
       <input id="p-prix" placeholder="Prix (€)" inputmode="numeric" required>
       <p class="hint" id="p-baro">Saisissez ville, quartier, surface et prix : Bienvu compare aux ventes réelles autour de l'adresse.</p>
+      <button class="btn cta p-submit" type="submit" id="p-submit">Publier gratuitement</button>
+      <p class="hint">Annonce gratuite, sans limite de durée. Les options ci-dessous sont facultatives et peuvent être ajoutées plus tard.</p>
     </div>
     <div class="step">
       <h3><span class="n">5</span>Options <span class="free" style="margin-left:auto">Annonce : 0 €</span></h3>
@@ -1006,8 +1009,6 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <div class="total"><span>Total à régler</span><b id="p-total">0 €</b></div>
       <p class="hint">Payé une fois à la publication, jamais au résultat. Aucune commission sur votre vente.</p>
     </div>
-    <button class="btn cta" type="submit" id="p-submit">Publier gratuitement</button>
-    <p class="hint">Annonce gratuite, sans limite de durée. Vous pouvez ajouter des options plus tard depuis votre tableau de bord.</p>
   </form>
   <div id="post-ok" hidden></div>
 </section>
