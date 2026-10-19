@@ -11,7 +11,40 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
-<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}
+/* Bienvu Prestige : bandeau d'accès en haut de page, entrée de nav, en-tête « salon » */
+.pbar{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;border:0;margin:0;cursor:pointer;font:inherit;background:var(--prestige-bg);color:var(--gold);padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));position:relative;overflow:hidden;text-decoration:none}
+.pbar::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(214,186,130,.22) 50%,transparent 65%);transform:translateX(-100%);animation:psheen 1.6s .8s ease-out 1 both;pointer-events:none}
+@keyframes psheen{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.pbar::after{animation:none;display:none}}
+.pbar .pdia{width:12px;height:12px;flex:none;stroke:var(--gold);fill:none;stroke-width:1.4}
+.pbar .pname{font-family:var(--display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.pbar .prule{width:28px;height:1px;background:var(--gold);opacity:.55;flex:none}
+.pbar .ptag{font-size:12px;letter-spacing:.06em;color:var(--prestige-muted)}
+.pbar .pgo{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(176,141,87,.6);padding-bottom:1px}
+.pbar:hover .pgo,.pbar:focus-visible .pgo{border-bottom-color:var(--gold)}
+.pbar:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
+@media (max-width:560px){.pbar .ptag,.pbar .prule.r2{display:none}.pbar{justify-content:space-between}.pbar .pname{font-size:12px;letter-spacing:.16em}}
+body[data-view="prestige"] .pbar,body[data-view="nda"] .pbar{display:none}
+/* En-tête qui passe en mode « salon » dans Prestige */
+.header{transition:background .35s ease,border-color .35s ease}
+.brand .bp{display:none;font-family:var(--display);font-size:.62em;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+body[data-view="prestige"] .header,body[data-view="nda"] .header{background:var(--prestige-bg);border-bottom-color:var(--gold)}
+body[data-view="prestige"] .brand,body[data-view="nda"] .brand{color:var(--prestige-ink)}
+body[data-view="prestige"] .brand .bp,body[data-view="nda"] .brand .bp{display:inline}
+body[data-view="prestige"] .brand small:not(.bp),body[data-view="nda"] .brand small:not(.bp){display:none}
+body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn.ghost{color:var(--prestige-ink);border-color:rgba(242,239,232,.45)}
+/* Entrée Prestige dans la navigation (tablette et ordinateur) */
+.nav .nav-p{display:none}
+@media (min-width:900px){
+  .nav .nav-p{display:flex;color:var(--gold);margin-left:14px;position:relative;font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;font-size:12.5px}
+  .nav .nav-p::before{content:"";position:absolute;left:-8px;top:30%;bottom:30%;width:1px;background:var(--line)}
+  .nav .nav-p svg{width:14px;height:14px;stroke:var(--gold)}
+  .nav .nav-p[aria-current="page"]{border-bottom-color:var(--gold);color:var(--gold)}
+  .pbar{order:-4;padding-block:9px}
+}
+@media (max-width:560px){body[data-view="prestige"] .brand,body[data-view="nda"] .brand{flex-direction:column;align-items:flex-start;gap:2px;line-height:1}body[data-view="prestige"] .brand .bp,body[data-view="nda"] .brand .bp{font-size:10.5px;letter-spacing:.32em}}
+</style>
 </head>
 <body>
 <title>Bienvu</title>
@@ -354,8 +387,9 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 }
 </style>
 
+<button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
 <header class="header">
-  <div class="brand">Bienvu <small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
+  <div class="brand">Bienvu <small class="bp">Prestige</small><small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
   <div class="acts"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
 </header>
 <div class="wire" aria-hidden="true"></div>
@@ -717,6 +751,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <button type="button" data-nav="post"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Déposer</button>
   <button type="button" data-nav="tarifs"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-8-8V4h8z"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>Tarifs</button>
   <button type="button" data-nav="msg"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Messages</button>
+  <button type="button" data-nav="prestige" class="nav-p"><svg viewBox="0 0 12 12"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Prestige</button>
 </nav>
 
 <script>
@@ -738,7 +773,7 @@ function card(b){ const e=ecart(b); return `<button class="card" type="button" d
   <span class="meta">${b.ville} · ${b.quartier}</span>
   <div class="badges"><span class="badge ok">Vérifié</span><span class="badge decl">Déclaré</span>${ecartBadge(e)}${b.dpe?`<span class="badge">DPE ${b.dpe}</span>`:''}</div></div></button>`; }
 
-function show(id){ document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
+function show(id){ if(id==='prestige'&&typeof renderPrestige==='function') renderPrestige(); document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.nav)));
 document.getElementById('hdr-deposer').addEventListener('click',()=>show('post'));
 document.getElementById('back-home').addEventListener('click',()=>show('home'));
@@ -756,6 +791,9 @@ let pf='all';
 function renderPrestige(){ const L=BIENS.filter(b=>b.premium).filter(b=>pf==='all'?true:pf==='prive'?b.prive:pf==='mer'?['Sète','Le Grau-du-Roi','Palavas-les-Flots','La Grande-Motte','Agde'].includes(b.ville):pf==='mas'?/mas|domaine|magnanerie|château/i.test(b.etage+b.desc)&&!['Sète','Le Grau-du-Roi'].includes(b.ville):/hôtel particulier|toulousaine|folie|appartement/i.test(b.etage+b.desc)); document.getElementById('prestige-full').innerHTML=L.length?L.map(pcard).join(''):'<p style="color:var(--prestige-muted)">Aucun bien dans cette catégorie pour le moment.</p>'; }
 document.getElementById('go-prestige').addEventListener('click',()=>{ renderPrestige(); show('prestige'); });
 document.getElementById('back-prestige').addEventListener('click',()=>show('home'));
+document.getElementById('pbar').addEventListener('click',()=>show('prestige'));
+try{ const n=BIENS.filter(b=>b.premium).length; if(n) document.getElementById('pbar-tag').textContent=`${n} biens d'exception · diffusion confidentielle`; }catch(e){}
+
 document.querySelector('.pfilters').addEventListener('click',e=>{ const b=e.target.closest('.pf'); if(!b) return; pf=b.dataset.pf; document.querySelectorAll('.pf').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderPrestige(); });
 renderHome();
 
