@@ -806,6 +806,30 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .field-err{outline:2px solid var(--bad,#B3261E);outline-offset:1px}
 @media (max-width:899px){.wz-prev{order:-1}.wz-prev .wz-card,.wz-prev .wz-check,.wz-prev>.eyebrow{display:none}}
 @media (min-width:900px){.wz{grid-template-columns:minmax(0,1fr) 340px;gap:32px}.wz-prev{position:sticky;top:76px}.wz-nav{bottom:0}}
+
+.kyc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kyc{position:relative;overflow:hidden;display:grid;justify-items:center;align-content:center;gap:6px;text-align:center;font:inherit;color:var(--ink);background:var(--tint,#EEF0F2);border:1.5px dashed #B7C0CA;border-radius:var(--r);padding:16px 10px;min-height:150px;cursor:pointer}
+.kyc svg{width:34px;height:34px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.kyc b{font-size:14px}
+.kyc small{font-size:12px;color:var(--muted)}
+.kyc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
+.kyc.done{border-style:solid;border-color:var(--good,#2E7D4F);background:#EEF6F0}
+.kyc.done svg{stroke:var(--good,#2E7D4F)}
+.kyc.done small{color:var(--good,#2E7D4F);font-weight:700}
+.kyc.wide{grid-template-columns:auto 1fr;justify-items:start;text-align:left;min-height:0;padding:16px;align-items:center;column-gap:14px}
+.kyc.wide svg{grid-row:1/3}
+.prop-docs{display:grid;gap:10px}
+.prop-l{display:grid;gap:5px;font-size:13.5px;font-weight:700}
+.kyc-res>div{border-radius:var(--r);padding:12px 14px;font-size:14px}
+.kyc-wait{background:#F3F4F6;display:flex;gap:10px;align-items:center;color:var(--muted)}
+.kyc-wait.warn{background:#FBF3E6;color:var(--ink)}
+.kyc-wait i{flex:none;width:16px;height:16px;border:2px solid #C3C8CE;border-top-color:var(--accent);border-radius:50%;animation:kspin .8s linear infinite}
+@keyframes kspin{to{transform:rotate(360deg)}}
+.kyc-ok{background:#EEF6F0;border:1px solid #BFDCC9}
+.kyc-ok>b{color:var(--good,#2E7D4F);font-size:15px}
+.kyc-ok>b::before{content:"✓ "}
+.kyc-ok ul{margin:6px 0 0;padding-left:18px;display:grid;gap:3px;color:var(--ink)}
+@media (max-width:560px){.kyc-grid{grid-template-columns:1fr 1fr}.kyc-grid .kyc:last-child{grid-column:1/-1;min-height:120px}}
 </style>
 
 <button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
@@ -1060,14 +1084,26 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   </div>
   <div class="wz">
   <form class="steps wz-form" id="post" novalidate>
-    <div class="step">
+    <div class="step" data-k="vous">
       <h3><span class="n">1</span>Qui êtes-vous ?</h3>
       <div class="row2"><input id="p-prenom" placeholder="Prénom" required><input id="p-nom" placeholder="Nom" required></div>
       <input id="p-tel" placeholder="Mobile (masqué sur le site)" inputmode="tel" required>
-      <p class="hint">Vous passerez ensuite une vérification d'identité (pièce d'identité + selfie, 2 minutes). Votre numéro n'apparaît jamais sur l'annonce.</p>
+      <p class="hint">Votre numéro n'apparaît jamais sur l'annonce. Étape suivante : vérification d'identité (2 minutes).</p>
     </div>
-    <div class="step">
-      <h3><span class="n">2</span>Votre bien</h3>
+    <div class="step" data-k="id">
+      <h3><span class="n">2</span>Vérification d'identité</h3>
+      <p class="hint">Trois photos, deux minutes. Elles servent uniquement à vérifier que vous êtes bien la personne qui publie : jamais affichées sur l'annonce ni transmises aux acheteurs.</p>
+      <div class="kyc-grid">
+        <button type="button" class="kyc" data-kyc="recto" data-cap="environment"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.4"/><path d="M5.5 16c.7-1.6 2-2.4 3.5-2.4s2.8.8 3.5 2.4M14.5 10h4M14.5 13h3"/></svg><b>Pièce d'identité · recto</b><small>Carte d'identité ou passeport</small></button>
+        <button type="button" class="kyc" data-kyc="verso" data-cap="environment"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.4"/><path d="M5.5 16c.7-1.6 2-2.4 3.5-2.4s2.8.8 3.5 2.4M14.5 10h4M14.5 13h3"/></svg><b>Pièce d'identité · verso</b><small>Passeport : page photo seule</small></button>
+        <button type="button" class="kyc" data-kyc="selfie" data-cap="user"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="4"/><path d="M5 20c1.4-3.2 4-4.8 7-4.8s5.6 1.6 7 4.8"/><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/></svg><b>Selfie</b><small>Visage de face, bien éclairé</small></button>
+      </div>
+      <input type="file" id="kyc-input" accept="image/*" hidden>
+      <div class="kyc-res" id="id-res" hidden></div>
+      <p class="note">Prototype : vérification simulée. En production, contrôle par un prestataire certifié (document authentique, détection de fraude, comparaison du visage), données chiffrées et supprimées après la vérification.</p>
+    </div>
+    <div class="step" data-k="bien">
+      <h3><span class="n">3</span>Votre bien</h3>
       <div class="row2">
         <select id="p-op"><option>Vente</option><option>Location</option></select>
         <select id="p-type"><option>Appartement</option><option>Studio</option><option>Maison</option><option>Loft</option><option>Terrain</option><option>Parking</option><option>Immeuble</option><option>Local</option></select>
@@ -1075,17 +1111,30 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <div class="row2"><input id="p-ville" placeholder="Ville" required><input id="p-quartier" placeholder="Quartier ou adresse"></div>
       <div class="row2"><input id="p-surface" placeholder="Surface (m²)" inputmode="numeric" required><input id="p-pieces" placeholder="Pièces" inputmode="numeric"></div>
       <div class="row2"><input id="p-adresse" placeholder="Adresse exacte (masquée sur l'annonce)"><select id="p-dpe"><option value="">DPE (obligatoire)</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></div>
-      <p class="hint">Preuve de propriété demandée après publication : titre, taxe foncière ou attestation notariale.</p>
+      <p class="hint">L'adresse exacte sert à vérifier la propriété et la position des photos ; elle n'est jamais publiée.</p>
     </div>
-    <div class="step">
-      <h3><span class="n">3</span>Photos guidées</h3>
+    <div class="step" data-k="prop">
+      <h3><span class="n">4</span>Preuve de propriété</h3>
+      <p class="hint">Bienvu vérifie que le bien vous appartient avant toute mise en ligne : c'est ce qui empêche les fausses annonces et les arnaques au dépôt de garantie.</p>
+      <label class="prop-l">Vous êtes
+        <select id="prop-qual"><option value="seul">Seul propriétaire</option><option value="couple">Propriétaire avec mon conjoint</option><option value="indiv">Propriétaire en indivision (succession, plusieurs héritiers)</option><option value="sci">Gérant d'une SCI ou d'une société</option><option value="mand">Usufruitier, tuteur ou mandataire</option></select>
+      </label>
+      <div class="prop-docs">
+        <button type="button" class="kyc wide" data-kyc="titre" data-cap="environment"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 11h7M9 14h7M9 17h4"/></svg><b>Justificatif de propriété</b><small>Avis de taxe foncière (le plus simple), attestation notariale ou acte de vente · PDF ou photo</small></button>
+        <button type="button" class="kyc wide" data-kyc="extra" data-cap="environment" id="prop-extra" hidden><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 11h7M9 14h7M9 17h4"/></svg><b id="prop-extra-t">Document complémentaire</b><small id="prop-extra-s"></small></button>
+      </div>
+      <div class="kyc-res" id="prop-res" hidden></div>
+      <p class="note">Prototype : lecture simulée. En production, le nom du propriétaire et l'adresse sont lus automatiquement sur le document et comparés à votre identité et à l'adresse déclarée ; en cas de doute, un conseiller vérifie sous 24 h.</p>
+    </div>
+    <div class="step" data-k="photos">
+      <h3><span class="n">5</span>Photos guidées</h3>
       <p class="hint">Photos prises dans l'appli uniquement (galerie désactivée), horodatées, géolocalisées et vérifiées : position conforme à l'adresse, façade comparée à la vue de rue, aucune image réutilisée ou retouchée. Focale standard imposée. Sans déclaration complète, pas de publication.</p>
       <div class="shot-count" id="shot-count"></div>
       <div class="shots" id="shots"></div>
       <input type="file" id="shot-input" accept="image/*" capture="environment" hidden>
     </div>
-    <div class="step">
-      <h3><span class="n">4</span>Déclaration de l'état du bien</h3>
+    <div class="step" data-k="decl">
+      <h3><span class="n">6</span>Déclaration de l'état du bien</h3>
       <p class="hint">Répondez honnêtement : la déclaration est jointe au compromis ou au bail. Une réponse « ? » est acceptée si vous ne savez pas.</p>
       <div class="qs" id="qs"></div>
       <div class="pv" id="pv-block">
@@ -1096,16 +1145,16 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       </div>
       <label class="opt" style="border:0;padding-top:12px"><input type="checkbox" id="p-cert"><span class="l">Je certifie l'exactitude de cette déclaration<small>Elle sera horodatée, signée électroniquement et jointe à l'annonce.</small></span></label>
     </div>
-    <div class="step">
-      <h3><span class="n">5</span>Votre prix</h3>
+    <div class="step" data-k="prix">
+      <h3><span class="n">7</span>Votre prix</h3>
       <div class="est-box" id="est-box" hidden></div>
       <input id="p-prix" placeholder="Prix (€)" inputmode="numeric" required>
       <p class="hint" id="p-baro">Saisissez ville, quartier, surface et prix : Bienvu compare aux ventes réelles autour de l'adresse.</p>
       <button class="btn cta p-submit" type="submit" id="p-submit">Publier gratuitement</button>
       <p class="hint">Annonce gratuite, sans limite de durée. Les options de l'étape suivante sont facultatives et peuvent être ajoutées plus tard.</p>
     </div>
-    <div class="step">
-      <h3><span class="n">6</span>Options et publication <span class="free" style="margin-left:auto">Annonce : 0 €</span></h3>
+    <div class="step" data-k="pub">
+      <h3><span class="n">8</span>Options et publication <span class="free" style="margin-left:auto">Annonce : 0 €</span></h3>
       <label class="opt"><input type="checkbox" class="optc" value="9" id="o-top"><span class="l">Remontée en tête de liste<small>7 jours, renouvelable</small></span><span class="p">9 €</span></label>
       <label class="opt"><input type="checkbox" class="optc" value="19" id="o-boost"><span class="l">Boost réseaux sociaux<small>Diffusion sur les groupes locaux</small></span><span class="p">19 €</span></label>
       <label class="opt"><input type="checkbox" class="optc" value="39" id="o-verif"><span class="l">Pack Vérifié+<small>Badge, photos retouchées, plan 2D</small></span><span class="p">39 €</span></label>
@@ -1876,29 +1925,51 @@ function baro(){ const v=document.getElementById('p-ville').value.trim(); const 
 function optTotal(){ const loc=document.getElementById('p-op').value==='Location'; const pack=document.getElementById('o-pack'); pack.value=loc?99:299; document.getElementById('o-pack-p').textContent=(loc?99:299)+' €'; let t=0; document.querySelectorAll('.optc:checked').forEach(c=>t+=+c.value); document.getElementById('p-total').textContent=eur(t); document.getElementById('p-submit').textContent=t?'Publier et régler '+eur(t):'Publier gratuitement'; }
 document.querySelectorAll('.optc').forEach(c=>c.addEventListener('change',optTotal)); document.getElementById('p-op').addEventListener('change',optTotal); optTotal();
 
+
+// ===== Vérification d'identité et preuve de propriété (simulées dans le prototype) =====
+const KYC={}; let kycTarget=null; const kycIn=document.getElementById('kyc-input'); const isTouch=matchMedia('(pointer:coarse)').matches;
+function propNeedsExtra(){ return document.getElementById('prop-qual').value!=='seul'; }
+const PROP_EXTRA={couple:['Accord de votre conjoint','Pièce d\'identité du conjoint et accord signé dans l\'appli (lien envoyé par SMS)'],indiv:['Accord des autres indivisaires','Attestation de dévolution ou acte de notoriété, et accord signé de chaque héritier'],sci:['Extrait Kbis et statuts','Kbis de moins de 3 mois et statuts prouvant que vous êtes gérant'],mand:['Justificatif de pouvoir','Jugement de tutelle, mandat ou acte de démembrement']};
+function propQual(){ const q=document.getElementById('prop-qual').value; const b=document.getElementById('prop-extra'); b.hidden=q==='seul'; if(q!=='seul'){ document.getElementById('prop-extra-t').textContent=PROP_EXTRA[q][0]; document.getElementById('prop-extra-s').textContent=PROP_EXTRA[q][1]; } if(KYC.titre) propVerify(); if(typeof wzUpd==='function') wzUpd(); }
+document.getElementById('prop-qual').addEventListener('change',propQual);
+function kycDone(k,url){ KYC[k]=true; const b=document.querySelector(`.kyc[data-kyc="${k}"]`); b.classList.add('done'); if(url){ b.querySelectorAll('img').forEach(x=>x.remove()); b.insertAdjacentHTML('afterbegin',`<img src="${url}" alt="">`); } b.querySelector('small').textContent='Reçu · '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  if(['recto','verso','selfie'].includes(k)&&KYC.recto&&KYC.verso&&KYC.selfie) idVerify();
+  if(['titre','extra'].includes(k)) propVerify(); if(typeof wzUpd==='function') wzUpd(); }
+document.querySelectorAll('.kyc').forEach(b=>b.addEventListener('click',()=>{ kycTarget=b.dataset.kyc; if(isTouch||b.dataset.kyc==='titre'||b.dataset.kyc==='extra'){ kycIn.setAttribute('accept',['titre','extra'].includes(kycTarget)?'image/*,.pdf':'image/*'); if(isTouch&&!['titre','extra'].includes(kycTarget)) kycIn.setAttribute('capture',b.dataset.cap); else kycIn.removeAttribute('capture'); kycIn.value=''; kycIn.click(); return; } kycDone(kycTarget,null); }));
+kycIn.addEventListener('change',()=>{ const f=kycIn.files[0]; if(!f||!kycTarget) return; kycDone(kycTarget,f.type.startsWith('image/')?URL.createObjectURL(f):null); });
+function nameUp(){ return (wzVal('p-nom')||'').toUpperCase()+' '+(wzVal('p-prenom')||''); }
+function idVerify(){ const r=document.getElementById('id-res'); r.hidden=false; KYC.idState='pending'; r.innerHTML='<div class="kyc-wait"><i></i>Vérification en cours : authenticité du document, lecture de la bande MRZ, comparaison du visage…</div>'; wzUpd();
+  setTimeout(()=>{ KYC.idState='ok'; r.innerHTML=`<div class="kyc-ok"><b>Identité vérifiée</b><ul><li>Document authentique, en cours de validité</li><li>Nom lu sur le document : <b>${nameUp().trim()||'—'}</b>, conforme à votre saisie</li><li>Visage concordant avec la photo du document (98 %)</li><li>Selfie réalisé en direct, pas une photo d'écran</li></ul></div>`; wzUpd(); },1600); }
+function propVerify(){ const r=document.getElementById('prop-res'); if(!KYC.titre) return; if(propNeedsExtra()&&!KYC.extra){ r.hidden=false; KYC.propState='wait'; r.innerHTML=`<div class="kyc-wait warn">Justificatif reçu. Ajoutez maintenant : <b>${PROP_EXTRA[document.getElementById('prop-qual').value][0]}</b>.</div>`; wzUpd(); return; }
+  r.hidden=false; KYC.propState='pending'; r.innerHTML='<div class="kyc-wait"><i></i>Lecture du document : nom du propriétaire, adresse et référence cadastrale…</div>'; wzUpd();
+  const adr=wzVal('p-adresse')||wzVal('p-ville')||'adresse déclarée'; const q=document.getElementById('prop-qual').value;
+  const owner=q==='sci'?`SCI ${(wzVal('p-nom')||'').toUpperCase()} · gérant : ${nameUp().trim()}`:q==='indiv'?`Indivision ${(wzVal('p-nom')||'').toUpperCase()} (3 indivisaires)`:q==='couple'?`${nameUp().trim()} et son conjoint`:nameUp().trim();
+  setTimeout(()=>{ KYC.propState='ok'; r.innerHTML=`<div class="kyc-ok"><b>Propriété vérifiée</b><ul><li>Propriétaire lu sur le document : <b>${owner||'—'}</b>, concordant avec votre identité</li><li>Adresse du bien : <b>${adr}</b>, conforme à l'adresse déclarée</li><li>Document récent et non modifié</li>${q!=='seul'?`<li>${PROP_EXTRA[q][0]} : reçu et conforme</li>`:''}</ul></div>`; wzUpd(); },1800); }
 // ===== Parcours vendeur : assistant =====
-const WZ_LABELS=['Vous','Le bien','Photos','Déclaration','Prix','Publier'];
+const WZ_LBL={vous:'Vous',id:'Identité',bien:'Le bien',prop:'Propriété',photos:'Photos',decl:'Déclaration',prix:'Prix',pub:'Publier'};
 const wzForm=document.getElementById('post'); const wzSteps=[...wzForm.querySelectorAll(':scope > .step')]; let wzCur=0;
 wzForm.classList.add('wizard');
 function wzVal(id){ return (document.getElementById(id).value||'').trim(); }
-function wzCheck(i,show){ const need={0:['p-prenom','p-nom','p-tel'],1:['p-ville','p-surface','p-dpe'],4:['p-prix']}[i]||[]; let bad=need.filter(id=>!wzVal(id));
+function wzCheck(i,show){ const key=wzSteps[i]&&wzSteps[i].dataset.k; const need={vous:['p-prenom','p-nom','p-tel'],bien:['p-ville','p-adresse','p-surface','p-dpe'],prix:['p-prix']}[key]||[]; let bad=need.filter(id=>!wzVal(id));
   document.querySelectorAll('.field-err').forEach(x=>x.classList.remove('field-err'));
   if(show) bad.forEach(id=>document.getElementById(id).classList.add('field-err'));
   if(bad.length) return 'Complétez les champs indiqués';
-  if(i===2){ const n=shotsEl.querySelectorAll('.shot.done').length; if(n<SHOTS.length) return `Il manque ${SHOTS.length-n} photo${SHOTS.length-n>1?'s':''}`; }
-  if(i===3){ const a=qsEl.querySelectorAll('.a button[aria-pressed="true"]').length; if(a<QS.length) return 'Répondez à toutes les questions (« ? » accepté)'; if(!document.getElementById('p-cert').checked) return 'Cochez la certification pour continuer'; }
+  if(key==='id'){ if(!KYC.recto||!KYC.verso||!KYC.selfie) return 'Prenez les trois photos d\'identité'; if(KYC.idState!=='ok') return 'Vérification d\'identité en cours…'; }
+  if(key==='prop'){ if(!KYC.titre) return 'Ajoutez un justificatif de propriété'; if(propNeedsExtra()&&!KYC.extra) return 'Ajoutez le document complémentaire'; if(KYC.propState!=='ok') return 'Vérification du justificatif en cours…'; }
+  if(key==='photos'){ const n=shotsEl.querySelectorAll('.shot.done').length; if(n<SHOTS.length) return `Il manque ${SHOTS.length-n} photo${SHOTS.length-n>1?'s':''}`; }
+  if(key==='decl'){ const a=qsEl.querySelectorAll('.a button[aria-pressed="true"]').length; if(a<QS.length) return 'Répondez à toutes les questions (« ? » accepté)'; if(!document.getElementById('p-cert').checked) return 'Cochez la certification pour continuer'; }
   return ''; }
 function wzGo(i){ wzCur=Math.max(0,Math.min(wzSteps.length-1,i)); wzSteps.forEach((st,k)=>st.classList.toggle('cur',k===wzCur));
   const nav=document.getElementById('wz-nav'); nav.classList.toggle('first',wzCur===0); nav.classList.toggle('last',wzCur===wzSteps.length-1);
   document.getElementById('wz-step').textContent=`Étape ${wzCur+1} sur ${wzSteps.length}`;
-  document.getElementById('wz-next').textContent=wzCur===4?'Voir les options →':'Continuer →';
-  wzProg(); if(wzCur===4) wzEst(); wzSave(); const top=document.getElementById('v-post'); if(top.getBoundingClientRect().top<0) window.scrollTo({top:window.scrollY+top.getBoundingClientRect().top-80,behavior:'smooth'}); }
-function wzProg(){ document.getElementById('wz-prog').innerHTML=WZ_LABELS.map((l,k)=>`<li class="${k===wzCur?'cur':(k<wzCur||!wzCheck(k,false))&&k!==wzCur?'done':''}"><button type="button" data-wz="${k}"><i>${k+1}</i>${l}</button></li>`).join(''); }
+  const ck=wzSteps[wzCur].dataset.k; document.getElementById('wz-next').textContent=ck==='prix'?'Voir les options →':'Continuer →';
+  wzProg(); if(ck==='prix') wzEst(); wzSave(); const top=document.getElementById('v-post'); if(top.getBoundingClientRect().top<0) window.scrollTo({top:window.scrollY+top.getBoundingClientRect().top-80,behavior:'smooth'}); }
+function wzProg(){ document.getElementById('wz-prog').innerHTML=wzSteps.map((st,k)=>`<li class="${k===wzCur?'cur':!wzCheck(k,false)&&k!==wzSteps.length-1?'done':''}"><button type="button" data-wz="${k}"><i>${k+1}</i>${WZ_LBL[st.dataset.k]}</button></li>`).join(''); }
 document.getElementById('wz-prog').addEventListener('click',e=>{ const b=e.target.closest('[data-wz]'); if(!b) return; const t=+b.dataset.wz; if(t>wzCur){ for(let k=wzCur;k<t;k++){ const m=wzCheck(k,true); if(m){ wzGo(k); toast(m); return; } } } wzGo(t); });
 document.getElementById('wz-next').addEventListener('click',()=>{ const m=wzCheck(wzCur,true); if(m){ toast(m); return; } wzGo(wzCur+1); });
 document.getElementById('wz-prev').addEventListener('click',()=>wzGo(wzCur-1));
 // Publication depuis l'étape prix : vérifier toutes les étapes
-wzForm.addEventListener('submit',e=>{ for(let k=0;k<5;k++){ const m=wzCheck(k,true); if(m){ e.preventDefault(); e.stopImmediatePropagation(); wzGo(k); toast(m); return; } } try{ localStorage.removeItem('bienvu-draft'); }catch(_){} },true);
+wzForm.addEventListener('submit',e=>{ for(let k=0;k<wzSteps.length-1;k++){ const m=wzCheck(k,true); if(m){ e.preventDefault(); e.stopImmediatePropagation(); wzGo(k); toast(m); return; } } try{ localStorage.removeItem('bienvu-draft'); }catch(_){} },true);
 // Photos : appareil photo du téléphone (sinon simulation)
 let shotTarget=null; const shotIn=document.getElementById('shot-input'); const mobileCam=matchMedia('(pointer:coarse)').matches;
 shotsEl.addEventListener('click',e=>{ const b=e.target.closest('.shot'); if(!b||!mobileCam) return; e.stopImmediatePropagation(); shotTarget=b; shotIn.value=''; shotIn.click(); },true);
@@ -1914,8 +1985,8 @@ function wzEst(){ const box=document.getElementById('est-box'); const v=norm(wzV
 // Aperçu en direct
 function wzUpd(){ const op=document.getElementById('p-op').value==='Location'?'location':'vente'; const typ=document.getElementById('p-type').value; const S=+wzVal('p-surface'), P=+wzVal('p-prix'), pc=+wzVal('p-pieces'); const city=wzVal('p-ville')||'Votre ville'; const q=wzVal('p-quartier');
   const img=shotsEl.querySelector('.shot img'); const nShots=shotsEl.querySelectorAll('.shot.done').length; const pack=document.getElementById('o-pack').checked;
-  document.getElementById('wz-card').innerHTML=`<div class="ph">${img?`<img src="${img.src}" alt="">`:'<span>Vos photos</span>'}</div><div class="body"><span class="price">${P?eur(P):'Votre prix'}${op==='location'?' <span class="meta">/ mois</span>':''}</span><span><b>${typ}${pc?' '+pc+' p.':''}${S?' · '+fmt(S)+' m²':''}</b></span><span class="meta">${city}${q?' · '+q:''}</span><div class="badges"><span class="badge ok">Vérifié</span>${nShots===SHOTS.length?'<span class="badge decl">Déclaré</span>':''}${pack?'<span class="badge pk">Parcours sécurisé</span>':''}${wzVal('p-dpe')?`<span class="badge">DPE ${wzVal('p-dpe')}</span>`:''}</div></div>`;
-  const checks=[['Coordonnées',!wzCheck(0,false)],['Description du bien',!wzCheck(1,false)],[`Photos (${nShots}/${SHOTS.length})`,nShots===SHOTS.length],['Déclaration signée',!wzCheck(3,false)],['Prix',!!P]];
+  document.getElementById('wz-card').innerHTML=`<div class="ph">${img?`<img src="${img.src}" alt="">`:'<span>Vos photos</span>'}</div><div class="body"><span class="price">${P?eur(P):'Votre prix'}${op==='location'?' <span class="meta">/ mois</span>':''}</span><span><b>${typ}${pc?' '+pc+' p.':''}${S?' · '+fmt(S)+' m²':''}</b></span><span class="meta">${city}${q?' · '+q:''}</span><div class="badges">${KYC.idState==='ok'&&KYC.propState==='ok'?'<span class="badge ok">Vérifié</span>':''}${nShots===SHOTS.length?'<span class="badge decl">Déclaré</span>':''}${pack?'<span class="badge pk">Parcours sécurisé</span>':''}${wzVal('p-dpe')?`<span class="badge">DPE ${wzVal('p-dpe')}</span>`:''}</div></div>`;
+  const kx=k=>wzSteps.findIndex(st=>st.dataset.k===k); const checks=[['Coordonnées',!wzCheck(kx('vous'),false)],['Identité vérifiée',KYC.idState==='ok'],['Description du bien',!wzCheck(kx('bien'),false)],['Propriété vérifiée',KYC.propState==='ok'],[`Photos (${nShots}/${SHOTS.length})`,nShots===SHOTS.length],['Déclaration signée',!wzCheck(kx('decl'),false)],['Prix',!!P]];
   const done=checks.filter(c=>c[1]).length; const pct=Math.round(done/checks.length*100);
   document.getElementById('wz-pct').textContent=pct+' %'; document.getElementById('wz-bar').style.width=pct+'%';
   document.getElementById('wz-check').innerHTML=checks.map(c=>`<li class="${c[1]?'ok':''}">${c[0]}</li>`).join('');
@@ -1930,13 +2001,13 @@ function wzSave(){ try{ const d={step:wzCur,f:{}}; WZ_F.forEach(id=>d.f[id]=docu
   (d.q||[]).forEach((k,i)=>{ const a=qsEl.querySelectorAll('.a')[i]; if(a&&k>=0) a.querySelectorAll('button')[k].setAttribute('aria-pressed','true'); });
   document.getElementById('p-cert').checked=!!d.cert; copro(); optTotal(); baro();
   if(WZ_F.some(id=>d.f&&d.f[id])){ const h=document.getElementById('wz-draft'); h.hidden=false; h.innerHTML='Brouillon retrouvé sur cet appareil. <button type="button" class="lnk" id="wz-reset">Recommencer</button>'; document.getElementById('wz-reset').onclick=()=>{ try{ localStorage.removeItem('bienvu-draft'); }catch(_){} WZ_F.forEach(id=>{ const el=document.getElementById(id); el.value=el.tagName==='SELECT'?el.options[0].value:''; }); qsEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false')); document.getElementById('p-cert').checked=false; h.hidden=true; wzGo(0); wzUpd(); }; }
-  wzCur=Math.min(d.step||0,4); })();
+  wzCur=Math.min(d.step||0,wzSteps.findIndex(st=>st.dataset.k==='prix')); if(wzCur>=wzSteps.findIndex(st=>st.dataset.k==='id')&&!KYC.idState) wzCur=wzSteps.findIndex(st=>st.dataset.k==='id'); })();
 // Le second bouton de publication suit le total
 const _optT=optTotal; optTotal=function(){ _optT(); const b2=document.getElementById('p-submit2'); if(b2) b2.textContent=document.getElementById('p-submit').textContent; };
 document.querySelectorAll('.optc').forEach(c=>c.addEventListener('change',optTotal)); optTotal();
 wzGo(wzCur); wzUpd();
 
-document.getElementById('post').addEventListener('submit',e=>{ e.preventDefault(); if(!document.getElementById('p-dpe').value){ toast('Le DPE est obligatoire pour publier'); return; } const dm=declOk(); if(dm){ toast(dm); return; } const f=document.getElementById('post'); f.hidden=true; const ok=document.getElementById('post-ok'); ok.hidden=false; const tot=document.getElementById('p-total').textContent; const now=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); ok.innerHTML=`<div class="ok-msg">Annonce enregistrée${tot==='0 €'?' gratuitement':' · '+tot+' réglés par carte'}. Déclaration signée le ${now}. Prochaine étape : vérification d'identité.</div><div class="steps" style="margin-top:14px"><div class="step"><h3><span class="n">1</span>Vérifiez votre identité</h3><p class="hint">Pièce d'identité et selfie via notre partenaire agréé. 2 minutes.</p></div><div class="step"><h3><span class="n">2</span>Prouvez que le bien est à vous</h3><p class="hint">Photo du titre, de la taxe foncière ou attestation notariale.</p></div><div class="step"><h3><span class="n">3</span>En ligne sous 24 h</h3><p class="hint">Votre annonce porte le badge Vérifié et apparaît en Occitanie.</p></div></div><button class="btn" type="button" id="post-again" style="margin-top:14px">Retour à l'accueil</button>`; document.getElementById('post-again').addEventListener('click',()=>{ f.hidden=false; f.reset(); ok.hidden=true; show('home'); }); });
+document.getElementById('post').addEventListener('submit',e=>{ e.preventDefault(); if(!document.getElementById('p-dpe').value){ toast('Le DPE est obligatoire pour publier'); return; } const dm=declOk(); if(dm){ toast(dm); return; } const f=document.getElementById('post'); f.hidden=true; const ok=document.getElementById('post-ok'); ok.hidden=false; const tot=document.getElementById('p-total').textContent; const now=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); ok.innerHTML=`<div class="ok-msg">Annonce enregistrée${tot==='0 €'?' gratuitement':' · '+tot+' réglés par carte'}. Déclaration signée le ${now}. Identité et propriété vérifiées.</div><div class="steps" style="margin-top:14px"><div class="step"><h3><span class="n">1</span>Relecture</h3><p class="hint">Un conseiller relit l'annonce et la déclaration.</p></div><div class="step"><h3><span class="n">2</span>Contrôle des photos</h3><p class="hint">Position GPS, façade et absence de retouche vérifiées automatiquement.</p></div><div class="step"><h3><span class="n">3</span>En ligne sous 24 h</h3><p class="hint">Votre annonce porte le badge Vérifié et apparaît en Occitanie.</p></div></div><button class="btn" type="button" id="post-again" style="margin-top:14px">Retour à l'accueil</button>`; document.getElementById('post-again').addEventListener('click',()=>{ f.hidden=false; f.reset(); ok.hidden=true; show('home'); }); });
 
 try{ const v=localStorage.getItem('bienvu-view'); if(v && document.getElementById('v-'+v) && !['detail','results','msg','live','dossier','vendeur'].includes(v)) show(v); }catch(e){}
 
