@@ -878,6 +878,77 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .pane.flash{animation:flash 1.3s ease-out}
 @keyframes flash{0%{box-shadow:0 0 0 3px var(--copper)}100%{box-shadow:0 0 0 0 transparent}}
 @media (min-width:900px){.sv-grid{grid-template-columns:minmax(0,1fr) 380px;gap:24px}.sv-side{position:sticky;top:76px}.sv-steps li{font-size:13.5px}}
+
+/* ===== Suivi vente / location ===== */
+.sp-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
+.sp-tabs button{font:inherit;font-weight:700;font-size:14px;color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.sp-tabs button.on{color:var(--ink);border-bottom-color:var(--copper)}
+.sv-txbtn{width:100%;padding:14px}
+.tx-head{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center}
+.tx-head .ph{width:72px;height:72px;border-radius:var(--r);overflow:hidden;background:var(--tint,#EEF0F2)}
+.tx-head .ph img{width:100%;height:100%;object-fit:cover}
+.tx-head h2{font-size:22px}
+.tx-role{grid-column:1/-1;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.tx-role button{font:inherit;font-size:13px;font-weight:700;text-transform:capitalize;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.tx-role button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tx-steps{list-style:none;margin:18px 0;padding:0;display:flex;overflow-x:auto;scrollbar-width:none}
+.tx-steps li{flex:1 0 96px;display:grid;justify-items:center;gap:6px;position:relative;font-size:12px;font-weight:700;color:var(--muted);text-align:center}
+.tx-steps li span{max-width:92px;line-height:1.25}
+.tx-steps li::before{content:"";position:absolute;top:14px;left:-50%;right:50%;height:2px;background:var(--line)}
+.tx-steps li:first-child::before{display:none}
+.tx-steps li.done::before,.tx-steps li.cur::before{background:var(--accent)}
+.tx-steps i{position:relative;z-index:1;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:var(--surface);border:2px solid var(--line)}
+.tx-steps li.done i{background:var(--accent);border-color:var(--accent);color:#fff}
+.tx-steps li.cur{color:var(--copper)}
+.tx-steps li.cur i{border-color:var(--copper);color:var(--copper);box-shadow:0 0 0 4px #F3E6DA}
+.tx-grid{display:grid;gap:14px}
+.tx-cur{border-top:3px solid var(--copper);display:grid;gap:12px;margin:0;align-content:start}
+.tx-grid{align-items:start}
+.tx-cur .toolbar{margin:0}
+.tx-cur>.lnk,.tx-cur>p>.lnk{justify-self:start}
+.tx-cur p{margin:0;line-height:1.55}
+.tx-side{display:grid;gap:12px;align-content:start}
+.tx-side .pane{margin:0}
+.tx-who{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.tx-who div{background:#F6F4F0;border-radius:var(--r);padding:10px 12px;display:grid;gap:2px}
+.tx-who span,.tx-money span{font-size:12.5px;color:var(--muted)}
+.tx-doc{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:12px 14px;display:grid;gap:4px;background:var(--surface)}
+.tx-doc span{font-size:14px;color:var(--muted);line-height:1.5}
+.tx-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tx-done{font-weight:700;color:var(--good,#2E7D4F);font-size:14px}
+.tx-wait{color:var(--muted);font-size:14px}
+.tx-money{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.tx-money>div{background:#F6F4F0;border-radius:var(--r);padding:10px 12px;display:grid;gap:2px}
+.tx-money b{font-family:var(--display);font-size:20px}
+.tx-money small{font-size:12px;color:var(--muted)}
+.tx-money .tot{background:#F3EEE4;border:1px solid #D9C7A3}
+.tx-money .tot b{color:var(--copper)}
+.tx-count{background:#F3EEE4;border-radius:var(--r);padding:12px 14px;display:grid;gap:4px}
+.tx-check{display:grid;gap:8px}
+.tx-end{background:#EEF6F0;border:1px solid #BFDCC9;border-radius:var(--r);padding:16px;display:grid;gap:6px}
+.tx-end b{font-family:var(--display);font-size:20px;color:var(--good,#2E7D4F)}
+.tx-end.off{background:#F6F4F0;border-color:var(--line)}
+.tx-end.off b{color:var(--ink)}
+.tx-docs{display:grid;gap:6px;font-size:14px}
+.tx-docs span::before{content:"▤ ";color:var(--accent)}
+.tx-rate{display:grid;gap:6px}
+.stars{display:flex;gap:4px}
+.stars button{font-size:26px;line-height:1;background:none;border:0;color:#D5D9DE;cursor:pointer;padding:0 2px}
+.stars button.on{color:var(--copper)}
+.cands{display:grid;gap:10px}
+.cand{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:4px;font-size:14px}
+.cand.best{border-color:var(--copper);background:#FBF6F1}
+.cand .h{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.cand .btn{justify-self:start;margin-top:4px}
+.edl{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.edl-r{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center;border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer}
+.edl-r input{width:auto;grid-row:1/3}
+.edl-r small{color:var(--muted);font-size:12px}
+.edl-r:has(input:checked){border-color:#BFDCC9;background:#EEF6F0}
+.cmp{display:grid;gap:6px}
+.cmp>div{display:grid;grid-template-columns:120px 1fr;gap:2px 10px;border-bottom:1px solid var(--line);padding:8px 0;font-size:14px}
+.cmp small{grid-column:2;color:var(--copper);font-weight:700}
+@media (min-width:900px){.tx-grid{grid-template-columns:minmax(0,1fr) 340px;gap:24px}.tx-side{position:sticky;top:76px}.tx-head{grid-template-columns:84px 1fr auto}.tx-head .ph{width:84px;height:84px}.tx-role{grid-column:auto;justify-content:flex-end}.tx-steps li{font-size:13px}}
 </style>
 
 <button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
@@ -1297,6 +1368,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 
 <!-- ESPACE VENDEUR -->
 <section class="view" id="v-vendeur" hidden></section>
+<section class="view" id="v-tx" hidden></section>
 
 <!-- NDA PRESTIGE -->
 <section class="view" id="v-nda" hidden>
@@ -1821,6 +1893,7 @@ var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=
   const mx=Math.max(...SELL.views); const spark=`<svg class="spark" viewBox="0 0 140 36" preserveAspectRatio="none">${SELL.views.map((v,i)=>`<rect x="${i*10+1}" y="${36-v/mx*34}" width="7" height="${v/mx*34}" rx="1"/>`).join('')}</svg>`;
   const ofr=o=>`<div class="ofr ${o.p===Math.max(...SELL.offres.map(x=>x.p))&&o.st!=='refusée'?'best':''}"><div class="t"><b>${eur(o.p)}</b><span class="${o.st==='acceptée'?'acc':o.st==='refusée'?'ref':''}">${o.st}${o.st==='reçue'?' · '+o.val:''}</span></div><div class="d"><span>${o.who} · <b>${o.fiab}</b></span><span>${o.fin}</span><span>Base : <b>${o.base}</b></span><span>${((o.p-b.prix)/b.prix*100).toFixed(1)} % vs prix affiché · ${e?((o.p/b.surface-e.ref)/e.ref*100>=0?'+':'')+((o.p/b.surface-e.ref)/e.ref*100).toFixed(0)+' % vs marché':''}</span>${o.cp?`<span>Votre contre-proposition : <b>${eur(o.cp)}</b> · en attente de l'acheteur</span>`:''}</div>${o.st==='reçue'&&!acc?(SELL.pack?`<div class="acts"><button type="button" class="a" data-acc="${o.num}">Accepter</button><button type="button" class="c" data-cp="${o.num}">Contre-proposer</button><button type="button" data-ref="${o.num}">Refuser</button></div><div class="cp" id="cp-${o.num}" hidden><input type="number" inputmode="numeric" step="1000" placeholder="Prix (€)" id="cpv-${o.num}"><button type="button" class="btn cta sm" data-cps="${o.num}">Envoyer</button></div>`:`<div class="hint">Offre reçue par la messagerie. Pour l'accepter en ligne avec signature horodatée et transmission aux notaires, activez le Pack Accompagnement.</div>`):''}${o.st==='acceptée'?`<div class="hint">Offre signée par les deux parties. Les autres offres ont été déclinées automatiquement.</div>`:''}</div>`;
   document.getElementById('v-vendeur').innerHTML=`
+  <div class="sp-tabs"><button type="button" class="on" data-sv="dash">Tableau de bord</button><button type="button" data-sv="txv">Suivi de la vente</button><button type="button" data-sv="loc">Ma location</button></div>
   <div class="sv-head"><div><span class="eyebrow">Espace vendeur</span><h2 style="margin:6px 0 2px">Bonjour ${b.vendeur.split(' ')[0]}</h2><span class="sv-status ${SELL.paused?'off':''}">${SELL.paused?'Annonce en pause':'Annonce en ligne'} · ${b.type} ${b.pieces?b.pieces+' p. ':''}${fmt(b.surface)} m² · ${b.ville}</span></div>
     <div class="sv-acts"><button type="button" class="btn ghost sm" data-sv="voir">Voir l'annonce</button><button type="button" class="btn ghost sm" data-sv="pause">${SELL.paused?'Remettre en ligne':'Mettre en pause'}</button></div></div>
   <ol class="sv-steps">${STAGES.map((t,i)=>`<li class="${i<stage?'done':i===stage?'cur':''}"><i>${i<stage?'✓':i+1}</i><span>${t}</span></li>`).join('')}</ol>
@@ -1830,6 +1903,7 @@ var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=
     <div class="kpis sv-kpis"><div class="kpi"><b>${SELL.vues.s}</b><span>vues · 7 j</span><small>+${SELL.vues.d} %</small></div><div class="kpi"><b>${SELL.contacts}</b><span>contacts</span></div><div class="kpi"><b>${SELL.favoris}</b><span>favoris</span></div><div class="kpi"><b>${SELL.visites.length}</b><span>visites</span></div></div>
     <div class="pane"><div class="toolbar"><h3>Vues des 14 derniers jours</h3><span class="hint">${SELL.views.reduce((x,y)=>x+y,0)} au total</span></div>${spark}</div>
     <div class="pane" id="sv-ofr"><h3>Offres reçues <small>${pend} en attente</small></h3>${SELL.offres.map(ofr).join('')}<p class="hint">Accepter une offre vous engage : c'est l'acheteur qui dispose ensuite de 10 jours de rétractation après le compromis, pas vous. Une contre-proposition annule l'offre initiale.</p></div>
+    ${acc?`<button type="button" class="btn cta sv-txbtn" data-sv="txv">Suivre la vente jusqu'à l'acte et aux clés →</button>`:''}
     ${acc?`<div class="pane" id="sv-not"><h3>Votre notaire ${SELL.notary?'<small>dossier transmis</small>':''}</h3>${SELL.notary?`<p class="hint">Maître ${SELL.notary} · dossier transmis aux deux études le ${SELL.notaryAt}. Le notaire de l'acheteur a accusé réception.</p>`:`<div class="row2"><input placeholder="Maître Nom Prénom" id="vn-nom"><input placeholder="Étude" id="vn-etude"></div><input placeholder="Adresse de l'étude" id="vn-adr"><div class="row2"><input type="email" placeholder="E-mail" id="vn-mail"><input placeholder="Téléphone" id="vn-tel"></div><button type="button" class="btn cta" id="vn-send">Transmettre mon dossier aux notaires</button><p class="hint">Bienvu envoie aux deux études : offre signée, déclaration et photos, diagnostics, justificatif de propriété, PV d'AG et analyse, identités vérifiées.</p>`}</div>
     <div class="pane" id="sv-pie"><h3>Pièces pour le compromis <small>${Object.values(SELL.pieces).filter(x=>x).length} / 5</small></h3>
       <div class="piece"><div><span>Relevé de charges 12 mois</span></div><span class="st ok">Reçu</span></div>
@@ -1867,6 +1941,9 @@ var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=
     else if(t.dataset.msg!==undefined){ SELL.msgs[+t.dataset.msg].unread=false; openThread(SELL.id,false); }
     else if(t.dataset.goSv){ const m={msg:()=>{ SELL.msgs.forEach(x=>x.unread=false); openThread(SELL.id,false); },vis:'sv-vis',ofr:'sv-ofr',not:'sv-not',pie:'sv-pie',prix:'voir'}[t.dataset.goSv]; if(typeof m==='function') m(); else if(m==='voir') openDetail(SELL.id); else { const el=document.getElementById(m); if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1400); } } }
     else if(t.dataset.sv==='voir'){ openDetail(SELL.id); }
+    else if(t.dataset.sv==='dash'){ }
+    else if(t.dataset.sv==='loc'){ openTx('loc',LOC_ID,'bailleur'); }
+    else if(t.dataset.sv==='txv'){ const a=SELL.offres.find(o=>o.st==='acceptée'); if(!a){ toast('Acceptez d\'abord une offre : le suivi de la vente démarre à ce moment-là'); const el=document.getElementById('sv-ofr'); if(el){ el.scrollIntoView({behavior:'smooth'}); } return; } txSale(SELL.id,{stage:SELL.notary?2:1,price:a.p,buyer:a.who,nv:SELL.notary?'Me '+SELL.notary:null,na:SELL.notary?'Me Laurent Fabre, office du Peyrou, Montpellier':null,cash:/comptant/i.test(a.fin)}); openTx('vente',SELL.id,'vendeur'); }
     else if(t.dataset.sv==='pause'){ SELL.paused=!SELL.paused; toast(SELL.paused?'Annonce mise en pause : elle n\'apparaît plus dans les recherches':'Annonce remise en ligne'); openVendeur(); }
     else if(t.dataset.sv==='pack'){ SELL.pack=true; findB(SELL.id).pack=true; toast('Pack Accompagnement activé · 299 € réglés par carte'); openVendeur(); }
   }); }
@@ -1893,7 +1970,7 @@ function renderBail(b){ const meuble=/meubl/i.test(b.desc); const dep=b.prix*(me
 document.getElementById('m-body').addEventListener('click',e=>{ const b=findB(curT.id); const meuble=/meubl/i.test(b.desc); const dep=b.prix*(meuble?2:1); const now=()=>new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
   if(e.target.closest('#bail-sign')){ push('ok',`Bail signé électroniquement par les deux parties le ${now()} · exemplaires envoyés par e-mail`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dépôt de garantie</span><b>${eur(dep)}</b></div><span class="st">À régler</span><div class="r"><span>Où va l'argent</span><b>Compte de cantonnement du prestataire de paiement agréé (jamais chez Bienvu, jamais chez le bailleur avant l'état des lieux)</b></div><div class="r"><span>Libération</span><b>Au bailleur dès l'état des lieux d'entrée signé ; restitué sous 1 mois (2 mois si retenues) à la sortie, retenues justifiées par l'état des lieux comparatif</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="dep-pay">Régler ${eur(dep)} par carte ou virement</button></div></div>`}); renderThread(); }
   if(e.target.closest('#dep-pay')){ push('ok',`Dépôt de garantie ${eur(dep)} séquestré le ${now()} · reçu envoyé aux deux parties`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>État des lieux d'entrée</span></div><span class="st">À planifier avec le bailleur</span><div class="r"><span>Comment</span><b>Dans l'appli, pièce par pièce, photos horodatées des deux côtés, compteurs relevés, signé sur place par les deux parties</b></div><div class="r"><span>Effet</span><b>Libère le dépôt de garantie au bailleur et sert de référence pour la sortie</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="edl-done">Simuler l'état des lieux signé</button></div></div>`}); renderThread(); }
-  if(e.target.closest('#edl-done')){ push('ok',`État des lieux d'entrée signé le ${now()} · 42 photos · compteurs relevés · dépôt de garantie libéré au bailleur · clés remises`); curT.msgs.push({k:'raw',t:`<div class="next"><b>Bienvenue chez vous</b><span>Quittances mensuelles générées automatiquement, rappel de l'assurance habitation (obligatoire), révision annuelle du loyer calculée sur l'IRL, préavis et état des lieux de sortie gérés ici le moment venu.</span></div>`}); renderThread(); } });
+  if(e.target.closest('#edl-done')){ push('ok',`État des lieux d'entrée signé le ${now()} · 42 photos · compteurs relevés · dépôt de garantie libéré au bailleur · clés remises`); curT.msgs.push({k:'raw',t:`<div class="next"><b>Bienvenue chez vous</b><span>Quittances mensuelles générées automatiquement, rappel de l'assurance habitation (obligatoire), révision annuelle du loyer calculée sur l'IRL, préavis et état des lieux de sortie gérés ici le moment venu.</span><button type="button" class="btn cta sm" id="open-loc" style="margin-top:8px">Ouvrir le suivi de ma location</button></div>`}); renderThread(); } });
 
 // NDA Prestige
 const NDAS={}; let ndaB=null;
@@ -1969,6 +2046,173 @@ document.getElementById('msg-list').addEventListener('click',e=>{ const c=e.targ
 renderList();
 
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),2200); }
+
+// ===== Suivi de bout en bout : vente (jusqu'aux clés) et location (de la candidature à la restitution du dépôt) =====
+const TX_KEY='bienvu-tx';
+let TXS={}; try{ TXS=JSON.parse(localStorage.getItem(TX_KEY)||'{}')||{}; }catch(_){ TXS={}; }
+function txSave(){ try{ localStorage.setItem(TX_KEY,JSON.stringify(TXS)); }catch(_){} }
+const nowS=()=>new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const dPlus=n=>{ const x=new Date(); x.setDate(x.getDate()+n); return x.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit'}); };
+function txLog(t,txt){ t.log.unshift([nowS(),txt]); }
+const LOC_ID=8; // maison de Pierre-Yves L. à Castelnau-le-Lez, mise en location
+const CANDS=[
+ {n:'Léa et Hugo D.',sit:'CDI tous les deux (infirmière, ingénieur)',rev:5200,gar:'Visale',visit:'Visite sur place le 14/10',pieces:6,anc:'Locataires depuis 6 ans, quittances à jour',fiab:'Identités vérifiées'},
+ {n:'Mehdi K.',sit:'CDI, cadre bancaire',rev:4300,gar:'Garant : parents (revenus 6 100 €)',visit:'Visite en visio le 16/10',pieces:6,anc:'Premier logement en location seul',fiab:'Identité vérifiée'},
+ {n:'Sophie R.',sit:'Indépendante depuis 3 ans',rev:3900,gar:'Aucune garantie',visit:'Non visité (sur dossier)',pieces:5,anc:'2 derniers bilans fournis',fiab:'Identité vérifiée'}];
+
+// ---------- Étapes de la VENTE ----------
+const SALE=[
+ {t:'Offre acceptée',who:'les deux'},
+ {t:'Notaires saisis',who:'les deux'},
+ {t:'Projet de compromis',who:'notaire'},
+ {t:'Signature du compromis',who:'les deux'},
+ {t:'Délai de rétractation',who:'acheteur'},
+ {t:'Financement',who:'acheteur'},
+ {t:'Préparation de l\'acte',who:'notaire'},
+ {t:'Acte et remise des clés',who:'les deux'},
+ {t:'Vente terminée',who:'—'}];
+const FIN2=['Demande de prêt à déposer','Demande déposée en banque','Accord de principe','Offre de prêt reçue (10 jours de réflexion)','Offre de prêt acceptée'];
+function txSale(id,o){ if(!TXS['v'+id]){ const b=findB(id); TXS['v'+id]={kind:'vente',id,stage:o&&o.stage||1,price:o&&o.price||b.prix,buyer:o&&o.buyer||'Thomas R.',fin:o&&o.cash?4:0,cash:!!(o&&o.cash),na:o&&o.na||null,nv:o&&o.nv||null,ok:{},log:[]}; txLog(TXS['v'+id],'Offre acceptée à '+eur(TXS['v'+id].price)+' · dossier ouvert'); txSave(); } return TXS['v'+id]; }
+function txLoc(id){ if(!TXS['l'+id]){ TXS['l'+id]={kind:'loc',id,stage:0,cand:null,ok:{},months:0,issues:[],ret:0,log:[]}; txLog(TXS['l'+id],'Annonce en ligne · 3 candidatures reçues'); txSave(); } return TXS['l'+id]; }
+
+function saleBody(t,role){ const b=findB(t.id); const P=t.price, ac=Math.round(P*0.05/100)*100, fn=Math.round(P*0.075/100)*100, loan=t.cash?0:Math.round((P*0.8)/1000)*1000, solde=P-ac+fn-loan; const me=role==='acheteur'?'acheteur':'vendeur'; const other=role==='acheteur'?'Le vendeur':'L\'acheteur';
+  const A=(k,label,cls)=>t.ok[k+'_'+me]?`<span class="tx-done">✓ ${label.replace(/^(Je |J')/,'Fait : ')}</span>`:`<button type="button" class="btn ${cls||'cta'}" data-tx-act="${k}">${label}</button>`;
+  const W=(k,label)=>t.ok[k+'_'+(me==='acheteur'?'vendeur':'acheteur')]?`<span class="tx-done">✓ ${other} : fait</span>`:`<span class="tx-wait">${other} : en attente</span> <button type="button" class="lnk" data-tx-sim="${k}">Simuler : ${label}</button>`;
+  switch(t.stage){
+  case 1: return `<p>Chaque partie choisit librement son notaire, sans surcoût : les deux études se partagent les émoluments. Bienvu transmet ensuite le même dossier aux deux.</p>
+    <div class="tx-who"><div><span>Notaire de l'acheteur</span><b>${t.na||'À renseigner'}</b></div><div><span>Notaire du vendeur</span><b>${t.nv||'À renseigner'}</b></div></div>
+    ${(role==='acheteur'?t.na:t.nv)?'':`<div class="row2"><input id="tx-not" placeholder="Maître Nom, étude, ville"><button type="button" class="btn cta" data-tx-act="notaire">Enregistrer mon notaire</button></div>`}
+    ${(role==='acheteur'?t.nv:t.na)?'':`<p class="hint">${other} n'a pas encore indiqué son notaire. <button type="button" class="lnk" data-tx-sim="notaire">Simuler : ${other.toLowerCase()} renseigne le sien</button></p>`}`;
+  case 2: return `<p>Le notaire rédige le compromis à partir du dossier Bienvu : offre signée, déclaration du vendeur et photos, diagnostics, justificatif de propriété${COPRO.includes(b.type)?', PV d\'AG et pré-état daté':''}, identités vérifiées. Objectif : projet envoyé sous 15 jours, relance automatique à J+7.</p>
+    ${t.ok.draft?`<div class="tx-doc"><b>Projet de compromis</b><span>Prix ${eur(P)} · acompte ${eur(ac)} (5 %) · condition suspensive de prêt ${t.cash?'non (achat comptant)':'de '+eur(loan)+' à 60 jours'} · date limite de l'acte : ${dPlus(90)}</span></div><p>Relisez-le ; vos remarques partent directement au notaire.</p><div class="tx-acts">${A('read','J\'ai relu, je suis d\'accord')} ${W('read','relecture faite')}</div>`:`<p class="tx-wait">En attente du notaire.</p><button type="button" class="lnk" data-tx-sim="draft">Simuler : le notaire envoie le projet</button>`}`;
+  case 3: return `<p>Signature chez le notaire ou à distance (signature électronique qualifiée), le ${dPlus(6)}. L'acheteur verse l'acompte <b>sur le compte séquestre du notaire</b> : jamais chez Bienvu, jamais chez le vendeur.</p>
+    <div class="tx-money"><div><span>Acompte (5 %)</span><b>${eur(ac)}</b><small>Virement au notaire, restitué en cas de rétractation ou de refus de prêt</small></div></div>
+    <div class="tx-acts">${role==='acheteur'?A('acompte','Je vire l\'acompte au notaire','ghost')+' ':''}${A('sign','Je signe le compromis')} ${W('sign','signature')}</div>
+    ${role==='vendeur'?`<p class="hint">Acompte : ${t.ok.acompte_acheteur?'<b>reçu par le notaire</b>':'en attente de l\'acheteur'}.</p>`:''}`;
+  case 4: return `<p>L'acheteur dispose de <b>10 jours</b> pour se rétracter sans motif (article L271-1 du Code de la construction), à compter du lendemain de la notification du compromis signé. Le vendeur, lui, est engagé.</p>
+    <div class="tx-count"><b>Fin du délai : ${dPlus(10)}</b><span>${role==='acheteur'?'Vous pouvez encore vous rétracter : l\'acompte vous serait intégralement restitué.':'Aucune action de votre part : Bienvu vous prévient à la fin du délai.'}</span></div>
+    <div class="tx-acts">${role==='acheteur'?(t.askRetract?`<button type="button" class="btn warnb" data-tx-act="retract">Confirmer : annuler la vente (acompte restitué sous 21 jours)</button> <button type="button" class="btn ghost" data-tx-act="noretract">Non, je continue</button> `:`<button type="button" class="btn ghost" data-tx-act="retract">Me rétracter</button> `):''}<button type="button" class="lnk" data-tx-sim="ret">Simuler : fin du délai de rétractation</button></div>`;
+  case 5: return t.cash?`<p>Achat comptant : pas de condition de prêt. Le notaire vérifie l'origine des fonds.</p><button type="button" class="lnk" data-tx-sim="fin">Continuer</button>`:`<p>Condition suspensive : l'acheteur doit obtenir son prêt de ${eur(loan)} avant le <b>${dPlus(60)}</b>. En cas de refus de la banque, la vente est annulée et l'acompte restitué.</p>
+    <div class="fin"><div class="b"><i style="width:${(t.fin+1)/FIN2.length*100}%"></i></div><b style="font-size:14px">${FIN2[t.fin]}</b></div>
+    <div class="tx-acts">${role==='acheteur'&&t.fin<FIN2.length-1?`<button type="button" class="btn cta" data-tx-act="fin">Étape suivante : ${FIN2[t.fin+1]}</button> <button type="button" class="btn ghost" data-tx-act="courtier">Être rappelé par un courtier partenaire</button>`:''}${role==='vendeur'&&t.fin<FIN2.length-1?`<span class="tx-wait">Mis à jour par l'acheteur</span> <button type="button" class="lnk" data-tx-sim="fin">Simuler : la banque avance</button>`:''}${t.fin>=FIN2.length-1?`<button type="button" class="btn cta" data-tx-act="levee">Lever la condition de prêt</button>`:''}</div>`;
+  case 6: return `<p>Le notaire prépare l'acte : droit de préemption de la mairie (DIA), état hypothécaire, ${COPRO.includes(b.type)?'état daté du syndic, ':''}calcul des frais et de la plus-value éventuelle. Rendez-vous de signature : <b>${dPlus(25)} à 10 h</b>.</p>
+    ${role==='acheteur'?`<div class="tx-money"><div><span>Prix</span><b>${eur(P)}</b></div><div><span>Frais de notaire (≈ 7,5 %)</span><b>${eur(fn)}</b></div><div><span>Déjà versé (acompte)</span><b>− ${eur(ac)}</b></div>${loan?`<div><span>Versé par la banque</span><b>− ${eur(loan)}</b></div>`:''}<div class="tot"><span>Solde à virer au notaire</span><b>${eur(solde)}</b></div></div>
+      <div class="tx-acts">${A('solde','Je vire le solde au notaire')} ${A('visite','Visite de contrôle faite (bien conforme)','ghost')}</div>`
+    :`<div class="tx-check"><b>Avant la signature</b><span>${A('resil','J\'ai prévenu mes fournisseurs (eau, électricité, assurance)','ghost')}</span><span>${A('cles','Clés, badges et codes rassemblés','ghost')}</span><span>${A('relev','Relevés de compteurs prêts pour le jour J','ghost')}</span></div>`}
+    <p class="hint">${t.ok.solde_acheteur?'Fonds de l\'acheteur reçus par le notaire.':'Fonds de l\'acheteur : en attente.'} <button type="button" class="lnk" data-tx-sim="ready">Simuler : tout est prêt, rendez-vous confirmé</button></p>`;
+  case 7: return `<p>Signature de l'acte authentique chez le notaire, ${dPlus(25)} à 10 h (ou à distance par procuration). Relevés de compteurs et remise des clés le même jour.</p>
+    <div class="tx-acts">${A('acte','Acte signé, clés '+(role==='acheteur'?'reçues':'remises'))} ${W('acte','signature de l\'acte')}</div>
+    <p class="hint">Le notaire verse le prix au vendeur après publication au service de la publicité foncière, en général sous quelques jours ; il rembourse lui-même l'éventuel crédit en cours du vendeur.</p>`;
+  case 8: if(t.cancel) return `<div class="tx-end off"><b>Vente annulée : rétractation de l'acheteur.</b><span>L'acompte est restitué à l'acheteur par le notaire. L'annonce du vendeur est remise en ligne, avec ses vues et favoris.</span></div><button type="button" class="lnk" data-tx-act="reset">Recommencer la démo</button>`;
+    return `<div class="tx-end"><b>Félicitations, la vente est terminée.</b><span>${role==='acheteur'?'Vous êtes propriétaire. L\'attestation de propriété est disponible ; le titre définitif vous sera adressé par le notaire après publication.':'Le prix de vente est versé par le notaire. Votre annonce a été retirée automatiquement.'}</span></div>
+    <div class="tx-docs"><b>Vos documents, archivés 10 ans</b><span>Offre d'achat signée</span><span>Compromis de vente</span><span>Acte authentique (copie)</span><span>Déclaration du vendeur et 15 photos horodatées</span><span>Diagnostics techniques</span>${COPRO.includes(b.type)?'<span>PV d\'AG et état daté</span>':''}</div>
+    <div class="tx-rate"><b>Notez ${role==='acheteur'?'le vendeur':'l\'acheteur'}</b><span class="stars" data-tx-rate>${[1,2,3,4,5].map(i=>`<button type="button" data-star="${i}" class="${(t.rate||0)>=i?'on':''}">★</button>`).join('')}</span><small>Bien conforme aux photos et à la déclaration ? Votre note alimente la fiabilité affichée sur Bienvu.</small></div>`;
+  } return ''; }
+
+// ---------- Étapes de la LOCATION ----------
+const RENT=[
+ {t:'Candidatures',who:'bailleur'},{t:'Bail',who:'les deux'},{t:'Dépôt et 1er loyer',who:'locataire'},{t:'État des lieux d\'entrée',who:'les deux'},
+ {t:'Remise des clés',who:'les deux'},{t:'Vie du bail',who:'les deux'},{t:'Préavis',who:'les deux'},{t:'État des lieux de sortie',who:'les deux'},{t:'Restitution du dépôt',who:'bailleur'},{t:'Location terminée',who:'—'}];
+const ROOMS=['Entrée','Séjour','Cuisine','Chambre 1','Chambre 2','Salle d\'eau','WC','Extérieur','Compteurs (eau, électricité)'];
+function rentBody(t,role){ const b=findB(t.id); const meuble=/meubl/i.test(b.desc); const dep=b.prix*(meuble?2:1); const ch=Math.round(b.prix*0.06/10)*10; const me=role; const other=role==='locataire'?'Le bailleur':'Le locataire'; const oth=role==='locataire'?'bailleur':'locataire';
+  const A=(k,label,cls)=>t.ok[k+'_'+me]?`<span class="tx-done">✓ ${label.replace(/^(Je |J')/,'Fait : ')}</span>`:`<button type="button" class="btn ${cls||'cta'}" data-tx-act="${k}">${label}</button>`;
+  const W=(k,label)=>t.ok[k+'_'+oth]?`<span class="tx-done">✓ ${other} : fait</span>`:`<span class="tx-wait">${other} : en attente</span> <button type="button" class="lnk" data-tx-sim="${k}">Simuler : ${label}</button>`;
+  const c=t.cand!=null?CANDS[t.cand]:null;
+  switch(t.stage){
+  case 0: if(role==='locataire') return `<p>Votre dossier a été envoyé : pièces vérifiées et filigranées, visibles par le bailleur seulement s'il vous présélectionne. Aucun paiement ne vous sera demandé avant la signature du bail.</p><button type="button" class="lnk" data-tx-sim="choose">Simuler : le bailleur retient votre dossier</button>`;
+    return `<p>Comparez les dossiers sur des critères objectifs. Bienvu masque les informations qu'un bailleur n'a pas le droit de demander (loi du 6 juillet 1989, décret 2015-1437).</p>
+    <div class="cands">${CANDS.map((x,i)=>{ const r=Math.round(b.prix/x.rev*100); return `<div class="cand ${i===0?'best':''}"><div class="h"><b>${x.n}</b><span class="badge ${r<=33?'good':'warn'}">loyer = ${r} % des revenus</span></div><span>${x.sit} · ${eur(x.rev)} net/mois</span><span>Garantie : <b>${x.gar}</b></span><span>${x.visit} · ${x.anc}</span><span class="hint">${x.pieces}/6 pièces vérifiées · ${x.fiab}</span><button type="button" class="btn ${i===0?'cta':'ghost'} sm" data-tx-pick="${i}">Retenir ce dossier</button></div>`; }).join('')}</div>`;
+  case 1: return `<p>${c?`Dossier retenu : <b>${c.n}</b>. Les autres candidats ont été prévenus. `:''}Bail généré sur le modèle officiel, complété automatiquement.</p>
+    <div class="tx-doc"><b>Bail d'habitation ${meuble?'meublé':'vide'} · ${b.type} ${fmt(b.surface)} m², ${b.ville}</b><span>Loyer ${eur(b.prix)} + provision sur charges ${eur(ch)} · durée ${meuble?'1 an':'3 ans'} renouvelable · dépôt de garantie ${eur(dep)} (${meuble?'2 mois':'1 mois'} hors charges, maximum légal) · révision annuelle selon l'IRL · annexes : diagnostics (DPE ${b.dpe||'—'}, ERP, électricité, gaz), notice d'information, état des lieux à venir${b.ville==='Montpellier'?' · loyer conforme à l\'encadrement':''}</span></div>
+    <div class="tx-acts">${A('bail','Je signe le bail')} ${W('bail','signature du bail')}</div>`;
+  case 2: return `<p>Le locataire règle le dépôt de garantie et le premier loyer. Le dépôt est <b>séquestré chez un prestataire de paiement agréé</b> et versé au bailleur une fois l'état des lieux d'entrée signé.</p>
+    <div class="tx-money"><div><span>Dépôt de garantie (séquestré)</span><b>${eur(dep)}</b></div><div><span>1er loyer + charges (au prorata)</span><b>${eur(b.prix+ch)}</b></div></div>
+    ${role==='locataire'?`<div class="tx-acts">${A('pay','Je règle le dépôt et le 1er loyer')} ${A('assur','J\'ajoute mon attestation d\'assurance habitation','ghost')}</div>`:`<p class="tx-wait">${t.ok.pay_locataire?'✓ Paiement reçu, dépôt séquestré':'Paiement du locataire en attente'} · ${t.ok.assur_locataire?'✓ attestation d\'assurance reçue':'attestation d\'assurance en attente'}</p><button type="button" class="lnk" data-tx-sim="pay">Simuler : le locataire paie et envoie son attestation</button>`}`;
+  case 3: return `<p>Rendez-vous sur place le ${dPlus(3)} à 18 h. L'état des lieux se fait dans l'appli, pièce par pièce, avec photos horodatées des deux côtés ; il sert de référence à la sortie.</p>
+    <div class="edl">${ROOMS.map((r,i)=>`<label class="edl-r"><input type="checkbox" data-edl="${i}" ${t.edl&&t.edl[i]?'checked':''}><span>${r}</span><small>${t.edl&&t.edl[i]?'Photos et état saisis · bon état':'À faire'}</small></label>`).join('')}</div>
+    <div class="tx-acts">${A('edl','Je signe l\'état des lieux')} ${W('edl','signature de l\'état des lieux')}</div>`;
+  case 4: return `<p>Remise des clés : <b>3 clés, 1 badge, 1 télécommande de portail</b>, notés dans l'état des lieux. Le dépôt de garantie est maintenant versé au bailleur par le prestataire.</p><div class="tx-acts">${A('keys',role==='locataire'?'J\'ai reçu les clés':'J\'ai remis les clés')} ${W('keys','remise des clés')}</div>`;
+  case 5: { const q=[]; for(let i=0;i<t.months;i++){ const d=new Date(); d.setMonth(d.getMonth()+i); q.push(`<span>Quittance ${d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})} · ${eur(b.prix+ch)} <button type="button" class="lnk" data-tx-act="dlq">Télécharger</button></span>`); }
+    return `<p>Le loyer est prélevé le 5 de chaque mois et reversé au bailleur ; la quittance est générée automatiquement. Révision annuelle selon l'indice de référence des loyers (IRL), rappel annuel de l'assurance habitation, régularisation des charges.</p>
+    <div class="tx-docs"><b>Quittances (${t.months})</b>${q.join('')||'<span class="hint">La première quittance sera émise au premier prélèvement.</span>'}</div>
+    ${t.issues.length?`<div class="tx-docs"><b>Demandes d'intervention</b>${t.issues.map((x,i)=>`<span>${x.t} · <b>${x.st}</b>${role==='bailleur'&&x.st==='Signalée'?` <button type="button" class="lnk" data-tx-fix="${i}">Envoyer un artisan</button>`:''}</span>`).join('')}</div>`:''}
+    <div class="tx-acts"><button type="button" class="btn ghost" data-tx-act="month">Simuler un mois de plus</button>${role==='locataire'?` <button type="button" class="btn ghost" data-tx-act="issue">Signaler un problème</button>`:''} <button type="button" class="btn ghost" data-tx-act="conge">${role==='locataire'?'Donner mon préavis':'Donner congé'}</button></div>
+    ${role==='bailleur'?'<p class="hint">Congé du bailleur : uniquement pour vendre, reprendre le logement ou motif légitime et sérieux, 6 mois avant l\'échéance du bail (3 mois en meublé).</p>':`<p class="hint">Préavis du locataire : ${meuble||['Montpellier','Castelnau-le-Lez','Toulouse','Nîmes','Sète'].includes(b.ville)?'1 mois (zone tendue ou meublé)':'3 mois'}.</p>`}`; }
+  case 6: return `<p>${t.congeBy==='bailleur'?'Congé donné par le bailleur':'Préavis donné par le locataire'} le ${t.congeAt}. Fin du bail : <b>${dPlus(30)}</b>. Le loyer reste dû jusqu'à cette date.</p>
+    <div class="tx-acts">${role==='bailleur'?`<button type="button" class="btn ghost" data-tx-act="relist">Republier l'annonce (visites pendant le préavis)</button> `:''}<button type="button" class="btn cta" data-tx-act="toexit">Planifier l'état des lieux de sortie</button></div>`;
+  case 7: { const diff=[['Séjour','Conforme à l\'entrée'],['Cuisine','Conforme à l\'entrée'],['Chambre 1','Trou de cheville non rebouché au mur','Rebouchage et peinture : 80 €'],['Salle d\'eau','Joint de douche noirci','Usure normale (vétusté) : 0 €'],['Extérieur','Conforme à l\'entrée']];
+    return `<p>État des lieux de sortie comparé automatiquement à celui d'entrée, pièce par pièce, photos côte à côte. Seules les dégradations imputables au locataire peuvent être retenues ; l'usure normale (vétusté) ne l'est pas.</p>
+    <div class="cmp">${diff.map(d=>`<div><b>${d[0]}</b><span>${d[1]}</span>${d[2]?`<small>${d[2]}</small>`:''}</div>`).join('')}</div>
+    <div class="tx-money"><div><span>Retenue proposée par le bailleur</span><b>${eur(80)}</b><small>Devis joint</small></div></div>
+    <div class="tx-acts">${A('exit',role==='locataire'?'Je signe et j\'accepte la retenue':'Je signe l\'état des lieux de sortie')} ${W('exit','signature')}${role==='locataire'&&!t.ok.exit_locataire?' <button type="button" class="btn ghost" data-tx-act="contest">Contester la retenue</button>':''}</div>`; }
+  case 8: { const net=dep-80; return `<p>Le dépôt de garantie doit être restitué <b>sous 1 mois</b> si l'état des lieux de sortie est conforme, <b>sous 2 mois</b> en cas de retenues justifiées ; au-delà, majoration de 10 % du loyer par mois de retard.</p>
+    <div class="tx-money"><div><span>Dépôt de garantie</span><b>${eur(dep)}</b></div><div><span>Retenue justifiée</span><b>− ${eur(80)}</b></div><div class="tot"><span>À restituer avant le ${dPlus(60)}</span><b>${eur(net)}</b></div></div>
+    ${role==='bailleur'?`<div class="tx-acts">${A('restit','Je restitue le dépôt')}</div>`:`<p class="tx-wait">${t.ok.restit_bailleur?'✓ Dépôt restitué':'Restitution en attente'}</p><button type="button" class="lnk" data-tx-sim="restit">Simuler : le bailleur restitue</button>`}`; }
+  case 9: return `<div class="tx-end"><b>Location terminée.</b><span>Dépôt restitué, dernières quittances et états des lieux archivés.</span></div>
+    <div class="tx-rate"><b>Notez ${role==='locataire'?'le bailleur':'le locataire'}</b><span class="stars">${[1,2,3,4,5].map(i=>`<button type="button" data-star="${i}" class="${(t.rate||0)>=i?'on':''}">★</button>`).join('')}</span></div>
+    ${role==='bailleur'?'<button type="button" class="btn cta" data-tx-act="again">Remettre le logement en location</button>':''}`;
+  } return ''; }
+
+let TXR={key:null,role:null};
+function openTx(kind,id,role){ const t=kind==='vente'?txSale(id):txLoc(id); TXR={key:(kind==='vente'?'v':'l')+id,role}; renderTx(); show('tx'); }
+function renderTx(){ const t=TXS[TXR.key]; const role=TXR.role; const b=findB(t.id); const S=t.kind==='vente'?SALE:RENT; const roles=t.kind==='vente'?['acheteur','vendeur']:['locataire','bailleur'];
+  const owner=role==='vendeur'||role==='bailleur';
+  document.getElementById('v-tx').innerHTML=`${owner?`<div class="sp-tabs"><button type="button" data-sp="vente" class="${t.kind==='vente'?'on':''}">Ma vente</button><button type="button" data-sp="loc" class="${t.kind==='loc'?'on':''}">Ma location</button><button type="button" data-sp="dash">Tableau de bord vendeur</button></div>`:''}
+  <div class="tx-head"><div class="ph">${b.img?`<img src="${b.img}" alt="">`:''}</div><div><span class="eyebrow">${t.kind==='vente'?'Suivi de la vente':'Suivi de la location'}</span><h2 style="margin:4px 0">${b.type} ${b.pieces?b.pieces+' p. ':''}${fmt(b.surface)} m² · ${b.ville}</h2><span class="hint">${t.kind==='vente'?`${eur(t.price)} · acheteur ${t.buyer} · vendeur ${b.vendeur}`:`${eur(b.prix)} / mois · bailleur ${b.vendeur}${t.cand!=null?' · locataire '+CANDS[t.cand].n:''}`}</span></div>
+   <div class="tx-role"><span>Vous êtes</span>${roles.map(r=>`<button type="button" data-role="${r}" class="${r===role?'on':''}">${r}</button>`).join('')}</div></div>
+  <ol class="tx-steps">${S.map((s,i)=>`<li class="${i<t.stage?'done':i===t.stage?'cur':''}"><i>${i<t.stage?'✓':i+1}</i><span>${s.t}</span></li>`).join('')}</ol>
+  <div class="tx-grid"><div class="pane tx-cur"><div class="toolbar"><h3>${t.stage+1}. ${S[t.stage].t}</h3><span class="hint">${t.stage<S.length-1?'Action : '+S[t.stage].who:''}</span></div>${t.kind==='vente'?saleBody(t,role):rentBody(t,role)}</div>
+  <aside class="tx-side"><div class="pane"><h3>Journal</h3><div class="log">${t.log.slice(0,12).map(l=>`<div><time>${l[0]}</time><span>${l[1]}</span></div>`).join('')}</div></div>
+   <div class="pane"><h3>Sécurité</h3><p class="hint">${t.kind==='vente'?'Bienvu ne détient jamais de fonds : acompte et solde transitent par le compte séquestre du notaire. Aucun frais à l\'acte, aucune commission.':'Le dépôt de garantie transite par un prestataire de paiement agréé ; Bienvu ne détient jamais de fonds. Aucune demande d\'argent hors plateforme.'}</p><button type="button" class="lnk" data-tx-act="reset">Recommencer la démo</button></div></aside></div>`; }
+function txNext(t,txt){ t.stage++; txLog(t,txt); txSave(); renderTx(); window.scrollTo({top:0,behavior:'smooth'}); }
+document.getElementById('v-tx').addEventListener('click',e=>{ const el=e.target.closest('button'); if(!el) return; const t=TXS[TXR.key]; if(!t) return; const role=TXR.role; const b=findB(t.id);
+  const both=k=>{ const r=t.kind==='vente'?['acheteur','vendeur']:['locataire','bailleur']; return r.every(x=>t.ok[k+'_'+x]); };
+  const otherR=t.kind==='vente'?(role==='acheteur'?'vendeur':'acheteur'):(role==='locataire'?'bailleur':'locataire');
+  if(el.dataset.role){ TXR.role=el.dataset.role; renderTx(); return; }
+  if(el.dataset.sp){ if(el.dataset.sp==='vente') openTx('vente',SELL.id,'vendeur'); else if(el.dataset.sp==='loc') openTx('loc',LOC_ID,'bailleur'); else openVendeur(); return; }
+  if(el.dataset.star){ t.rate=+el.dataset.star; txLog(t,'Avis laissé : '+t.rate+' / 5'); txSave(); renderTx(); toast('Merci pour votre avis'); return; }
+  if(el.dataset.txPick!==undefined){ t.cand=+el.dataset.txPick; txNext(t,'Dossier retenu : '+CANDS[t.cand].n+' · autres candidats prévenus · bail généré'); toast('Candidat retenu · bail prêt à signer'); return; }
+  if(el.dataset.txFix!==undefined){ t.issues[+el.dataset.txFix].st='Artisan envoyé, intervention le '+dPlus(2); txLog(t,'Intervention planifiée'); txSave(); renderTx(); return; }
+  const sim=el.dataset.txSim, act=el.dataset.txAct;
+  const mark=(k,r)=>{ t.ok[k+'_'+r]=true; };
+  if(act==='reset'){ delete TXS[TXR.key]; txSave(); if(t.kind==='vente') txSale(t.id,{stage:1}); else txLoc(t.id); renderTx(); toast('Démo réinitialisée'); return; }
+  if(t.kind==='vente'){
+    if(act==='notaire'||sim==='notaire'){ const v=act?(document.getElementById('tx-not').value.trim()):'Me Sarah Benoît, office notarial de la Comédie, Montpellier'; if(!v){ toast('Indiquez votre notaire'); return; } const r=act?role:otherR; if(r==='acheteur') t.na=v; else t.nv=v; txLog(t,'Notaire '+r+' : '+v); if(t.na&&t.nv){ txNext(t,'Dossier complet transmis aux deux études · accusés de réception reçus'); } else { txSave(); renderTx(); } return; }
+    if(sim==='draft'){ t.ok.draft=true; txLog(t,'Projet de compromis reçu du notaire, envoyé aux deux parties'); txSave(); renderTx(); return; }
+    if(act==='read'||sim==='read'){ mark('read',act?role:otherR); txLog(t,'Projet relu et approuvé par '+(act?role:otherR)); if(both('read')) txNext(t,'Projet validé par les deux parties · signature fixée au '+dPlus(6)); else { txSave(); renderTx(); } return; }
+    if(act==='acompte'){ mark('acompte','acheteur'); txLog(t,'Acompte viré sur le compte séquestre du notaire'); txSave(); renderTx(); toast('Acompte viré au notaire'); return; }
+    if(act==='sign'||sim==='sign'){ const r=act?role:otherR; if(r==='acheteur'&&!t.ok.acompte_acheteur){ if(act){ toast('Virez d\'abord l\'acompte au notaire'); return; } mark('acompte','acheteur'); } mark('sign',r); txLog(t,'Compromis signé par '+r); if(both('sign')) txNext(t,'Compromis signé par les deux parties · notifié à l\'acheteur · délai de rétractation ouvert'); else { txSave(); renderTx(); } return; }
+    if(act==='retract'){ if(!t.askRetract){ t.askRetract=true; renderTx(); return; } txLog(t,'Rétractation de l\'acheteur · acompte restitué · annonce remise en ligne'); t.stage=8; t.cancel=true; txSave(); renderTx(); return; }
+    if(act==='noretract'){ t.askRetract=false; renderTx(); return; }
+    if(sim==='ret'){ txNext(t,'Fin du délai de rétractation · la vente est ferme sous conditions suspensives'); return; }
+    if(act==='fin'||sim==='fin'){ if(t.cash||t.fin>=FIN2.length-1){ txNext(t,t.cash?'Achat comptant : origine des fonds vérifiée':'Condition de prêt levée'); return; } t.fin++; txLog(t,'Financement : '+FIN2[t.fin]); txSave(); renderTx(); return; }
+    if(act==='courtier'){ toast('Un courtier partenaire vous rappelle sous 24 h, sans frais'); txLog(t,'Rappel courtier demandé'); txSave(); return; }
+    if(act==='levee'){ txNext(t,'Offre de prêt acceptée · condition suspensive levée · notaire informé'); return; }
+    if(['solde','visite','resil','cles','relev'].includes(act)){ mark(act,role); txLog(t,{solde:'Solde viré au notaire',visite:'Visite de contrôle faite par l\'acheteur',resil:'Fournisseurs prévenus par le vendeur',cles:'Clés rassemblées',relev:'Relevés de compteurs préparés'}[act]); txSave(); renderTx(); return; }
+    if(sim==='ready'){ ['solde','visite'].forEach(k=>mark(k,'acheteur')); ['resil','cles','relev'].forEach(k=>mark(k,'vendeur')); txNext(t,'Fonds reçus par le notaire · rendez-vous de signature confirmé le '+dPlus(25)); return; }
+    if(act==='acte'||sim==='acte'){ const r=act?role:otherR; mark('acte',r); txLog(t,'Acte signé par '+r); if(both('acte')) txNext(t,'Acte authentique signé · clés remises · prix versé au vendeur par le notaire · annonce retirée'); else { txSave(); renderTx(); } return; }
+  } else {
+    if(sim==='choose'){ t.cand=0; txNext(t,'Dossier retenu par le bailleur · bail généré'); return; }
+    if(act==='bail'||sim==='bail'){ mark('bail',act?role:otherR); txLog(t,'Bail signé par '+(act?role:otherR)); if(both('bail')) txNext(t,'Bail signé électroniquement par les deux parties'); else { txSave(); renderTx(); } return; }
+    if(act==='pay'||act==='assur'||sim==='pay'){ if(sim){ mark('pay','locataire'); mark('assur','locataire'); } else mark(act,'locataire'); txLog(t,act==='assur'?'Attestation d\'assurance habitation reçue':'Dépôt de garantie séquestré et 1er loyer réglé'); if(t.ok.pay_locataire&&t.ok.assur_locataire) txNext(t,'Paiements reçus · état des lieux d\'entrée à planifier'); else { txSave(); renderTx(); } return; }
+    if(act==='edl'||sim==='edl'){ const r=act?role:otherR; if(r===role&&(!t.edl||ROOMS.some((_,i)=>!t.edl[i]))){ toast('Cochez chaque pièce de l\'état des lieux'); return; } mark('edl',r); txLog(t,'État des lieux d\'entrée signé par '+r); if(both('edl')) txNext(t,'État des lieux d\'entrée signé · dépôt de garantie versé au bailleur'); else { txSave(); renderTx(); } return; }
+    if(act==='keys'||sim==='keys'){ mark('keys',act?role:otherR); if(both('keys')){ t.months=1; txNext(t,'Clés remises · bail en cours · première quittance émise'); } else { txSave(); renderTx(); } return; }
+    if(act==='month'){ t.months++; txLog(t,'Loyer prélevé et reversé · quittance émise'); txSave(); renderTx(); return; }
+    if(act==='dlq'){ toast('Quittance PDF : disponible dans l\'application finale'); return; }
+    if(act==='issue'){ t.issues.push({t:'Fuite sous l\'évier de la cuisine (photo jointe)',st:'Signalée'}); txLog(t,'Le locataire signale : fuite sous l\'évier'); txSave(); renderTx(); toast('Le bailleur est prévenu'); return; }
+    if(act==='conge'){ t.congeBy=role; t.congeAt=new Date().toLocaleDateString('fr-FR'); txNext(t,(role==='locataire'?'Préavis donné par le locataire':'Congé donné par le bailleur')+' · lettre horodatée envoyée'); return; }
+    if(act==='relist'){ toast('Annonce republiée · visites possibles pendant le préavis'); txLog(t,'Annonce republiée'); txSave(); return; }
+    if(act==='toexit'){ txNext(t,'État des lieux de sortie fixé au '+dPlus(30)); return; }
+    if(act==='exit'||sim==='exit'){ mark('exit',act?role:otherR); txLog(t,'État des lieux de sortie signé par '+(act?role:otherR)); if(both('exit')) txNext(t,'État des lieux de sortie signé · retenue de 80 € acceptée'); else { txSave(); renderTx(); } return; }
+    if(act==='contest'){ toast('Contestation envoyée au bailleur · médiation possible auprès de la commission de conciliation'); txLog(t,'Retenue contestée par le locataire'); txSave(); return; }
+    if(act==='restit'||sim==='restit'){ mark('restit','bailleur'); txNext(t,'Dépôt de garantie restitué au locataire'); return; }
+    if(act==='again'){ delete TXS[TXR.key]; txSave(); openTx('loc',t.id,'bailleur'); toast('Logement remis en location'); return; }
+  } });
+document.getElementById('v-tx').addEventListener('change',e=>{ const c=e.target.closest('[data-edl]'); if(!c) return; const t=TXS[TXR.key]; t.edl=t.edl||{}; t.edl[c.dataset.edl]=c.checked; txSave(); renderTx(); });
+
+// Liens vers le suivi
+openDossier=function(){ const o=curT.offer||{}; const D=curT.dossier||{}; const na=D.na?[D.na.nom,D.na.etude].filter(Boolean).join(', '):null; const t=txSale(curT.id,{stage:(na&&(curT.nv||D.same))?2:1,price:o.p||findB(curT.id).prix,buyer:'Vous',na,nv:D.same?na:(curT.nv||null)}); openTx('vente',curT.id,'acheteur'); };
+document.getElementById('m-body').addEventListener('click',e=>{ if(e.target.closest('#open-loc')){ const t=txLoc(curT.id); if(t.stage<5){ t.stage=5; t.months=Math.max(t.months,1); ['bail','edl','keys'].forEach(k=>{t.ok[k+'_locataire']=t.ok[k+'_bailleur']=true;}); t.ok.pay_locataire=t.ok.assur_locataire=true; txLog(t,'Bail en cours · clés remises'); txSave(); } openTx('loc',curT.id,'locataire'); } });
 
 // Calculette
 function mens(K,ans,taux,assu){ const n=ans*12, r=taux/100/12; const m0 = r>0 ? K*r/(1-Math.pow(1+r,-n)) : K/n; const a=K*assu/100/12; return {m:m0+a, interets:m0*n-K, assurance:a*n}; }
