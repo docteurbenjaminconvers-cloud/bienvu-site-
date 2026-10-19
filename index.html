@@ -24,7 +24,7 @@
 .pbar .pgo{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(176,141,87,.6);padding-bottom:1px}
 .pbar:hover .pgo,.pbar:focus-visible .pgo{border-bottom-color:var(--gold)}
 .pbar:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
-@media (max-width:560px){.pbar .ptag,.pbar .prule.r2{display:none}.pbar{justify-content:space-between}.pbar .pname{font-size:12px;letter-spacing:.16em}}
+.pbar{padding-top:calc(8px + env(safe-area-inset-top,0px))}.pbar .pname,.pbar .pgo{white-space:nowrap}@media (max-width:560px){.pbar .ptag,.pbar .prule{display:none}.pbar{justify-content:center;gap:10px;min-height:calc(42px + env(safe-area-inset-top,0px));padding-bottom:10px}.pbar .pdia{width:14px;height:14px}.pbar .pname{font-size:13px;letter-spacing:.14em}.pbar .pgo{font-size:11.5px;letter-spacing:.06em;margin-left:6px}.pbar .pgo::after{content:" →"}}
 body[data-view="prestige"] .pbar,body[data-view="nda"] .pbar{display:none}
 /* En-tête qui passe en mode « salon » dans Prestige */
 .header{transition:background .35s ease,border-color .35s ease}
