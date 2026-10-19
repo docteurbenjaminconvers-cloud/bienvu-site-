@@ -142,7 +142,7 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 .row2 .btn{white-space:normal;min-width:0;line-height:1.25}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
 <title>Bienvu</title>
@@ -1403,6 +1403,7 @@ function smartParse(){ const q=document.getElementById('q'); const raw=q.value.t
   if(city){ q.value=city; got.unshift(city); } else if(got.length) q.value='';
   const h=document.getElementById('smart-hint'); if(got.length>1||(got.length&&!city)){ h.hidden=false; h.textContent='Compris : '+got.join(' · '); setTimeout(()=>toast('Compris : '+got.join(' · ')),50); } else h.hidden=true; }
 document.getElementById('search').addEventListener('submit',smartParse);
+window.addEventListener('load',()=>{ if(document.body.dataset.view==='prix'){ pxMapInit(); pxRender(); } });
 
 document.getElementById('search').addEventListener('submit',e=>{ e.preventDefault(); const q=document.getElementById('q').value.trim().toLowerCase(); const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
   const res=BIENS.filter(b=>b.op===mode && (!q || b.ville.toLowerCase().includes(q) || b.quartier.toLowerCase().includes(q) || (b.premium&&/prestige|exception|luxe/.test(q))) && (!t || b.type===t) && b.prix<=bud);
