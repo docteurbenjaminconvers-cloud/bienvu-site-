@@ -44,6 +44,95 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
   .pbar{order:-4;padding-block:9px}
 }
 @media (max-width:560px){body[data-view="prestige"] .brand,body[data-view="nda"] .brand{flex-direction:column;align-items:flex-start;gap:2px;line-height:1}body[data-view="prestige"] .brand .bp,body[data-view="nda"] .brand .bp{font-size:10.5px;letter-spacing:.32em}}
+
+/* ===== Page Bienvu Prestige ===== */
+.btn.gold{background:var(--gold);color:#1E2630}
+.btn.pline{background:transparent;color:var(--prestige-ink);border:1px solid rgba(242,239,232,.55)}
+.pkick{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.pkick svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:1.3;flex:none}
+.pkick.dark{color:#8C6A35}
+.phero{position:relative;margin-top:12px;border-radius:var(--r);overflow:hidden;background:var(--prestige-bg);color:var(--prestige-ink);min-height:440px;display:flex;flex-direction:column;justify-content:flex-end}
+.phero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:pzoom 14s ease-out both}
+@keyframes pzoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.phero-img{animation:none}}
+.phero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,26,33,.15) 0%,rgba(20,26,33,.35) 40%,rgba(20,26,33,.92) 100%)}
+.phero-in{position:relative;z-index:2;padding:22px 18px 18px;display:grid;gap:12px}.phero-in .pkick{justify-self:start;background:rgba(20,26,33,.72);padding:6px 10px;color:#D6BA82}.phero h1,.phero p{text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.phero h1{font-family:var(--display);color:#fff;font-size:34px;line-height:1.1;margin:0;font-weight:700}
+.phero p{margin:0;color:#E4E1DA;max-width:46ch;font-size:15px;line-height:1.5}
+.phero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.pstats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);margin:0;border-top:1px solid rgba(176,141,87,.45);background:rgba(20,26,33,.55)}
+.pstats div{padding:12px 8px;text-align:center}
+.pstats div+div{border-left:1px solid rgba(176,141,87,.3)}
+.pstats dt{font-family:var(--display);font-size:20px;color:var(--gold);font-weight:700}
+.pstats dd{margin:2px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--prestige-muted)}
+.psec{margin-top:30px;display:grid;gap:14px}
+.psec-h{display:grid;gap:6px}
+.psec-h h2{margin:0;font-family:var(--display);font-size:22px;color:var(--ink)}
+.pfeat{display:grid;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);overflow:hidden;text-align:left;padding:0;font:inherit;color:var(--ink);cursor:pointer;width:100%}
+.pfeat .fimg{position:relative;aspect-ratio:4/3;overflow:hidden;background:#222}
+.pfeat .fimg img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.pfeat:hover .fimg img{transform:scale(1.03)}
+.pfeat .fimg span{position:absolute;left:12px;bottom:12px;background:rgba(20,26,33,.75);color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;font-weight:700}
+.pfeat .fbody{padding:18px;display:grid;gap:8px;border-top:3px solid var(--gold)}
+.pfeat .fbody h3{margin:0;font-family:var(--display);font-size:21px;line-height:1.25}
+.pfeat .fbody .floc{color:var(--muted);font-size:13px;letter-spacing:.04em}
+.pfeat .fbody p{margin:0;color:var(--ink);line-height:1.55;font-size:14.5px}
+.pfeat .fspecs{display:flex;gap:18px;flex-wrap:wrap;padding:10px 0;border-block:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pfeat .fspecs b{display:block;color:var(--ink);font-size:15px}
+.pfeat .fprice{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pfeat .fprice strong{font-family:var(--display);font-size:24px}
+.pfeat .fgo{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8C6A35;border-bottom:1px solid #8C6A35}
+.punivs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.puniv{position:relative;aspect-ratio:3/4;border:0;padding:0;border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--prestige-bg);font:inherit;text-align:left}
+.puniv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.puniv:hover img{transform:scale(1.05)}
+.puniv::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,26,33,.88))}
+.puniv span{position:absolute;left:12px;right:12px;bottom:12px;z-index:1;display:grid;gap:3px;color:#fff}
+.puniv b{font-family:var(--display);font-size:16px;font-weight:700}
+.puniv small{font-size:11.5px;color:#D9D5CC}
+.puniv.off img{filter:blur(6px) brightness(.55);transform:scale(1.1)}
+.puniv .plock{position:absolute;z-index:1;top:50%;left:50%;width:34px;height:34px;margin:-30px 0 0 -17px;stroke:var(--gold);fill:none;stroke-width:1.3}
+.ppills{display:grid;gap:10px}
+.ppill{background:var(--surface);border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:var(--r);padding:16px;display:grid;gap:6px}
+.ppill svg{width:26px;height:26px;stroke:#8C6A35;fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.ppill b{font-family:var(--display);font-size:15.5px}
+.ppill p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.pbars{display:grid;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.pbr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;font-size:13.5px}
+.pbr span{color:var(--muted)}
+.pbr b{font-family:var(--display);font-size:17px;grid-column:2;grid-row:1}
+.pbt{grid-column:1/-1;height:10px;background:#EEECE7}
+.pbt i{display:block;height:100%;background:#9AA3AD;min-width:6px;transform-origin:left;animation:pgrow 1.2s .2s ease-out both}
+.pbr.gold .pbt i{background:var(--gold)}
+.pbr.gold b{color:#8C6A35}
+@keyframes pgrow{from{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.pbt i{animation:none}}
+.pcomp .note{margin:0}
+.pclose{margin-top:30px;background:var(--prestige-bg);color:var(--prestige-ink);border-radius:var(--r);padding:28px 18px;display:grid;gap:10px;justify-items:center;text-align:center;border-top:3px solid var(--gold)}
+.pclose h2{margin:0;font-family:var(--display);color:var(--prestige-ink);font-size:23px}
+.pclose p{margin:0;color:var(--prestige-muted);max-width:44ch}
+.pclose .btn{margin-top:6px;justify-self:center}
+@media (min-width:900px){
+  .phero{min-height:560px}
+  .phero-in{padding:44px 44px 30px;max-width:720px}
+  .phero h1{font-size:56px}
+  .phero p{font-size:17px}
+  .pstats{grid-template-columns:repeat(3,auto);justify-content:start;background:transparent;border-top:0;padding:0 44px 34px;gap:0}
+  .pstats div{text-align:left;padding:0 28px 0 0;margin-right:28px}
+  .pstats div+div{border-left:1px solid rgba(176,141,87,.4);padding-left:28px}
+  .pstats dt{font-size:28px}
+  .psec{margin-top:52px}
+  .psec-h h2{font-size:28px}
+  .pfeat{grid-template-columns:1.25fr 1fr}
+  .pfeat .fimg{aspect-ratio:auto;min-height:380px}
+  .pfeat .fbody{border-top:0;border-left:3px solid var(--gold);padding:32px;align-content:center;gap:12px}
+  .pfeat .fbody h3{font-size:28px}
+  .punivs{grid-template-columns:repeat(4,1fr);gap:16px}
+  .puniv b{font-size:19px}
+  .ppills{grid-template-columns:repeat(4,1fr);gap:16px}
+  .pclose{padding:48px 24px;margin-top:52px}
+  .pclose h2{font-size:30px}
+}
 </style>
 </head>
 <body>
@@ -455,18 +544,63 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 <!-- PRESTIGE -->
 <section class="view" id="v-prestige" hidden>
   <button class="back" id="back-prestige" type="button">← Accueil</button>
-  <div class="prestige" style="margin-top:12px">
-    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><h2>Immobilier d'exception</h2><p>Biens à partir de 1 M€ (ou 4 000 € de loyer), vendus entre particuliers. Diffusion confidentielle possible, visites sur rendez-vous uniquement, dossier complet avant toute visite.</p></div>
+
+  <div class="phero">
+    <img src="photos/domaine.jpg" alt="" class="phero-img">
+    <div class="phero-in">
+      <span class="pkick"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Bienvu Prestige</span>
+      <h1>L'exception,<br>entre nous.</h1>
+      <p>Mas, domaines, hôtels particuliers et villas sur l'eau, vendus directement par leurs propriétaires. La discrétion d'un cabinet, sans ses 5 %.</p>
+      <div class="phero-cta"><button type="button" class="btn gold" id="ph-voir">Voir la sélection</button><button type="button" class="btn pline" id="ph-confier">Confier un bien</button></div>
+    </div>
+    <dl class="pstats" id="pstats"></dl>
+  </div>
+
+  <div class="psec">
+    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>La sélection du moment</span></div>
+    <div id="pfeat"></div>
+  </div>
+
+  <div class="psec">
+    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Quatre univers</span><h2>Choisissez votre art de vivre</h2></div>
+    <div class="punivs">
+      <button type="button" class="puniv" data-pf="mas"><img src="photos/mas.jpg" alt="" loading="lazy"><span><b>Mas & domaines</b><small>Pierre, oliviers, vignes</small></span></button>
+      <button type="button" class="puniv" data-pf="mer"><img src="photos/villa-mer.jpg" alt="" loading="lazy"><span><b>Littoral</b><small>Sète, Camargue, Port Camargue</small></span></button>
+      <button type="button" class="puniv" data-pf="ville"><img src="photos/hotel-particulier.jpg" alt="" loading="lazy"><span><b>Hôtels particuliers</b><small>Montpellier, Nîmes, Toulouse</small></span></button>
+      <button type="button" class="puniv off" data-pf="prive"><img src="photos/domaine.jpg" alt="" loading="lazy"><span><b>Off-market</b><small>Sur accord de confidentialité</small></span><svg class="plock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button>
+    </div>
+  </div>
+
+  <div class="prestige" id="prestige-sel" style="margin-top:28px">
+    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Tous les biens d'exception</span><h2>La collection</h2><p>Biens à partir de 1 M€ (ou 4 000 € de loyer). Visites sur rendez-vous, dossier complet avant toute visite.</p></div>
     <div class="pfilters"><button type="button" class="pf" data-pf="all" aria-pressed="true">Tous</button><button type="button" class="pf" data-pf="mas" aria-pressed="false">Mas & domaines</button><button type="button" class="pf" data-pf="mer" aria-pressed="false">Littoral</button><button type="button" class="pf" data-pf="ville" aria-pressed="false">Hôtels particuliers & villes</button><button type="button" class="pf" data-pf="prive" aria-pressed="false">Off-market</button></div>
     <div class="plist" id="prestige-full"></div>
   </div>
-  <div class="pane" style="margin-top:14px">
-    <h3>Ce que comprend Bienvu Prestige <small>pour le vendeur · 490 €</small></h3>
-    <div class="piece"><div><span>Diffusion confidentielle</span><small>Annonce sans adresse ni photos extérieures identifiables, accessible aux acheteurs vérifiés ayant signé un engagement de confidentialité ; prix sur demande possible.</small></div></div>
-    <div class="piece"><div><span>Reportage photo, drone et visite 3D</span><small>Réalisés par un photographe partenaire, inclus.</small></div></div>
-    <div class="piece"><div><span>Acheteurs qualifiés</span><small>Attestation de capacité financière établie par la banque du candidat sur formulaire Bienvu et vérifiée par nous auprès de l'agence ; accord de confidentialité signé ; visites sur rendez-vous, accompagnées si vous le souhaitez.</small></div></div>
-    <div class="piece"><div><span>Pack Transaction inclus</span><small>Offre, notaires, suivi jusqu'à l'acte, conciergerie de déménagement partenaire.</small></div></div>
-    <p class="note">Toujours sans commission : 490 € à l'acte, quel que soit le prix du bien. Sur une vente à 1,8 M€, un cabinet de prestige facture 70 000 à 100 000 €.</p>
+
+  <div class="psec">
+    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>L'art de la discrétion</span><h2>Ce qui fait Bienvu Prestige</h2></div>
+    <div class="ppills">
+      <div class="ppill"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><path d="M4 4l16 16"/></svg><b>Diffusion confidentielle</b><p>Sans adresse ni façade identifiable. Le dossier complet s'ouvre après un accord de confidentialité signé.</p></div>
+      <div class="ppill"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9 21v-7M15 21v-7M2 10l10-6 10 6z"/></svg><b>Acheteurs qualifiés</b><p>Capacité financière attestée par la banque du candidat et vérifiée par contre-appel avant toute visite.</p></div>
+      <div class="ppill"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 7l2-3h4l2 3"/></svg><b>Une image à la hauteur</b><p>Reportage photo, drone et visite 3D par un photographe partenaire, inclus.</p></div>
+      <div class="ppill"><svg viewBox="0 0 24 24"><path d="M4 20L20 4M7 7h.01M17 17h.01"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg><b>Jamais de commission</b><p>490 € à l'acte, quel que soit le prix. Offre, notaires et suivi jusqu'à l'acte compris.</p></div>
+    </div>
+  </div>
+
+  <div class="psec pcomp">
+    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Sur une vente à 1,8 M€</span><h2>Ce que vous gardez</h2></div>
+    <div class="pbars">
+      <div class="pbr"><span>Cabinet de prestige · 4 à 5 %</span><div class="pbt"><i style="width:100%"></i></div><b>70 000 à 100 000 €</b></div>
+      <div class="pbr gold"><span>Bienvu Prestige · forfait</span><div class="pbt"><i style="width:1.2%"></i></div><b>490 €</b></div>
+    </div>
+    <p class="note">Ordre de grandeur des honoraires pratiqués par les réseaux de prestige ; le forfait Bienvu ne dépend jamais du prix de vente.</p>
+  </div>
+
+  <div class="pclose">
+    <span class="pkick"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Propriétaires</span>
+    <h2>Confiez-nous un bien d'exception</h2>
+    <p>Reportage, diffusion confidentielle, acheteurs vérifiés et suivi notarial, pour 490 € sans commission.</p>
+    <button type="button" class="btn gold" id="ph-confier2">Confier mon bien</button>
   </div>
 </section>
 
@@ -773,7 +907,7 @@ function card(b){ const e=ecart(b); return `<button class="card" type="button" d
   <span class="meta">${b.ville} · ${b.quartier}</span>
   <div class="badges"><span class="badge ok">Vérifié</span><span class="badge decl">Déclaré</span>${ecartBadge(e)}${b.dpe?`<span class="badge">DPE ${b.dpe}</span>`:''}</div></div></button>`; }
 
-function show(id){ if(id==='prestige'&&typeof renderPrestige==='function') renderPrestige(); document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
+function show(id){ if(id==='prestige'&&typeof renderPrestige==='function'){ renderPrestige(); renderPrestigeHome(); } document.body.dataset.view=id; document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id); document.querySelectorAll('.nav button').forEach(b=>{ if(b.dataset.nav===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); }); window.scrollTo({top:0}); try{localStorage.setItem('bienvu-view',id)}catch(e){} }
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.nav)));
 document.getElementById('hdr-deposer').addEventListener('click',()=>show('post'));
 document.getElementById('back-home').addEventListener('click',()=>show('home'));
@@ -791,6 +925,21 @@ let pf='all';
 function renderPrestige(){ const L=BIENS.filter(b=>b.premium).filter(b=>pf==='all'?true:pf==='prive'?b.prive:pf==='mer'?['Sète','Le Grau-du-Roi','Palavas-les-Flots','La Grande-Motte','Agde'].includes(b.ville):pf==='mas'?/mas|domaine|magnanerie|château/i.test(b.etage+b.desc)&&!['Sète','Le Grau-du-Roi'].includes(b.ville):/hôtel particulier|toulousaine|folie|appartement/i.test(b.etage+b.desc)); document.getElementById('prestige-full').innerHTML=L.length?L.map(pcard).join(''):'<p style="color:var(--prestige-muted)">Aucun bien dans cette catégorie pour le moment.</p>'; }
 document.getElementById('go-prestige').addEventListener('click',()=>{ renderPrestige(); show('prestige'); });
 document.getElementById('back-prestige').addEventListener('click',()=>show('home'));
+// Page Prestige enrichie
+function renderPrestigeHome(){
+  const P=BIENS.filter(b=>b.premium);
+  const villes=new Set(P.map(b=>b.ville)).size;
+  document.getElementById('pstats').innerHTML=`<div><dt>${P.length}</dt><dd>biens d'exception</dd></div><div><dt>${villes}</dt><dd>villes en Occitanie</dd></div><div><dt>0 %</dt><dd>de commission</dd></div>`;
+  const f=P.find(b=>!b.prive&&b.op==='vente')||P[0]; if(!f) return;
+  document.getElementById('pfeat').innerHTML=`<button type="button" class="pfeat" data-fid="${f.id}"><div class="fimg">${f.img?`<img src="${f.img}" alt="">`:''}<span>${f.drone?'Photos, drone et visite 3D':'Photos et visite 3D'}</span></div><div class="fbody"><span class="floc">${f.ville} · ${f.quartier}</span><h3>${f.etage}</h3><p>${f.desc}</p><div class="fspecs"><span><b>${fmt(f.surface)} m²</b>habitables</span>${f.pieces?`<span><b>${f.pieces}</b>pièces</span>`:''}${f.dpe?`<span><b>${f.dpe}</b>DPE</span>`:''}</div><div class="fprice"><strong>${eur(f.prix)}</strong><span class="fgo">Découvrir ce bien</span></div></div></button>`;
+}
+document.addEventListener('click',e=>{
+  const fe=e.target.closest('.pfeat'); if(fe){ openDetail(fe.dataset.fid); return; }
+  const u=e.target.closest('.puniv'); if(u){ pf=u.dataset.pf; document.querySelectorAll('.pf').forEach(x=>x.setAttribute('aria-pressed',x.dataset.pf===pf)); renderPrestige(); document.getElementById('prestige-sel').scrollIntoView({behavior:'smooth',block:'start'}); }
+});
+document.getElementById('ph-voir').addEventListener('click',()=>document.getElementById('prestige-sel').scrollIntoView({behavior:'smooth',block:'start'}));
+['ph-confier','ph-confier2'].forEach(id=>document.getElementById(id).addEventListener('click',()=>show('post')));
+
 document.getElementById('pbar').addEventListener('click',()=>show('prestige'));
 try{ const n=BIENS.filter(b=>b.premium).length; if(n) document.getElementById('pbar-tag').textContent=`${n} biens d'exception · diffusion confidentielle`; }catch(e){}
 
