@@ -646,6 +646,13 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .pxmap .leaflet-tile-pane{filter:grayscale(.55) sepia(.12) brightness(1.04) contrast(.92)}
 .pxmap .leaflet-control-attribution{font-size:10.5px;background:rgba(255,255,255,.8)}
 .pricemap-mini>svg{width:100%;height:100%;display:block}
+.pricemap-mini{cursor:pointer}
+.pricemap-mini .leaflet-tile-pane{filter:grayscale(.55) sepia(.12) brightness(1.04) contrast(.92)}
+.pricemap-mini .leaflet-control-attribution{font-size:10px;background:rgba(255,255,255,.8)}
+.pricemap-mini .leaflet-control-attribution svg{display:none!important}
+.mini-tt{background:rgba(255,255,255,.94);border:0;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.18);font:600 12.5px var(--body);color:var(--ink);padding:3px 7px}
+.mini-tt b{font-family:var(--display)}
+.mini-tt::before{display:none}
 .pxlegend{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);padding:10px 2px}
 .pxlegend i{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:5px;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .pxsplit{display:grid;gap:16px;margin-top:16px}
@@ -1391,6 +1398,17 @@ document.getElementById('seg-estimer').addEventListener('click',()=>openPrix('es
 document.getElementById('foot-cities').innerHTML=Object.keys(DVF).filter(c=>GEO[c]).slice(0,16).map(c=>`<button type="button" data-city="${c}">Prix au m² à ${c}</button>`).join('');
 document.getElementById('foot-cities').addEventListener('click',e=>{ const b=e.target.closest('[data-city]'); if(b){ openPrix('carte'); pxSelect(b.dataset.city); } });
 pxSvg(document.getElementById('mini-map'),true);
+function miniMapInit(){ const el=document.getElementById('mini-map'); if(!window.L||el._bv) return; try{
+  el.innerHTML=''; const m=L.map(el,{zoomControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,attributionControl:false});
+  L.control.attribution({prefix:false}).addTo(m);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(m);
+  const show=['Toulouse','Montpellier','Nîmes','Perpignan','Uzès','Béziers','Carcassonne'];
+  Object.keys(GEO).filter(c=>DVF[c]).forEach(c=>{ const k=L.circleMarker(GEO[c],{radius:show.includes(c)?8:6,weight:2.5,color:'#fff',fillColor:pxColor(DVF[c].v),fillOpacity:.95}).addTo(m);
+    if(show.includes(c)) k.bindTooltip(`<b>${c}</b> ${fmt(DVF[c].v)} €/m²`,{permanent:true,direction:c==='Toulouse'||c==='Carcassonne'?'left':'right',className:'mini-tt',offset:[c==='Toulouse'||c==='Carcassonne'?-8:8,0]}); });
+  const fit=()=>{ m.invalidateSize(); m.fitBounds(Object.values(GEO),{padding:[28,28]}); }; fit(); setTimeout(fit,200);
+  m.on('click',()=>openPrix('carte')); el._bv=m; }catch(e){ el._bv=null; pxSvg(el,true); } }
+miniMapInit();
+window.addEventListener('resize',()=>{ const el=document.getElementById('mini-map'); if(el._bv) el._bv.invalidateSize(); });
 document.getElementById('mini-map').addEventListener('click',()=>openPrix('carte'));
 // Recherche en langage naturel : extrait ville, type, budget et achat/location
 function smartParse(){ const q=document.getElementById('q'); const raw=q.value.trim(); if(!raw) return; const t=norm(raw); const got=[];
