@@ -141,6 +141,9 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 .step table td:last-child{white-space:nowrap;text-align:right;vertical-align:top;padding-left:10px}
 .row2 .btn{white-space:normal;min-width:0;line-height:1.25}
 .p-submit{width:100%;margin-top:6px}
+.relax{grid-column:1/-1;background:#F3EEE4;border:1px solid #D9C7A3;border-radius:var(--r);padding:14px 16px;display:grid;gap:6px}
+.relax span{color:var(--muted);font-size:14px}
+.relax .btn{justify-self:start}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -1688,7 +1691,7 @@ function pxPaint(){ if(!pxMap&&!pxFail&&window.L&&document.body.dataset.view==='
   else pxSvg(document.getElementById('px-map'),false); }
 function pxRender(){ pxCard(); pxTypes(); pxTable(); pxLegend(); pxPaint(); }
 function pxSelect(c){ if(!DVF[c]) return; pxCity=c; document.getElementById('px-city').value=c; pxRender(); if(pxMap) pxMap.panTo(GEO[c]); }
-function pxTab(t){ document.querySelectorAll('.pxt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.px===t)); document.getElementById('px-carte-body').hidden=t!=='carte'; document.getElementById('px-estim-body').hidden=t!=='estim'; if(t==='estim'){ const ec=document.getElementById('es-city'); if(!ec.value) ec.value=pxCity; } }
+function pxTab(t){ document.querySelectorAll('.pxt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.px===t)); document.getElementById('px-carte-body').hidden=t!=='carte'; document.getElementById('px-estim-body').hidden=t!=='estim'; document.querySelector('.pxwrap').hidden=t==='estim'; document.getElementById('px-legend').hidden=t==='estim'; if(t==='carte'&&pxMap) setTimeout(()=>pxMap.invalidateSize(),50); window.scrollTo({top:0}); if(t==='estim'){ const ec=document.getElementById('es-city'); if(!ec.value) ec.value=pxCity; } }
 function openPrix(tab){ show('prix'); pxTab(tab||'carte'); pxMapInit(); pxRender(); }
 const ART_HOUSE=`<svg class="wf" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M10 84 H110"/><path d="M22 84 V44 L52 20 L82 44 V84"/><path d="M14 50 L52 18 L90 50"/><path d="M44 84 V62 H60 V84"/><rect x="30" y="50" width="10" height="10"/><rect x="64" y="50" width="10" height="10"/><path d="M70 30 V20 H78 V36"/><path d="M90 84 V58 H108 V84 M94 64 H104 M94 72 H104"/></svg>`, ART_FLAT=`<svg class="wf" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 84 H112"/><path d="M34 84 V14 H86 V84"/><path d="M42 24 H52 M68 24 H78 M42 38 H52 M68 38 H78 M42 52 H52 M68 52 H78 M42 66 H52 M68 66 H78"/><path d="M54 84 V72 H66 V84"/><path d="M16 84 V54 H34 M86 54 H104 V84"/></svg>`;
 document.getElementById('px-cities').innerHTML=Object.keys(DVF).sort().map(c=>`<option value="${c}">`).join('');
@@ -1700,14 +1703,14 @@ document.getElementById('px-table').addEventListener('click',e=>{ const r=e.targ
 document.getElementById('px-map').addEventListener('click',e=>{ const g=e.target.closest('.pxpt'); if(g) pxSelect(g.dataset.c); });
 document.querySelectorAll('[data-px]').forEach(b=>b.addEventListener('click',()=>pxTab(b.dataset.px)));
 document.getElementById('estim-form').addEventListener('submit',e=>{ e.preventDefault(); const v=norm(document.getElementById('es-city').value.trim()); const c=Object.keys(DVF).find(k=>norm(k)===v)||Object.keys(DVF).find(k=>norm(k).startsWith(v));
-  const box=document.getElementById('estim-res'); if(!c){ box.innerHTML='<p class="sub">Ville non couverte pour l\'instant. Villes disponibles : voir la carte des prix.</p>'; return; }
+  const box=document.getElementById('estim-res'); let approx=false; if(!c){ approx=true; } const vals=Object.values(DVF); const REF=c?DVF[c]:{v:Math.round(vals.reduce((x,y)=>x+y.v,0)/vals.length/50)*50,l:Math.round(vals.reduce((x,y)=>x+y.l,0)/vals.length*10)/10};
   const op=document.getElementById('es-op').value, typ=document.getElementById('es-type').value, S=+document.getElementById('es-surf').value||0;
   let k=(+document.getElementById('es-etat').value)*(typ==='Maison'?0.93:1.04);
   if(document.getElementById('es-ext').checked) k*=1.05; if(document.getElementById('es-park').checked) k*=1.03; if(document.getElementById('es-vue').checked) k*=1.04; if(document.getElementById('es-dpe').checked) k*=0.9;
   if(S<30) k*=1.08; if(S>150) k*=0.94;
-  const base=(op==='vente'?DVF[c].v:DVF[c].l)*S*k, lo=base*0.92, hi=base*1.08, unit=op==='vente'?'':' / mois';
+  const cn=c||(document.getElementById('es-city').value.trim()||'votre commune'); const base=(op==='vente'?REF.v:REF.l)*S*k, lo=base*0.92, hi=base*1.08, unit=op==='vente'?'':' / mois';
   const r=x=>op==='vente'?Math.round(x/1000)*1000:Math.round(x/10)*10;
-  box.innerHTML=`<span class="eyebrow" style="text-align:center">${typ} · ${fmt(S)} m² · ${c}</span><div class="sub">${op==='vente'?'Prix de vente estimé':'Loyer estimé hors charges'}</div><div class="big">${eur(r(base))}${unit}</div><div class="pxgauge"><i style="left:50%"></i></div><div class="pxbl"><span>Bas : ${eur(r(lo))}</span><span>Haut : ${eur(r(hi))}</span></div><p class="sub">Soit ${fmt(Math.round(base/S))} € le m²${op==='vente'?'':' par mois'}, pour une moyenne de ${pxOp==='vente'&&op==='vente'?fmt(DVF[c].v):String(op==='vente'?fmt(DVF[c].v):DVF[c].l).replace('.',',')} € à ${c}.</p>${op==='vente'?`<p class="sub">Avec Bienvu, vous gardez les ${eur(Math.round(base*0.05/100)*100)} qu'une agence aurait pris à 5 %.</p>`:''}<button type="button" class="btn cta" data-go="post" style="justify-self:center">Déposer gratuitement mon annonce</button>`; });
+  box.innerHTML=`<span class="eyebrow" style="text-align:center">${typ} · ${fmt(S)} m² · ${cn}</span>${approx?'<p class="sub" style="color:#9A6B1F">Commune pas encore dans notre base : estimation indicative sur la moyenne Occitanie, à affiner.</p>':''}<div class="sub">${op==='vente'?'Prix de vente estimé':'Loyer estimé hors charges'}</div><div class="big">${eur(r(base))}${unit}</div><div class="pxgauge"><i style="left:50%"></i></div><div class="pxbl"><span>Bas : ${eur(r(lo))}</span><span>Haut : ${eur(r(hi))}</span></div><p class="sub">Soit ${fmt(Math.round(base/S))} € le m²${op==='vente'?'':' par mois'}, pour une moyenne de ${op==='vente'?fmt(REF.v):String(REF.l).replace('.',',')} € ${approx?'en Occitanie':'à '+c}.</p>${op==='vente'?`<p class="sub">Avec Bienvu, vous gardez les ${eur(Math.round(base*0.05/100)*100)} qu'une agence aurait pris à 5 %.</p>`:''}<button type="button" class="btn cta" data-go="post" style="justify-self:center">Déposer gratuitement mon annonce</button>`; box.scrollIntoView({behavior:'smooth',block:'start'}); });
 // Raccourcis (boutons data-go)
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(!g) return; const t=g.dataset.go;
   if(t==='prix') openPrix('carte'); else if(t==='estimer') openPrix('estim'); else if(t==='home-loc'){ show('home'); document.getElementById('seg-location').click(); } else show(t); });
@@ -1728,17 +1731,43 @@ miniMapInit();
 window.addEventListener('resize',()=>{ const el=document.getElementById('mini-map'); if(el._bv) el._bv.invalidateSize(); });
 document.getElementById('mini-map').addEventListener('click',()=>openPrix('carte'));
 // Recherche en langage naturel : extrait ville, type, budget et achat/location
-function smartParse(){ const q=document.getElementById('q'); const raw=q.value.trim(); if(!raw) return; const t=norm(raw); const got=[];
+// Recherche en langage naturel : ville ou département, type, budget, achat/location, mots-clés (piscine, château, vue mer…)
+const DEPTS={gard:['Nîmes','Uzès','Alès','Beaucaire','Saint-Gilles','Bagnols-sur-Cèze','Villeneuve-lès-Avignon','Le Grau-du-Roi','Vauvert','Sommières','Anduze','Saint-Just-et-Vacquières'],herault:['Montpellier','Sète','Béziers','Agde','Castelnau-le-Lez','Lunel','Palavas-les-Flots','La Grande-Motte','Pézenas','Juvignac','Saint-Jean-de-Védas','Mauguio','Frontignan','Marsillargues'],aude:['Carcassonne','Narbonne'],'pyrenees orientales':['Perpignan'],'haute garonne':['Toulouse']};
+const STOP=new Set('je j cherche recherche recherchons veux voudrais un une des le la les l de du d a au aux en et ou avec sans pour sur dans moins plus minimum max maximum tres beau belle joli jolie grand grande petit petite budget prix euro euros eur environ pres proche autour secteur region france occitanie sud bien biens immobilier achat acheter vendre vente vend louer location loyer mois par mensuel pieces piece p chambre chambres m2 metre metres carres m'.split(' '));
+const SYN={chateau:['chateau','manoir','domaine','bastide','mas'],villa:['villa','maison'],mas:['mas','bastide','domaine'],mer:['mer','plage','port','littoral','marina','sete','grau','palavas','grande-motte','agde'],plage:['plage','mer','port','littoral'],piscine:['piscine'],jardin:['jardin','terrain','parc','oliveraie'],terrasse:['terrasse','balcon','rooftop'],balcon:['balcon','terrasse'],garage:['garage','parking','box'],parking:['parking','garage','box'],vue:['vue','panorama','degagee'],calme:['calme','impasse','village','campagne'],centre:['centre','ecusson','hyper','coeur'],neuf:['neuf','2019','2020','2021','2022','2023','renove','contemporain'],renove:['renove','refait','neuf'],ancien:['ancien','pierre','caractere','xviie','xviiie','hotel particulier'],luxe:['prestige','exception','luxe'],prestige:['prestige','exception'],meuble:['meuble'],ascenseur:['ascenseur'],cave:['cave','cellier']};
+let SQ={kw:[],city:null,dept:null};
+['type','budget'].forEach(id=>document.getElementById(id).addEventListener('change',e=>{ e.target.dataset.manual='1'; }));
+function smartParse(){ const q=document.getElementById('q'); const raw=q.value.trim(); SQ={kw:[],city:null,dept:null,raw}; const h=document.getElementById('smart-hint'); if(!raw){ h.hidden=true; return; } let t=norm(raw).replace(/[’']/g,' '); const got=[];
   if(/\b(louer|location|loyer|a louer)\b/.test(t)&&mode!=='location'){ document.getElementById('seg-location').click(); got.push('Location'); }
-  const types=[[/\b(maison|villa|mas|pavillon)s?\b/,'Maison'],[/\b(appartement|appart|t[1-6]|f[1-6])\b/,'Appartement'],[/\bstudio\b/,'Studio'],[/\bloft\b/,'Loft'],[/\bterrain\b/,'Terrain'],[/\b(parking|garage|box)\b/,'Parking'],[/\bimmeuble\b/,'Immeuble'],[/\b(local|commerce|boutique)\b/,'Local']];
-  for(const [re,ty] of types){ if(re.test(t)){ document.getElementById('type').value=ty; got.push(ty); break; } }
-  const city=Object.keys(DVF).sort((a,b)=>b.length-a.length).find(c=>t.includes(norm(c)))||(BIENS.map(b=>b.ville).sort((a,b)=>b.length-a.length).find(c=>t.includes(norm(c))));
-  const m=t.match(/(\d[\d\s.]*)\s*(k|m|mille|000|€|euros)?/g); let bud=0;
-  (m||[]).forEach(x=>{ const mm=x.match(/(\d[\d\s.]*)\s*(k|m|mille|000|€|euros)?/); let n=parseFloat(mm[1].replace(/[\s.]/g,'')); const u=mm[2]||''; if(u==='k'||u==='mille') n*=1000; if(u==='m') n*=1e6; if(n>=20000||(mode==='location'&&n>=200&&u&&u!=='k')) bud=Math.max(bud,n); });
-  if(bud){ const sel=document.getElementById('budget'); let o=[...sel.options].find(o=>+o.value===bud); if(!o){ o=new Option(fmt(bud)+' €',bud); sel.add(o); } sel.value=String(bud); got.push('≤ '+fmt(bud)+' €'); }
-  if(city){ q.value=city; got.unshift(city); } else if(got.length) q.value='';
-  const h=document.getElementById('smart-hint'); if(got.length>1||(got.length&&!city)){ h.hidden=false; h.textContent='Compris : '+got.join(' · '); setTimeout(()=>toast('Compris : '+got.join(' · ')),50); } else h.hidden=true; }
+  if(/\b(acheter|achat|a vendre|vente)\b/.test(t)&&mode!=='vente'){ document.getElementById('seg-vente').click(); got.push('Achat'); }
+  const tsel=document.getElementById('type'), bsel=document.getElementById('budget');
+  if(!tsel.dataset.manual) tsel.value=''; if(!bsel.dataset.manual) bsel.value='';
+  const types=[[/\b(maison|villa|pavillon)s?\b/,'Maison'],[/\b(appartement|appart|t[1-6]|f[1-6])s?\b/,'Appartement'],[/\bstudios?\b/,'Studio'],[/\blofts?\b/,'Loft'],[/\bterrains?\b/,'Terrain'],[/\b(parking|box)s?\b/,'Parking'],[/\bimmeubles?\b/,'Immeuble'],[/\b(local|commerce|boutique)s?\b/,'Local']];
+  for(const [re,ty] of types){ if(re.test(t)){ tsel.value=ty; tsel.dataset.manual=''; got.push(ty); t=t.replace(re,' '); break; } }
+  // budget
+  let bud=0; t=t.replace(/(\d[\d\s.,]*)\s*(k|m|millions?|mille|000|€|euros?)?(?![\w])/g,(x,num,u)=>{ let n=parseFloat(num.replace(/[\s.]/g,'').replace(',','.')); u=u||''; if(u==='k'||u==='mille') n*=1000; if(/^m/.test(u)&&u!=='mille') n*=1e6; if(n>=20000||(mode==='location'&&n>=200)) { bud=Math.max(bud,n); return ' '; } return x; });
+  if(bud){ let o=[...bsel.options].find(o=>+o.value===bud); if(!o){ o=new Option(fmt(bud)+' €',bud); bsel.add(o); } bsel.value=String(bud); bsel.dataset.manual=''; got.push('≤ '+fmt(bud)+' €'); }
+  // ville puis département
+  const cities=[...new Set([...Object.keys(DVF),...BIENS.map(b=>b.ville)])].sort((a,b)=>b.length-a.length);
+  const city=cities.find(c=>(' '+t+' ').includes(' '+norm(c).replace(/-/g,' ')+' ')||t.includes(norm(c)));
+  if(city){ SQ.city=city; got.unshift(city); t=t.replace(norm(c=city),' ').replace(norm(city).replace(/-/g,' '),' '); }
+  else { const dk=Object.keys(DEPTS).find(d=>t.includes(d)); if(dk){ SQ.dept=dk; got.unshift(dk==='herault'?'Hérault':dk.replace(/\b\w/g,m=>m.toUpperCase())); t=t.replace(dk,' '); } }
+  SQ.kw=t.split(/[^a-z0-9-]+/).filter(w=>w.length>1&&!STOP.has(w)&&!STOP.has(w.replace(/s$/,''))&&!/^\d+$/.test(w)).map(w=>w.length>3?w.replace(/s$/,''):w);
+  SQ.kw.forEach(k=>got.push(k));
+  if(got.length){ h.hidden=false; h.textContent='Compris : '+got.join(' · '); setTimeout(()=>toast('Compris : '+got.join(' · ')),50); } else h.hidden=true; }
+function hayOf(b){ return norm([b.type,b.etage,b.desc,b.quartier,b.ville,b.premium?'prestige exception luxe':''].join(' ')).replace(/[’']/g,' '); }
+function kwOk(b,k){ const hay=' '+hayOf(b).replace(/[^a-z0-9-]+/g,' ')+' '; return (SYN[k]||[k]).some(x=>new RegExp('[ -]'+x.replace(/-/g,'[ -]')+(x.length>4?'':'s?')+'[ -]').test(hay)||(x.length>5&&hay.includes(x))); }
+function searchRun(){ const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
+  const cityOk=b=>SQ.city?(b.ville===SQ.city||norm(b.quartier).includes(norm(SQ.city))):SQ.dept?DEPTS[SQ.dept].includes(b.ville):true;
+  const base=BIENS.filter(b=>b.op===mode);
+  const full=base.filter(b=>cityOk(b)&&(!t||b.type===t)&&b.prix<=bud&&SQ.kw.every(k=>kwOk(b,k)));
+  const sc=b=>SQ.kw.reduce((a,k)=>{ const L=SYN[k]||[k]; const i=L.findIndex(x=>kwOk(b,x)); return a+(i<0?9:i); },0);
+  if(full.length) return {res:full.sort((x,y)=>sc(x)-sc(y)),relaxed:null};
+  const tries=[['les mots-clés',b=>cityOk(b)&&(!t||b.type===t)&&b.prix<=bud&&SQ.kw.some(k=>kwOk(b,k))],['le type de bien',b=>cityOk(b)&&b.prix<=bud&&(SQ.kw.length?SQ.kw.some(k=>kwOk(b,k)):true)],['le budget',b=>cityOk(b)&&(!t||b.type===t)],['la ville',b=>(!t||b.type===t)&&b.prix<=bud&&(SQ.kw.length?SQ.kw.some(k=>kwOk(b,k)):true)],['tous les critères',b=>true]];
+  for(const [lab,f] of tries){ const r=base.filter(f); if(r.length) return {res:r.slice(0,12),relaxed:lab}; }
+  return {res:[],relaxed:null}; }
 document.getElementById('search').addEventListener('submit',smartParse);
+document.getElementById('res-list').addEventListener('click',e=>{ if(e.target.closest('#alert-btn')) toast('Alerte créée : vous serez prévenu dès qu\'un bien correspond'); });
 // Tarifs : bascule vente / location
 function plMode(loc){ document.getElementById('pl-v').setAttribute('aria-pressed',!loc); document.getElementById('pl-l').setAttribute('aria-pressed',loc);
   document.querySelector('#v-tarifs .pv').textContent=loc?'99 €':'299 €';
@@ -1749,10 +1778,10 @@ document.getElementById('pl-l').addEventListener('click',()=>plMode(true));
 window.addEventListener('load',()=>{ if(document.body.dataset.view==='prix'){ pxMapInit(); pxRender(); } });
 
 document.getElementById('search').addEventListener('submit',e=>{ e.preventDefault(); const q=document.getElementById('q').value.trim().toLowerCase(); const t=document.getElementById('type').value; const bud=+document.getElementById('budget').value||Infinity;
-  const res=BIENS.filter(b=>b.op===mode && (!q || b.ville.toLowerCase().includes(q) || b.quartier.toLowerCase().includes(q) || (b.premium&&/prestige|exception|luxe/.test(q))) && (!t || b.type===t) && b.prix<=bud);
+  if(!SQ.raw&&q){ SQ={kw:[],city:null,dept:null,raw:q}; } const R=searchRun(); const res=R.res;
   document.getElementById('res-title').textContent = mode==='vente'?'Biens à vendre':'Biens à louer';
-  document.getElementById('res-count').textContent = res.length+' bien'+(res.length>1?'s':'')+(q?' · '+document.getElementById('q').value:'');
-  document.getElementById('res-list').innerHTML = res.length?res.map(card).join(''):'<p class="hint">Aucun bien ne correspond. Essayez une autre ville ou un budget plus large.</p>';
+  const lab=SQ.raw||document.getElementById('q').value; document.getElementById('res-count').textContent = (R.relaxed?'Suggestions':res.length+' bien'+(res.length>1?'s':''))+(lab?' · '+lab:'');
+  document.getElementById('res-list').innerHTML = (R.relaxed?`<div class="relax"><b>Aucun bien ne correspond exactement à « ${lab} » pour l'instant.</b><span>Voici les plus proches, en élargissant ${R.relaxed}. Bienvu démarre en Occitanie : de nouveaux biens arrivent chaque semaine.</span><button type="button" class="btn ghost sm" id="alert-btn">Créer une alerte pour cette recherche</button></div>`:'')+(res.length?res.map(card).join(''):'<p class="hint">Aucun bien pour le moment.</p>');
   show('results'); });
 
 document.addEventListener('click',e=>{ const c=e.target.closest('.card,.pcard'); if(c) openDetail(c.dataset.id); });
