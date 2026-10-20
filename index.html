@@ -7,13 +7,13 @@
 <meta name="theme-color" content="#3B4A5C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Bienvu">
-<meta name="description" content="Bienvu — l'immobilier entre nous. Vente et location entre particuliers, sans commission, sécurisées.">
+<meta name="apple-mobile-web-app-title" content="Tour de clef">
+<meta name="description" content="Tour de clef — l'immobilier entre nous. Vente et location entre particuliers, sans commission, sécurisées.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}
-/* Bienvu Prestige : bandeau d'accès en haut de page, entrée de nav, en-tête « salon » */
+/* Tour de clef Prestige : bandeau d'accès en haut de page, entrée de nav, en-tête « salon » */
 .pbar{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;border:0;margin:0;cursor:pointer;font:inherit;background:var(--prestige-bg);color:var(--gold);padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));position:relative;overflow:hidden;text-decoration:none}
 .pbar::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(214,186,130,.22) 50%,transparent 65%);transform:translateX(-100%);animation:psheen 1.6s .8s ease-out 1 both;pointer-events:none}
 @keyframes psheen{to{transform:translateX(100%)}}
@@ -46,7 +46,7 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 }
 @media (max-width:560px){body[data-view="prestige"] .brand,body[data-view="nda"] .brand{flex-direction:column;align-items:flex-start;gap:2px;line-height:1}body[data-view="prestige"] .brand .bp,body[data-view="nda"] .brand .bp{font-size:10.5px;letter-spacing:.32em}}
 
-/* ===== Page Bienvu Prestige ===== */
+/* ===== Page Tour de clef Prestige ===== */
 .btn.gold{background:var(--gold);color:#1E2630}
 .btn.pline{background:transparent;color:var(--prestige-ink);border:1px solid rgba(242,239,232,.55)}
 .pkick{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
@@ -150,12 +150,14 @@ body[data-view="prestige"] .header .btn.ghost,body[data-view="nda"] .header .btn
 .gallery::before{left:10px;top:10px;bottom:auto}
 .pcard .ph,.gallery{position:relative}
 .demo-note{display:block;margin-top:6px;font-size:12px;color:var(--muted)}
+.brand .bk{color:var(--copper)}
+.brand .bw{white-space:nowrap}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
-<title>Bienvu</title>
+<title>Tour de clef</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Karla:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: une app mobile-first à onglets, feuille de recherche en tête, cartes de biens en liste, fiche en plein écran.
@@ -960,9 +962,9 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 @media (min-width:900px){.tx-grid{grid-template-columns:minmax(0,1fr) 340px;gap:24px}.tx-side{position:sticky;top:76px}.tx-head{grid-template-columns:84px 1fr auto}.tx-head .ph{width:84px;height:84px}.tx-role{grid-column:auto;justify-content:flex-end}.tx-steps li{font-size:13px}}
 </style>
 
-<button type="button" class="pbar" id="pbar" aria-label="Bienvu Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Bienvu Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
+<button type="button" class="pbar" id="pbar" aria-label="Tour de clef Prestige : découvrir l'immobilier d'exception"><svg class="pdia" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg><span class="pname">Tour de clef Prestige</span><span class="prule"></span><span class="ptag" id="pbar-tag">Immobilier d'exception · diffusion confidentielle</span><span class="prule r2"></span><span class="pgo">Découvrir</span></button>
 <header class="header">
-  <div class="brand">Bienvu <small class="bp">Prestige</small><small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
+  <div class="brand"><span class="bw">Tour de <span class="bk">clef</span></span><small class="bp">Prestige</small><small>l'immobilier entre nous</small><small id="sync" style="text-transform:none;letter-spacing:0;color:var(--good)"></small></div>
   <div class="acts"><button class="btn sm ghost" id="hdr-vendeur" type="button">Espace vendeur</button><button class="btn sm cta" id="hdr-deposer" type="button">Déposer</button></div>
 </header>
 <div class="wire" aria-hidden="true"></div>
@@ -1024,13 +1026,13 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="proof"><b>Vérifié et déclaré</b><span>Identité et propriété contrôlées ; état du bien déclaré, photographié et signé par le vendeur.</span></div>
     <div class="proof"><b>Prix réels</b><span>Chaque annonce est comparée aux ventes notariées à moins de 500 m de l'adresse (DVF), pas à une moyenne de ville.</span></div>
     <div class="proof"><b>Visite 3D</b><span>Visitez depuis votre canapé, déplacez-vous seulement pour les coups de cœur.</span></div>
-    <div class="proof"><b>Actes sécurisés</b><span>Offre, compromis, bail et dépôt de garantie en ligne, sans fonds chez Bienvu.</span></div>
+    <div class="proof"><b>Actes sécurisés</b><span>Offre, compromis, bail et dépôt de garantie en ligne, sans fonds chez Tour de clef.</span></div>
   </div>
   <div class="step" style="margin-bottom:6px"><div class="toolbar"><h3>Combien ça coûte ?</h3><span class="pricetag">0 € pour chercher</span></div><p class="hint">Annonce gratuite, options de visibilité dès 9 €, Pack Accompagnement 299 € payé à l'avance. Aucun frais à l'acte, jamais de commission. <a href="#" id="lnk-tarifs" style="color:var(--copper);font-weight:700;text-decoration:none">Voir les tarifs</a> · <a href="#" id="lnk-guide" style="color:var(--copper);font-weight:700;text-decoration:none">Comment ça marche</a></p></div>
   <h2>Derniers biens vérifiés</h2>
   <div class="list" id="home-list"></div>
   <section class="prestige" id="prestige-band">
-    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><h2>Immobilier d'exception, entre nous aussi.</h2><p>Mas, hôtels particuliers, villas pieds dans l'eau, domaines : vendus directement par leurs propriétaires, avec la discrétion d'un cabinet et sans ses 5 %.</p><button class="btn gold sm" type="button" id="go-prestige">Voir la sélection</button></div>
+    <div class="prestige-h"><span class="eyebrow" style="color:var(--gold)">Tour de clef Prestige</span><h2>Immobilier d'exception, entre nous aussi.</h2><p>Mas, hôtels particuliers, villas pieds dans l'eau, domaines : vendus directement par leurs propriétaires, avec la discrétion d'un cabinet et sans ses 5 %.</p><button class="btn gold sm" type="button" id="go-prestige">Voir la sélection</button></div>
     <div class="plist" id="prestige-list"></div>
   </section>
   <section class="hsplit" id="h-prix">
@@ -1038,7 +1040,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="hsplit-txt">
       <span class="tagpill">Restez informé</span>
       <h2>Le vrai prix de l'immobilier, ville par ville</h2>
-      <p>La carte des prix Bienvu affiche le prix moyen au mètre carré et les loyers de chaque commune d'Occitanie, avec une fourchette basse et haute. Estimez votre bien en deux minutes avant de fixer votre prix.</p>
+      <p>La carte des prix Tour de clef affiche le prix moyen au mètre carré et les loyers de chaque commune d'Occitanie, avec une fourchette basse et haute. Estimez votre bien en deux minutes avant de fixer votre prix.</p>
       <div class="hsplit-cta"><button type="button" class="btn ghost" data-go="prix">Explorer la carte des prix →</button><button type="button" class="btn cta" data-go="estimer">Estimer mon bien</button></div>
     </div>
   </section>
@@ -1061,7 +1063,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <section class="hsteps">
     <h2 class="center">Bien préparer son annonce</h2>
     <ol class="timeline">
-      <li><span class="tn">1</span><div><h3>Trouvez le bon prix</h3><p>Partez de l'estimation Bienvu, calculée sur les ventes notariées de votre commune. Un prix juste attire des acheteurs sérieux et évite des mois d'attente.</p><button type="button" class="lnk" data-go="estimer">Estimer mon bien →</button></div></li>
+      <li><span class="tn">1</span><div><h3>Trouvez le bon prix</h3><p>Partez de l'estimation Tour de clef, calculée sur les ventes notariées de votre commune. Un prix juste attire des acheteurs sérieux et évite des mois d'attente.</p><button type="button" class="lnk" data-go="estimer">Estimer mon bien →</button></div></li>
       <li><span class="tn">2</span><div><h3>Photographiez dans l'appli</h3><p>Quinze prises guidées, horodatées et géolocalisées : intérieur, façades, rue, tableau électrique. Pas de retouche, pas de mise en scène virtuelle : c'est ce qui rassure.</p></div></li>
       <li><span class="tn">3</span><div><h3>Déclarez l'état du bien</h3><p>Un questionnaire de 30 points, signé électroniquement. En copropriété, le PV de la dernière assemblée générale est analysé automatiquement pour signaler travaux et procédures.</p></div></li>
       <li><span class="tn">4</span><div><h3>Publiez et répondez vite</h3><p>Votre annonce est en ligne après vérification. Les réponses rapides font la différence : proposez des créneaux de visite sur place ou en visio depuis la messagerie.</p></div></li>
@@ -1071,7 +1073,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   </section>
 
   <section class="hguides">
-    <h2 class="center">Bienvu vous accompagne dans votre projet</h2>
+    <h2 class="center">Tour de clef vous accompagne dans votre projet</h2>
     <div class="gcards">
       <button type="button" class="gcard" data-go="guide"><b>Guide de l'acheteur</b><span>Budget, visites, offre sans visite, rôle du notaire : les étapes d'un achat entre particuliers.</span><i>Découvrir →</i></button>
       <button type="button" class="gcard" data-go="guide"><b>Guide du locataire</b><span>Un dossier réutilisable, un bail conforme, un dépôt de garantie qui ne disparaît pas.</span><i>Découvrir →</i></button>
@@ -1094,9 +1096,9 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <section class="happ">
     <div>
       <h2>Les meilleures annonces partent vite. Soyez le premier.</h2>
-      <p>Alertes personnalisées, estimation, messagerie et suivi de vos démarches, sur votre téléphone. Applications iPhone et Android en préparation ; en attendant, ajoutez Bienvu à votre écran d'accueil depuis Safari ou Chrome.</p>
+      <p>Alertes personnalisées, estimation, messagerie et suivi de vos démarches, sur votre téléphone. Applications iPhone et Android en préparation ; en attendant, ajoutez Tour de clef à votre écran d'accueil depuis Safari ou Chrome.</p>
     </div>
-    <div class="happ-phone" aria-hidden="true"><div class="scr"><b>Bienvu</b><span>Bonjour,</span><i></i><i></i><i class="s"></i></div></div>
+    <div class="happ-phone" aria-hidden="true"><div class="scr"><b>Tour de clef</b><span>Bonjour,</span><i></i><i></i><i class="s"></i></div></div>
   </section>
 </section>
 
@@ -1107,7 +1109,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <div class="phero">
     <img src="photos/domaine.jpg" alt="" class="phero-img">
     <div class="phero-in">
-      <span class="pkick"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Bienvu Prestige</span>
+      <span class="pkick"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Tour de clef Prestige</span>
       <h1>L'exception,<br>entre nous.</h1>
       <p>Mas, domaines, hôtels particuliers et villas sur l'eau, vendus directement par leurs propriétaires. La discrétion d'un cabinet, sans ses 5 %.</p>
       <div class="phero-cta"><button type="button" class="btn gold" id="ph-voir">Voir la sélection</button><button type="button" class="btn pline" id="ph-confier">Confier un bien</button></div>
@@ -1137,7 +1139,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
   </div>
 
   <div class="psec">
-    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>L'art de la discrétion</span><h2>Ce qui fait Bienvu Prestige</h2></div>
+    <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>L'art de la discrétion</span><h2>Ce qui fait Tour de clef Prestige</h2></div>
     <div class="ppills">
       <div class="ppill"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><path d="M4 4l16 16"/></svg><b>Diffusion confidentielle</b><p>Sans adresse ni façade identifiable. Le dossier complet s'ouvre après un accord de confidentialité signé.</p></div>
       <div class="ppill"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9 21v-7M15 21v-7M2 10l10-6 10 6z"/></svg><b>Acheteurs qualifiés</b><p>Capacité financière attestée par la banque du candidat et vérifiée par contre-appel avant toute visite.</p></div>
@@ -1150,9 +1152,9 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="psec-h"><span class="pkick dark"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 L11 6 L6 11 L1 6 Z"/><path d="M6 3.6 L8.4 6 L6 8.4 L3.6 6 Z"/></svg>Sur une vente à 1,8 M€</span><h2>Ce que vous gardez</h2></div>
     <div class="pbars">
       <div class="pbr"><span>Cabinet de prestige · 4 à 5 %</span><div class="pbt"><i style="width:100%"></i></div><b>70 000 à 100 000 €</b></div>
-      <div class="pbr gold"><span>Bienvu Prestige · forfait</span><div class="pbt"><i style="width:1.2%"></i></div><b>990 €</b></div>
+      <div class="pbr gold"><span>Tour de clef Prestige · forfait</span><div class="pbt"><i style="width:1.2%"></i></div><b>990 €</b></div>
     </div>
-    <p class="note">Ordre de grandeur des honoraires pratiqués par les réseaux de prestige ; le forfait Bienvu ne dépend jamais du prix de vente.</p>
+    <p class="note">Ordre de grandeur des honoraires pratiqués par les réseaux de prestige ; le forfait Tour de clef ne dépend jamais du prix de vente.</p>
   </div>
 
   <div class="pclose">
@@ -1198,7 +1200,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <tr><td>Coût total du crédit (intérêts + assurance)</td><td id="c-cout"></td></tr>
       <tr><td>Revenu net mensuel conseillé (taux d'effort 35 %)</td><td id="c-revenu"></td></tr>
     </table>
-    <p class="note">Simulation indicative et gratuite. Bienvu n'est pas un intermédiaire en crédit ; nos courtiers partenaires vous rappellent sans frais, Bienvu est rémunéré par eux.</p>
+    <p class="note">Simulation indicative et gratuite. Tour de clef n'est pas un intermédiaire en crédit ; nos courtiers partenaires vous rappellent sans frais, Tour de clef est rémunéré par eux.</p>
   </div>
 </section>
 
@@ -1243,7 +1245,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     </div>
     <div class="step" data-k="prop">
       <h3><span class="n">4</span>Preuve de propriété</h3>
-      <p class="hint">Bienvu vérifie que le bien vous appartient avant toute mise en ligne : c'est ce qui empêche les fausses annonces et les arnaques au dépôt de garantie.</p>
+      <p class="hint">Tour de clef vérifie que le bien vous appartient avant toute mise en ligne : c'est ce qui empêche les fausses annonces et les arnaques au dépôt de garantie.</p>
       <label class="prop-l">Vous êtes
         <select id="prop-qual"><option value="seul">Seul propriétaire</option><option value="couple">Propriétaire avec mon conjoint</option><option value="indiv">Propriétaire en indivision (succession, plusieurs héritiers)</option><option value="sci">Gérant d'une SCI ou d'une société</option><option value="mand">Usufruitier, tuteur ou mandataire</option></select>
       </label>
@@ -1267,7 +1269,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <div class="qs" id="qs"></div>
       <div class="pv" id="pv-block">
         <div class="toolbar"><b style="font-size:14px">PV de la dernière assemblée générale</b><span class="hint">Copropriété uniquement</span></div>
-        <p class="hint">Obligatoire pour une vente en copropriété (loi Alur). Bienvu l'analyse automatiquement et signale à l'acheteur ce qui compte : travaux votés, procédures, impayés, fonds travaux.</p>
+        <p class="hint">Obligatoire pour une vente en copropriété (loi Alur). Tour de clef l'analyse automatiquement et signale à l'acheteur ce qui compte : travaux votés, procédures, impayés, fonds travaux.</p>
         <label class="btn ghost sm" style="display:inline-block;cursor:pointer">Joindre le PV (PDF ou photo)<input type="file" id="p-pv" accept=".pdf,image/*" style="display:none"></label>
         <div id="pv-result" hidden></div>
       </div>
@@ -1277,7 +1279,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <h3><span class="n">7</span>Votre prix</h3>
       <div class="est-box" id="est-box" hidden></div>
       <input id="p-prix" placeholder="Prix (€)" inputmode="numeric" required>
-      <p class="hint" id="p-baro">Saisissez ville, quartier, surface et prix : Bienvu compare aux ventes réelles autour de l'adresse.</p>
+      <p class="hint" id="p-baro">Saisissez ville, quartier, surface et prix : Tour de clef compare aux ventes réelles autour de l'adresse.</p>
       <button class="btn cta p-submit" type="submit" id="p-submit">Publier gratuitement</button>
       <p class="hint">Annonce gratuite, sans limite de durée. Les options de l'étape suivante sont facultatives et peuvent être ajoutées plus tard.</p>
     </div>
@@ -1348,26 +1350,26 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
       </div>
       <div class="np"><b>Pièces (prises en photo dans l'appli ou importées)</b>
         <div class="shots" id="cd-docs"></div>
-        <p class="hint">Vérification automatique des documents (cohérence des montants, filigrane anti-réutilisation « Bienvu · candidature n°… »).</p>
+        <p class="hint">Vérification automatique des documents (cohérence des montants, filigrane anti-réutilisation « Tour de clef · candidature n°… »).</p>
       </div>
       <label class="opt" style="border:0"><input type="checkbox" id="cd-ok" required><span class="l">Je certifie l'exactitude de mon dossier<small>Un faux document entraîne la fermeture du compte.</small></span></label>
       <div class="row2"><button class="btn cta" type="submit">Envoyer ma candidature</button><button class="btn ghost" type="button" id="cd-cancel">Annuler</button></div>
     </form>
     <form class="offer" id="notaires" hidden>
       <h3>Notaires et transmission du dossier</h3>
-      <p class="hint">Chaque partie choisit librement son notaire ; un seul notaire peut aussi intervenir pour les deux. Bienvu leur transmet le dossier complet et horodaté, et suit l'avancement jusqu'à l'acte.</p>
+      <p class="hint">Chaque partie choisit librement son notaire ; un seul notaire peut aussi intervenir pour les deux. Tour de clef leur transmet le dossier complet et horodaté, et suit l'avancement jusqu'à l'acte.</p>
       <div class="np"><b>Votre notaire (acheteur)</b>
         <div class="row2"><input id="na-nom" placeholder="Maître Nom Prénom" required><input id="na-etude" placeholder="Étude / office notarial" required></div>
         <input id="na-adr" placeholder="Adresse de l'étude" required>
         <div class="row2"><input id="na-mail" type="email" placeholder="E-mail de l'étude" required><input id="na-tel" inputmode="tel" placeholder="Téléphone"></div>
         <input id="na-crpcen" placeholder="N° CRPCEN (facultatif, pour l'échange sécurisé)">
-        <p class="hint">Pas de notaire ? <a href="#" id="na-find" style="color:var(--copper);font-weight:700;text-decoration:none">Annuaire des notaires près de chez vous</a> ou notaire partenaire Bienvu à Montpellier.</p>
+        <p class="hint">Pas de notaire ? <a href="#" id="na-find" style="color:var(--copper);font-weight:700;text-decoration:none">Annuaire des notaires près de chez vous</a> ou notaire partenaire Tour de clef à Montpellier.</p>
       </div>
       <div class="np"><b>Notaire du vendeur</b>
         <div class="hint" id="nv-info">Renseigné par le vendeur dans son espace · <span id="nv-state" style="color:var(--warn);font-weight:700">en attente</span></div>
         <label class="opt" style="border:0;padding:6px 0"><input type="checkbox" id="nv-same"><span class="l">Proposer au vendeur un notaire unique (le mien)<small>Les émoluments sont identiques avec un ou deux notaires ; ils se partagent entre eux.</small></span></label>
       </div>
-      <div class="np"><b>Dossier transmis par Bienvu</b>
+      <div class="np"><b>Dossier transmis par Tour de clef</b>
         <ul class="docs" id="docs-list"></ul>
       </div>
       <div class="row2"><button class="btn cta" type="submit">Transmettre le dossier aux notaires</button><button class="btn ghost" type="button" id="no-later">Plus tard</button></div>
@@ -1382,11 +1384,11 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 <!-- NDA PRESTIGE -->
 <section class="view" id="v-nda" hidden>
   <button class="back" id="back-nda" type="button">← Retour au bien</button>
-  <span class="eyebrow" style="color:var(--gold);margin-top:12px;display:block">Bienvu Prestige · accès au dossier confidentiel</span>
+  <span class="eyebrow" style="color:var(--gold);margin-top:12px;display:block">Tour de clef Prestige · accès au dossier confidentiel</span>
   <h2 style="margin:6px 0 10px" id="nda-title">Accord de confidentialité</h2>
   <div class="steps">
     <div class="step"><h3><span class="n">1</span>Votre capacité financière</h3>
-      <p class="hint">Faites compléter le <b>formulaire Bienvu</b> par votre banque (tranche de capacité : 1, 2, 3, 5 M€ ou plus, sans détail de vos comptes). Bienvu vérifie l'attestation par contre-appel de votre agence au numéro officiel de l'établissement, sous 24 h ouvrées. Validité 30 jours pour tous les biens Prestige. Le propriétaire ne voit que « capacité attestée ».</p>
+      <p class="hint">Faites compléter le <b>formulaire Tour de clef</b> par votre banque (tranche de capacité : 1, 2, 3, 5 M€ ou plus, sans détail de vos comptes). Tour de clef vérifie l'attestation par contre-appel de votre agence au numéro officiel de l'établissement, sous 24 h ouvrées. Validité 30 jours pour tous les biens Prestige. Le propriétaire ne voit que « capacité attestée ».</p>
       <div class="row2"><button type="button" class="btn ghost sm" id="nda-form">Télécharger le formulaire pour ma banque</button><label class="btn ghost sm" style="display:inline-block;cursor:pointer;text-align:center">Joindre l'attestation complétée<input type="file" id="nda-cap" accept=".pdf,image/*" style="display:none"></label></div>
       <p class="hint">Bientôt : vérification instantanée par connexion bancaire sécurisée (DSP2), avec votre accord, qui ne transmet que « seuil atteint : oui / non ».</p>
       <span class="hint" id="nda-cap-st"></span></div>
@@ -1410,7 +1412,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <h2 style="margin:6px 0 10px" id="live-title">Visite en direct</h2>
     <div class="step">
       <h3>Avant de rejoindre</h3>
-      <p class="hint">Le vendeur filme le bien avec son téléphone, vous le guidez pièce par pièce. La visite est enregistrée et horodatée, conservée 3 ans et jointe au dossier. En rejoignant, chaque partie accepte que cette visite vaut visite du bien au sens des règles Bienvu : elle ouvre le droit de faire une offre et engage le vendeur sur ce qu'il montre.</p>
+      <p class="hint">Le vendeur filme le bien avec son téléphone, vous le guidez pièce par pièce. La visite est enregistrée et horodatée, conservée 3 ans et jointe au dossier. En rejoignant, chaque partie accepte que cette visite vaut visite du bien au sens des règles Tour de clef : elle ouvre le droit de faire une offre et engage le vendeur sur ce qu'il montre.</p>
       <ul class="hint" style="margin:0;padding-left:18px;display:grid;gap:4px">
         <li>Le vendeur s'engage à montrer tout ce que l'acheteur demande, y compris les 15 points de la déclaration.</li>
         <li>L'acheteur peut demander à tout moment un arrêt sur image : la capture est conservée.</li>
@@ -1510,7 +1512,7 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div><b>Acheteur et locataire</b><span>Recherche, alertes, visite 3D, messagerie, offre et dossier locataire : toujours gratuit, sans abonnement.</span></div>
     <div><b>Partenaires, sans frais pour vous</b><span>Courtier, diagnostiqueur, assurance loyers impayés, déménageur : rémunérés par eux, jamais imposés.</span></div>
   </div>
-  <p class="note">Ce que Bienvu ne fait jamais : commission sur la vente, abonnement acheteur, revente de vos données, publicité d'agences immobilières.</p>
+  <p class="note">Ce que Tour de clef ne fait jamais : commission sur la vente, abonnement acheteur, revente de vos données, publicité d'agences immobilières.</p>
 </section>
 
 <!-- GUIDE -->
@@ -1565,21 +1567,21 @@ td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="step"><h3><span class="n">1</span>Vérification et déclaration</h3><p>Identité et propriété contrôlées avant toute mise en ligne. Le vendeur ou le bailleur photographie son bien dans l'appli (horodaté, géolocalisé) et répond à un questionnaire qu'il signe : c'est la déclaration jointe à l'annonce, puis au compromis ou au bail. Les annonces sans DPE ou sans déclaration sont refusées.</p></div>
     <div class="step"><h3><span class="n">2</span>Prix juste</h3><p>Le baromètre compare votre bien aux ventes notariées des 18 derniers mois dans un rayon de 300 à 500 m autour de l'adresse (données DVF publiques), même type de bien et surface comparable, avec au moins 15 ventes. Faute de ventes suffisantes, il élargit au quartier puis à la commune, et le dit. Le nombre de ventes, le rayon et la fourchette basse-haute sont toujours affichés.</p></div>
     <div class="step"><h3><span class="n">3</span>Visite</h3><p>Visite 3D en ligne, puis créneaux de visite réelle confirmés par SMS. Numéros masqués, messagerie interne qui bloque toute demande d'acompte, de RIB ou de frais avant la visite. Après la visite, l'acheteur confirme « conforme » ou signale « non conforme » : deux signalements suspendent l'annonce, relecture humaine sous 24 h, compte fermé en cas de fraude.</p></div>
-    <div class="step"><h3><span class="n">4</span>Actes</h3><p>Offre d'achat horodatée, compromis ou bail sur modèle conforme, signature électronique. La déclaration signée du vendeur est jointe à l'acte : une photo ou une réponse mensongère devient une preuve écrite en cas de vice caché. L'acompte est séquestré chez le notaire après la visite, le dépôt de garantie chez un prestataire agréé, libéré à l'état des lieux signé. Protection juridique incluse dans le Pack Accompagnement. Bienvu ne détient jamais vos fonds.</p></div>
+    <div class="step"><h3><span class="n">4</span>Actes</h3><p>Offre d'achat horodatée, compromis ou bail sur modèle conforme, signature électronique. La déclaration signée du vendeur est jointe à l'acte : une photo ou une réponse mensongère devient une preuve écrite en cas de vice caché. L'acompte est séquestré chez le notaire après la visite, le dépôt de garantie chez un prestataire agréé, libéré à l'état des lieux signé. Protection juridique incluse dans le Pack Accompagnement. Tour de clef ne détient jamais vos fonds.</p></div>
     <div class="step"><h3><span class="n">5</span>Ce que ça coûte</h3><p>Rien pour l'acheteur ou le locataire. Pour le vendeur ou le bailleur : annonce gratuite, options de visibilité de 9 à 39 €, visite 3D 99 à 149 €, Pack Accompagnement payé à l'avance, 299 € (vente) ou 99 € (location). Rien à l'acte, jamais de pourcentage sur le prix.</p></div>
   </div>
-  <p class="note">Bienvu est un support de diffusion d'annonces et d'outils pour particuliers. Il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</p>
+  <p class="note">Tour de clef est un support de diffusion d'annonces et d'outils pour particuliers. Il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</p>
 </section>
 </main>
 <footer class="foot">
   <div class="foot-tabs"><b>Prix au m² par ville</b><div class="foot-cities" id="foot-cities"></div></div>
   <div class="foot-cols">
-    <div><h4>Bienvu</h4><button type="button" data-go="guide">Comment ça marche</button><button type="button" data-go="tarifs">Tarifs</button><button type="button" data-go="prestige">Bienvu Prestige</button><button type="button" data-go="guide">Sécurité et confiance</button></div>
+    <div><h4>Tour de clef</h4><button type="button" data-go="guide">Comment ça marche</button><button type="button" data-go="tarifs">Tarifs</button><button type="button" data-go="prestige">Tour de clef Prestige</button><button type="button" data-go="guide">Sécurité et confiance</button></div>
     <div><h4>Outils</h4><button type="button" data-go="prix">Carte des prix</button><button type="button" data-go="estimer">Estimation immobilière</button><button type="button" data-go="calc">Calculer mon prêt</button><button type="button" data-go="post">Déposer une annonce</button></div>
     <div><h4>Vous êtes</h4><button type="button" data-go="home">Acheteur</button><button type="button" data-go="home-loc">Locataire</button><button type="button" data-go="post">Vendeur</button><button type="button" data-go="post">Bailleur</button></div>
     <div><h4>Application</h4><p>iPhone et Android en préparation.</p><span class="store">App Store · bientôt</span><span class="store">Google Play · bientôt</span></div>
   </div>
-  <div class="foot-legal"><span>Bienvu — l'immobilier entre nous</span><span class="demo-note">Version de démonstration : les annonces, vendeurs, prix et échanges présentés sur ce site sont fictifs.</span><span>Mentions légales · Données personnelles · Cookies · CGU · Fonctionnement du site</span><span>Bienvu est un support de diffusion d'annonces entre particuliers ; il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</span></div>
+  <div class="foot-legal"><span>Tour de clef — l'immobilier entre nous</span><span class="demo-note">Version de démonstration : les annonces, vendeurs, prix et échanges présentés sur ce site sont fictifs.</span><span>Mentions légales · Données personnelles · Cookies · CGU · Fonctionnement du site</span><span>Tour de clef est un support de diffusion d'annonces entre particuliers ; il n'exerce aucune activité d'entremise au sens de la loi Hoguet.</span></div>
 </footer>
 
 <nav class="nav" aria-label="Navigation">
@@ -1678,7 +1680,7 @@ const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 function pxLegend(){ const b=pxBins(); const u=pxOp==='vente'?' €':' €'; const lab=[`< ${pxFmt(b[0])}`,`${pxFmt(b[0])} – ${pxFmt(b[1])}`,`${pxFmt(b[1])} – ${pxFmt(b[2])}`,`${pxFmt(b[2])} – ${pxFmt(b[3])}`,`> ${pxFmt(b[3])}`];
   document.getElementById('px-legend').innerHTML=`<b style="color:var(--ink)">${pxOp==='vente'?'Prix de vente au m²':'Loyer mensuel au m²'}</b>`+lab.map((l,i)=>`<span><i style="background:${PXC[i]}"></i>${l}</span>`).join(''); }
 function pxCard(){ const v=pxVal(pxCity), lo=v*0.68, hi=v*1.34, pos=Math.max(4,Math.min(96,(v-lo)/(hi-lo)*100));
-  document.getElementById('px-card').innerHTML=`<span class="t1">${pxOp==='vente'?"Prix de l'immobilier au m²":'Loyer moyen au m²'}</span><span class="t2">${pxCity}</span><span class="src">Données Bienvu de démonstration · octobre 2026</span><span class="lbl">${pxOp==='vente'?'Prix moyen au m²':'Loyer mensuel moyen au m²'}</span><span class="big">${pxFmt(v)}</span><div class="pxgauge"><i style="left:${pos}%"></i></div><div class="pxbl"><span>Prix bas : ${pxFmt(lo)}</span><span>Prix haut : ${pxFmt(hi)}</span></div>`; }
+  document.getElementById('px-card').innerHTML=`<span class="t1">${pxOp==='vente'?"Prix de l'immobilier au m²":'Loyer moyen au m²'}</span><span class="t2">${pxCity}</span><span class="src">Données Tour de clef de démonstration · octobre 2026</span><span class="lbl">${pxOp==='vente'?'Prix moyen au m²':'Loyer mensuel moyen au m²'}</span><span class="big">${pxFmt(v)}</span><div class="pxgauge"><i style="left:${pos}%"></i></div><div class="pxbl"><span>Prix bas : ${pxFmt(lo)}</span><span>Prix haut : ${pxFmt(hi)}</span></div>`; }
 function pxTypes(){ const v=DVF[pxCity].v, l=DVF[pxCity].l; const a=pxOp==='vente'?v*1.04:l*1.06, m=pxOp==='vente'?v*0.93:l*0.9;
   const all=Object.keys(DVF).map(c=>pxVal(c)); const avg=all.reduce((x,y)=>x+y,0)/all.length;
   const card=(t,val,art)=>`<div class="pxtype"><div><h3>Prix moyen ${t==='a'?'des appartements':'des maisons'} au m², ${pxCity}</h3><span class="r">Prix haut : ${pxFmt(val*1.3)}</span><div class="v">${pxFmt(val)}</div><span class="r">Prix bas : ${pxFmt(val*0.66)}</span><span class="r" style="display:block;margin-top:8px">Moyenne des villes suivies : <b>${pxFmt(avg*(t==='a'?1.04:0.93))}</b></span></div>${art}</div>`;
@@ -1716,7 +1718,7 @@ document.getElementById('estim-form').addEventListener('submit',e=>{ e.preventDe
   if(S<30) k*=1.08; if(S>150) k*=0.94;
   const cn=c||(document.getElementById('es-city').value.trim()||'votre commune'); const base=(op==='vente'?REF.v:REF.l)*S*k, lo=base*0.92, hi=base*1.08, unit=op==='vente'?'':' / mois';
   const r=x=>op==='vente'?Math.round(x/1000)*1000:Math.round(x/10)*10;
-  box.innerHTML=`<span class="eyebrow" style="text-align:center">${typ} · ${fmt(S)} m² · ${cn}</span>${approx?'<p class="sub" style="color:#9A6B1F">Commune pas encore dans notre base : estimation indicative sur la moyenne Occitanie, à affiner.</p>':''}<div class="sub">${op==='vente'?'Prix de vente estimé':'Loyer estimé hors charges'}</div><div class="big">${eur(r(base))}${unit}</div><div class="pxgauge"><i style="left:50%"></i></div><div class="pxbl"><span>Bas : ${eur(r(lo))}</span><span>Haut : ${eur(r(hi))}</span></div><p class="sub">Soit ${fmt(Math.round(base/S))} € le m²${op==='vente'?'':' par mois'}, pour une moyenne de ${op==='vente'?fmt(REF.v):String(REF.l).replace('.',',')} € ${approx?'en Occitanie':'à '+c}.</p>${op==='vente'?`<p class="sub">Avec Bienvu, vous gardez les ${eur(Math.round(base*0.05/100)*100)} qu'une agence aurait pris à 5 %.</p>`:''}<button type="button" class="btn cta" data-go="post" style="justify-self:center">Déposer gratuitement mon annonce</button>`; box.scrollIntoView({behavior:'smooth',block:'start'}); });
+  box.innerHTML=`<span class="eyebrow" style="text-align:center">${typ} · ${fmt(S)} m² · ${cn}</span>${approx?'<p class="sub" style="color:#9A6B1F">Commune pas encore dans notre base : estimation indicative sur la moyenne Occitanie, à affiner.</p>':''}<div class="sub">${op==='vente'?'Prix de vente estimé':'Loyer estimé hors charges'}</div><div class="big">${eur(r(base))}${unit}</div><div class="pxgauge"><i style="left:50%"></i></div><div class="pxbl"><span>Bas : ${eur(r(lo))}</span><span>Haut : ${eur(r(hi))}</span></div><p class="sub">Soit ${fmt(Math.round(base/S))} € le m²${op==='vente'?'':' par mois'}, pour une moyenne de ${op==='vente'?fmt(REF.v):String(REF.l).replace('.',',')} € ${approx?'en Occitanie':'à '+c}.</p>${op==='vente'?`<p class="sub">Avec Tour de clef, vous gardez les ${eur(Math.round(base*0.05/100)*100)} qu'une agence aurait pris à 5 %.</p>`:''}<button type="button" class="btn cta" data-go="post" style="justify-self:center">Déposer gratuitement mon annonce</button>`; box.scrollIntoView({behavior:'smooth',block:'start'}); });
 // Raccourcis (boutons data-go)
 document.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(!g) return; const t=g.dataset.go;
   if(t==='prix') openPrix('carte'); else if(t==='estimer') openPrix('estim'); else if(t==='home-loc'){ show('home'); document.getElementById('seg-location').click(); } else show(t); });
@@ -1787,7 +1789,7 @@ document.getElementById('search').addEventListener('submit',e=>{ e.preventDefaul
   if(!SQ.raw&&q){ SQ={kw:[],city:null,dept:null,raw:q}; } const R=searchRun(); const res=R.res;
   document.getElementById('res-title').textContent = mode==='vente'?'Biens à vendre':'Biens à louer';
   const lab=SQ.raw||document.getElementById('q').value; document.getElementById('res-count').textContent = (R.relaxed?'Suggestions':res.length+' bien'+(res.length>1?'s':''))+(lab?' · '+lab:'');
-  document.getElementById('res-list').innerHTML = (R.relaxed?`<div class="relax"><b>Aucun bien ne correspond exactement à « ${lab} » pour l'instant.</b><span>Voici les plus proches, en élargissant ${R.relaxed}. Bienvu démarre en Occitanie : de nouveaux biens arrivent chaque semaine.</span><button type="button" class="btn ghost sm" id="alert-btn">Créer une alerte pour cette recherche</button></div>`:'')+(res.length?res.map(card).join(''):'<p class="hint">Aucun bien pour le moment.</p>');
+  document.getElementById('res-list').innerHTML = (R.relaxed?`<div class="relax"><b>Aucun bien ne correspond exactement à « ${lab} » pour l'instant.</b><span>Voici les plus proches, en élargissant ${R.relaxed}. Tour de clef démarre en Occitanie : de nouveaux biens arrivent chaque semaine.</span><button type="button" class="btn ghost sm" id="alert-btn">Créer une alerte pour cette recherche</button></div>`:'')+(res.length?res.map(card).join(''):'<p class="hint">Aucun bien pour le moment.</p>');
   show('results'); });
 
 document.addEventListener('click',e=>{ const c=e.target.closest('.card,.pcard'); if(c) openDetail(c.dataset.id); });
@@ -1806,7 +1808,7 @@ function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.m
   document.getElementById('v-detail').innerHTML = `<div class="detail">
   <button class="back" id="back-res" type="button">← Retour</button>
   <div class="gallery">${b.img&&!(b.prive&&!NDAS[b.id])?`<img src="${b.img}" alt="">`:''}${b.visite3d?'<span>Visite virtuelle 3D</span><span style="font-family:var(--body);font-size:13px">Capture 360° · 12 pièces</span><button class="btn sm v3d" type="button" id="btn-3d">Lancer la visite</button>':'<span>Photos</span><span style="font-family:var(--body);font-size:13px">Visite 3D non disponible</span>'}</div>
-  ${b.premium?(b.prive&&!(NDAS[b.id])?`<div class="prestige" style="margin:0;padding:12px 14px;gap:8px"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige · diffusion confidentielle</span><span style="font-size:13px;color:var(--prestige-muted)">Adresse exacte, photos extérieures, prix et documents sont réservés aux candidats dont la capacité financière est attestée et qui ont signé l'accord de confidentialité.</span><button class="btn gold sm" type="button" id="btn-nda">Demander l'accès au dossier confidentiel</button></div>`:b.prive?`<div class="unlock"><b>Dossier confidentiel ouvert</b><div class="row"><span>Accord</span><span>${NDAS[b.id].num} · signé le ${NDAS[b.id].at}</span></div><div class="row"><span>Adresse</span><span>${NDAS[b.id].adr}</span></div><div class="row"><span>Prix demandé</span><span>${eur(b.prix)}</span></div><div class="row"><span>Documents</span><span>Titre, diagnostics, ${COPRO.includes(b.type)?'PV d\'AG, ':''}plans, drone, 3D · filigranés à votre nom</span></div><span class="hint" style="color:var(--prestige-muted)">Chaque consultation est journalisée. Visites sur rendez-vous via la messagerie.</span></div>`:`<div class="prestige" style="margin:0;padding:12px 14px;gap:4px"><span class="eyebrow" style="color:var(--gold)">Bienvu Prestige</span><span style="font-size:13px;color:var(--prestige-muted)">Visites sur rendez-vous, attestation de capacité financière demandée avant la visite.</span></div>`):''}
+  ${b.premium?(b.prive&&!(NDAS[b.id])?`<div class="prestige" style="margin:0;padding:12px 14px;gap:8px"><span class="eyebrow" style="color:var(--gold)">Tour de clef Prestige · diffusion confidentielle</span><span style="font-size:13px;color:var(--prestige-muted)">Adresse exacte, photos extérieures, prix et documents sont réservés aux candidats dont la capacité financière est attestée et qui ont signé l'accord de confidentialité.</span><button class="btn gold sm" type="button" id="btn-nda">Demander l'accès au dossier confidentiel</button></div>`:b.prive?`<div class="unlock"><b>Dossier confidentiel ouvert</b><div class="row"><span>Accord</span><span>${NDAS[b.id].num} · signé le ${NDAS[b.id].at}</span></div><div class="row"><span>Adresse</span><span>${NDAS[b.id].adr}</span></div><div class="row"><span>Prix demandé</span><span>${eur(b.prix)}</span></div><div class="row"><span>Documents</span><span>Titre, diagnostics, ${COPRO.includes(b.type)?'PV d\'AG, ':''}plans, drone, 3D · filigranés à votre nom</span></div><span class="hint" style="color:var(--prestige-muted)">Chaque consultation est journalisée. Visites sur rendez-vous via la messagerie.</span></div>`:`<div class="prestige" style="margin:0;padding:12px 14px;gap:4px"><span class="eyebrow" style="color:var(--gold)">Tour de clef Prestige</span><span style="font-size:13px;color:var(--prestige-muted)">Visites sur rendez-vous, attestation de capacité financière demandée avant la visite.</span></div>`):''}
   <div><span class="eyebrow">${b.op==='vente'?'À vendre':'À louer'} · ${b.ville} · ${b.prive?'secteur confidentiel':b.quartier}</span>
   <h2 style="margin-top:6px">${b.type} ${b.pieces?b.pieces+' pièces':''} de ${fmt(b.surface)} m²</h2>
   <p class="price" style="font-size:28px;margin-top:6px">${b.prive&&!NDAS[b.id]&&b.op==='vente'?'Prix sur demande':eur(b.prix)+(b.op==='location'?' <span class="meta">/ mois</span>':'')}</p></div>
@@ -1819,7 +1821,7 @@ function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.m
   <div class="trust">
     <div class="trust-h"><span class="shield"></span><b>Comment ces photos sont contrôlées</b></div>
     <ul>
-      <li>Prises sur place, dans l'appli Bienvu, le 12/10/2026 à 18:42 ; position GPS conforme à l'adresse.</li>
+      <li>Prises sur place, dans l'appli Tour de clef, le 12/10/2026 à 18:42 ; position GPS conforme à l'adresse.</li>
       <li>Façade comparée à la vue de rue et au cadastre ; aucune photo réutilisée d'une autre annonce.</li>
       <li>Focale standard imposée, pas de retouche ni de mise en scène virtuelle.</li>
       <li>Surface déclarée ${fmt(b.surface)} m² ${COPRO.includes(b.type)?'· Carrez '+fmt(b.surface-1)+' m² (écart < 5 %)':'· plan 2D cohérent'}.</li>
@@ -1841,8 +1843,8 @@ function openDetail(id){ const b=findB(id); const e=ecart(b); const pos=e?Math.m
   <div class="seller"><div class="avatar">${b.vendeur[0]}</div><div style="min-width:0"><b>${b.vendeur}</b><span class="badge ok" style="margin-left:6px">Identité et propriété vérifiées</span><p class="rel">Particulier · répond en moins de 24 h · <b>fiabilité 100 %</b> (${b.id%4+1} visite${b.id%4?'s':''} confirmée${b.id%4?'s':''} conforme${b.id%4?'s':''}, 0 signalement)</p></div></div>
   <div class="row2"><button class="btn cta" type="button" id="btn-msg">Envoyer un message</button><button class="btn ghost" type="button" id="btn-visite">Demander une visite</button></div>
   <div class="kv"><div><b>0 €</b><span>de frais pour ${b.op==='vente'?"l'acheteur":'le locataire'}</span></div><div><b>0 %</b><span>de commission d'agence</span></div></div>
-  ${b.pack?`<div class="packon"><b>◆ Parcours sécurisé Bienvu activé</b><span>${b.op==='vente'?"Offre d'achat en ligne, dossier transmis aux notaires, compromis, acompte séquestré et suivi jusqu'à l'acte":"Dossier locataire, bail, dépôt de garantie et caution en ligne, état des lieux"} : le ${b.op==='vente'?'vendeur':'bailleur'} a pris le Pack Accompagnement.</span></div>`:`<div class="packoff"><b>Annonce simple</b><span>Le ${b.op==='vente'?'vendeur':'bailleur'} n'a pas activé le Pack Accompagnement : échangez par la messagerie. ${b.op==='vente'?"L'offre en ligne, le suivi notarial et le séquestre":"Le dossier locataire vérifié, le bail en ligne et le dépôt de garantie séquestré"} ne sont pas disponibles pour ce bien.</span></div>`}
-  <p class="note">Numéro masqué. Les échanges passent par la messagerie Bienvu ; ne payez jamais hors plateforme.</p>
+  ${b.pack?`<div class="packon"><b>◆ Parcours sécurisé Tour de clef activé</b><span>${b.op==='vente'?"Offre d'achat en ligne, dossier transmis aux notaires, compromis, acompte séquestré et suivi jusqu'à l'acte":"Dossier locataire, bail, dépôt de garantie et caution en ligne, état des lieux"} : le ${b.op==='vente'?'vendeur':'bailleur'} a pris le Pack Accompagnement.</span></div>`:`<div class="packoff"><b>Annonce simple</b><span>Le ${b.op==='vente'?'vendeur':'bailleur'} n'a pas activé le Pack Accompagnement : échangez par la messagerie. ${b.op==='vente'?"L'offre en ligne, le suivi notarial et le séquestre":"Le dossier locataire vérifié, le bail en ligne et le dépôt de garantie séquestré"} ne sont pas disponibles pour ce bien.</span></div>`}
+  <p class="note">Numéro masqué. Les échanges passent par la messagerie Tour de clef ; ne payez jamais hors plateforme.</p>
   </div>`;
   if(b.op==='vente'){ const r=mens(b.prix*0.9,20,3.4,0.30); document.getElementById('d-mens').textContent=eur(r.m)+' / mois'; }
   detailLayout();
@@ -1894,17 +1896,17 @@ ofForm.addEventListener('submit',e=>{ e.preventDefault(); const b=findB(curT.id)
   const basis = curT.visit ? `Visite ${curT.visit}` : 'Sur dossier, sans visite (reconnu par l\'acheteur)';
   const card=(st)=>`<div class="offer-card"><div class="t"><span>Offre d'achat ${num}</span><b>${eur(p)}</b></div><span class="st ${st==='Acceptée'?'acc':''}">${st}</span><div class="r"><span>Bien</span><b>${b.type} ${fmt(b.surface)} m², ${b.ville}</b></div><div class="r"><span>Base</span><b>${basis}</b></div><div class="r"><span>Financement</span><b>${fin==='pret'?`Prêt immobilier, apport ${eur(ap)}, condition suspensive d'obtention du prêt`:'Comptant, justificatif de fonds à fournir'}</b></div><div class="r"><span>Validité</span><b>jusqu'au ${exp.toLocaleDateString('fr-FR')}</b></div><div class="r"><span>Signature</span><b>${sig}</b></div><time>Signée électroniquement le ${stamp} · empreinte ${hash}</time></div>`;
   curT.msgs.push({k:'raw',t:card('Envoyée au vendeur')}); push('sys','Le vendeur a '+val+' jours pour accepter, refuser ou faire une contre-proposition. Aucune somme ne vous est demandée.');
-  setTimeout(()=>{ curT.offer.status='acceptée'; curT.msgs.push({k:'raw',t:card('Acceptée')}); push('them','J\'accepte votre offre. Rendez-vous chez le notaire.'); curT.msgs.push({k:'raw',t:`<div class="next"><b>Offre acceptée, et maintenant ?</b><span>1. Renseignez votre notaire ci-dessous ; le vendeur renseigne le sien. Bienvu leur transmet le dossier complet.</span><span>2. Compromis sous 2 à 3 semaines ; acompte de 5 à 10 % séquestré chez le notaire, jamais chez le vendeur ni chez Bienvu.</span><span>3. Délai de rétractation de 10 jours après le compromis.</span><span>4. Prêt : nos courtiers partenaires vous rappellent sans frais.</span><span class="hint">Pack Accompagnement pris en charge par le vendeur : modèles, signature, suivi jusqu'à l'acte.</span></div>`}); renderThread(); openNotaires(); },2200); renderThread(); });
+  setTimeout(()=>{ curT.offer.status='acceptée'; curT.msgs.push({k:'raw',t:card('Acceptée')}); push('them','J\'accepte votre offre. Rendez-vous chez le notaire.'); curT.msgs.push({k:'raw',t:`<div class="next"><b>Offre acceptée, et maintenant ?</b><span>1. Renseignez votre notaire ci-dessous ; le vendeur renseigne le sien. Tour de clef leur transmet le dossier complet.</span><span>2. Compromis sous 2 à 3 semaines ; acompte de 5 à 10 % séquestré chez le notaire, jamais chez le vendeur ni chez Tour de clef.</span><span>3. Délai de rétractation de 10 jours après le compromis.</span><span>4. Prêt : nos courtiers partenaires vous rappellent sans frais.</span><span class="hint">Pack Accompagnement pris en charge par le vendeur : modèles, signature, suivi jusqu'à l'acte.</span></div>`}); renderThread(); openNotaires(); },2200); renderThread(); });
 
 // Notaires et dossier
 const notForm=document.getElementById('notaires');
-function docsFor(b){ const d=[['Offre d\'achat signée et acceptée','horodatée'],['Déclaration du vendeur signée','15 photos horodatées'],['Diagnostics techniques (DPE '+(b.dpe||'—')+', amiante, plomb, électricité, ERP)','fournis par le vendeur'],['Titre de propriété et taxe foncière','vérifiés par Bienvu'],['Identités des parties','vérifiées (KYC)']]; if(COPRO.includes(b.type)){ d.push(['PV de la dernière AG + analyse','joint'],['Règlement de copropriété, pré-état daté','à demander au syndic']); } if(curT.visit&&curT.visit.includes('visio')) d.push(['Enregistrement de la visite en visio','conservé 3 ans']); d.push(['Plan de financement de l\'acheteur','prêt / apport déclarés']); return d; }
+function docsFor(b){ const d=[['Offre d\'achat signée et acceptée','horodatée'],['Déclaration du vendeur signée','15 photos horodatées'],['Diagnostics techniques (DPE '+(b.dpe||'—')+', amiante, plomb, électricité, ERP)','fournis par le vendeur'],['Titre de propriété et taxe foncière','vérifiés par Tour de clef'],['Identités des parties','vérifiées (KYC)']]; if(COPRO.includes(b.type)){ d.push(['PV de la dernière AG + analyse','joint'],['Règlement de copropriété, pré-état daté','à demander au syndic']); } if(curT.visit&&curT.visit.includes('visio')) d.push(['Enregistrement de la visite en visio','conservé 3 ans']); d.push(['Plan de financement de l\'acheteur','prêt / apport déclarés']); return d; }
 function openNotaires(){ const b=findB(curT.id); document.getElementById('docs-list').innerHTML=docsFor(b).map(x=>`<li><span>${x[0]}</span><span>${x[1]}</span></li>`).join(''); notForm.hidden=false; notForm.scrollIntoView({block:'start'}); setTimeout(()=>{ const s=document.getElementById('nv-state'); s.textContent='Me Laurent Fabre, office notarial du Peyrou, Montpellier · renseigné'; s.style.color='var(--good)'; curT.nv='Me Laurent Fabre, office du Peyrou, Montpellier'; },2500); }
 document.getElementById('no-later').addEventListener('click',()=>{ notForm.hidden=true; toast('Vous pourrez renseigner votre notaire depuis cette conversation'); });
 document.getElementById('na-find').addEventListener('click',e=>{ e.preventDefault(); toast('Annuaire notaires.fr : ouverture dans l\'application finale'); });
 notForm.addEventListener('submit',e=>{ e.preventDefault(); const b=findB(curT.id); const na={nom:document.getElementById('na-nom').value,etude:document.getElementById('na-etude').value,adr:document.getElementById('na-adr').value,mail:document.getElementById('na-mail').value,tel:document.getElementById('na-tel').value}; const same=document.getElementById('nv-same').checked; notForm.hidden=true; const stamp=new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); const docs=docsFor(b);
-  curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dossier transmis aux notaires</span></div><span class="st acc">Envoyé le ${stamp}</span><div class="r"><span>Notaire acheteur</span><b>${na.nom}, ${na.etude}<br>${na.adr}<br>${na.mail}${na.tel?' · '+na.tel:''}</b></div><div class="r"><span>Notaire vendeur</span><b>${same?'Notaire unique proposé : '+na.nom+' (en attente d\'accord du vendeur)':(curT.nv||'En attente du vendeur')}</b></div><ul class="docs" style="margin-top:6px">${docs.map(x=>`<li class="ok"><span>${x[0]}</span><span>transmis</span></li>`).join('')}</ul><time>Envoi sécurisé, accusé de réception demandé aux études. Les originaux restent consultables par les notaires dans l'espace Bienvu pendant 5 ans.</time></div>`});
-  curT.msgs.push({k:'raw',t:`<div class="track"><b style="font-size:14px">Suivi jusqu'à l'acte</b><div class="s"><i class="d"></i><span>Offre acceptée<small>${stamp}</small></span></div><div class="s"><i class="d"></i><span>Dossier transmis aux notaires<small>${stamp}</small></span></div><div class="s"><i class="c"></i><span>Rédaction du compromis par le notaire<small>Objectif : sous 15 jours · Bienvu relance les études à J+7</small></span></div><div class="s"><i></i><span>Signature du compromis, acompte séquestré chez le notaire<small>Puis 10 jours de rétractation</small></span></div><div class="s"><i></i><span>Obtention du prêt<small>Condition suspensive, 45 à 60 jours</small></span></div><div class="s"><i></i><span>Acte authentique et remise des clés<small>Objectif : 3 mois après le compromis</small></span></div></div>`});
+  curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dossier transmis aux notaires</span></div><span class="st acc">Envoyé le ${stamp}</span><div class="r"><span>Notaire acheteur</span><b>${na.nom}, ${na.etude}<br>${na.adr}<br>${na.mail}${na.tel?' · '+na.tel:''}</b></div><div class="r"><span>Notaire vendeur</span><b>${same?'Notaire unique proposé : '+na.nom+' (en attente d\'accord du vendeur)':(curT.nv||'En attente du vendeur')}</b></div><ul class="docs" style="margin-top:6px">${docs.map(x=>`<li class="ok"><span>${x[0]}</span><span>transmis</span></li>`).join('')}</ul><time>Envoi sécurisé, accusé de réception demandé aux études. Les originaux restent consultables par les notaires dans l'espace Tour de clef pendant 5 ans.</time></div>`});
+  curT.msgs.push({k:'raw',t:`<div class="track"><b style="font-size:14px">Suivi jusqu'à l'acte</b><div class="s"><i class="d"></i><span>Offre acceptée<small>${stamp}</small></span></div><div class="s"><i class="d"></i><span>Dossier transmis aux notaires<small>${stamp}</small></span></div><div class="s"><i class="c"></i><span>Rédaction du compromis par le notaire<small>Objectif : sous 15 jours · Tour de clef relance les études à J+7</small></span></div><div class="s"><i></i><span>Signature du compromis, acompte séquestré chez le notaire<small>Puis 10 jours de rétractation</small></span></div><div class="s"><i></i><span>Obtention du prêt<small>Condition suspensive, 45 à 60 jours</small></span></div><div class="s"><i></i><span>Acte authentique et remise des clés<small>Objectif : 3 mois après le compromis</small></span></div></div>`});
   curT.dossier={na, same, t0:new Date(), pieces:{ach:{pret:false,apport:false,id:true},ven:{charges:true,predate:false,diag:true,titre:true}}, fin:1, log:[[stamp,'Dossier transmis aux deux études, accusé de réception demandé']]};
   curT.msgs.push({k:'raw',t:`<div class="bub ok" style="align-self:stretch;max-width:100%"><button type="button" class="btn cta sm" id="open-dossier" style="width:100%">Ouvrir le suivi notarial complet</button></div>`});
   push('sys','Les deux notaires et les deux parties reçoivent le même dossier. Vous serez notifié à chaque étape.'); renderThread(); });
@@ -1912,7 +1914,7 @@ document.getElementById('m-body').addEventListener('click',e=>{ if(e.target.clos
 
 // Espace vendeur (simulé : vous êtes Claire M., vendeuse du bien n°1)
 const SELL={ id:1, vues:{s:412,d:+38}, contacts:14, favoris:27, visites:[{who:'Thomas R.',when:'mar 20/10 à 10:30',mode:'Sur place',st:'Confirmée'},{who:'Inès B.',when:'mer 21/10 à 18:15',mode:'En visio',st:'Confirmée'},{who:'Karim A.',when:'proposition en attente',mode:'Sur place',st:'À confirmer'}],
-  offres:[{num:'OA-2026-4821',who:'Thomas R.',p:322000,fin:'Prêt, apport 60 000 €, accord de principe reçu',base:'Visite sur place le 15/10',val:'jusqu\'au 25/10',st:'reçue',fiab:'3 visites confirmées conformes'},{num:'OA-2026-4877',who:'Inès B.',p:315000,fin:'Comptant, justificatif de fonds fourni',base:'Sur dossier, sans visite (reconnu)',val:'jusqu\'au 22/10',st:'reçue',fiab:'nouvelle sur Bienvu, identité vérifiée'}],
+  offres:[{num:'OA-2026-4821',who:'Thomas R.',p:322000,fin:'Prêt, apport 60 000 €, accord de principe reçu',base:'Visite sur place le 15/10',val:'jusqu\'au 25/10',st:'reçue',fiab:'3 visites confirmées conformes'},{num:'OA-2026-4877',who:'Inès B.',p:315000,fin:'Comptant, justificatif de fonds fourni',base:'Sur dossier, sans visite (reconnu)',val:'jusqu\'au 22/10',st:'reçue',fiab:'nouvelle sur Tour de clef, identité vérifiée'}],
   pieces:{charges:true,predate:false,diag:true,titre:true,pvag:true}, options:{top:false,boost:false,v3d:true} };
 var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=SELL.offres.find(o=>o.st==='acceptée');
   SELL.msgs=SELL.msgs||[{who:'Thomas R.',t:'Bonjour, la cave est-elle comprise dans la vente ?',h:'il y a 2 h',unread:true},{who:'Karim A.',t:'Je peux visiter samedi matin si vous êtes disponible.',h:'hier',unread:true},{who:'Inès B.',t:'Merci pour la visio, je vous fais une offre.',h:'lun.',unread:false}];
@@ -1939,10 +1941,10 @@ var openVendeur=function(){ const b=findB(SELL.id); const e=ecart(b); const acc=
     <div class="pane"><div class="toolbar"><h3>Vues des 14 derniers jours</h3><span class="hint">${SELL.views.reduce((x,y)=>x+y,0)} au total</span></div>${spark}</div>
     <div class="pane" id="sv-ofr"><h3>Offres reçues <small>${pend} en attente</small></h3>${SELL.offres.map(ofr).join('')}<p class="hint">Accepter une offre vous engage : c'est l'acheteur qui dispose ensuite de 10 jours de rétractation après le compromis, pas vous. Une contre-proposition annule l'offre initiale.</p></div>
     ${acc?`<button type="button" class="btn cta sv-txbtn" data-sv="txv">Suivre la vente jusqu'à l'acte et aux clés →</button>`:''}
-    ${acc?`<div class="pane" id="sv-not"><h3>Votre notaire ${SELL.notary?'<small>dossier transmis</small>':''}</h3>${SELL.notary?`<p class="hint">Maître ${SELL.notary} · dossier transmis aux deux études le ${SELL.notaryAt}. Le notaire de l'acheteur a accusé réception.</p>`:`<div class="row2"><input placeholder="Maître Nom Prénom" id="vn-nom"><input placeholder="Étude" id="vn-etude"></div><input placeholder="Adresse de l'étude" id="vn-adr"><div class="row2"><input type="email" placeholder="E-mail" id="vn-mail"><input placeholder="Téléphone" id="vn-tel"></div><button type="button" class="btn cta" id="vn-send">Transmettre mon dossier aux notaires</button><p class="hint">Bienvu envoie aux deux études : offre signée, déclaration et photos, diagnostics, justificatif de propriété, PV d'AG et analyse, identités vérifiées.</p>`}</div>
+    ${acc?`<div class="pane" id="sv-not"><h3>Votre notaire ${SELL.notary?'<small>dossier transmis</small>':''}</h3>${SELL.notary?`<p class="hint">Maître ${SELL.notary} · dossier transmis aux deux études le ${SELL.notaryAt}. Le notaire de l'acheteur a accusé réception.</p>`:`<div class="row2"><input placeholder="Maître Nom Prénom" id="vn-nom"><input placeholder="Étude" id="vn-etude"></div><input placeholder="Adresse de l'étude" id="vn-adr"><div class="row2"><input type="email" placeholder="E-mail" id="vn-mail"><input placeholder="Téléphone" id="vn-tel"></div><button type="button" class="btn cta" id="vn-send">Transmettre mon dossier aux notaires</button><p class="hint">Tour de clef envoie aux deux études : offre signée, déclaration et photos, diagnostics, justificatif de propriété, PV d'AG et analyse, identités vérifiées.</p>`}</div>
     <div class="pane" id="sv-pie"><h3>Pièces pour le compromis <small>${Object.values(SELL.pieces).filter(x=>x).length} / 5</small></h3>
       <div class="piece"><div><span>Relevé de charges 12 mois</span></div><span class="st ok">Reçu</span></div>
-      <div class="piece"><div><span>Pré-état daté du syndic</span><small>Délai habituel 10 jours · Bienvu a envoyé la demande à votre syndic</small></div>${SELL.pieces.predate?'<span class="st ok">Reçu</span>':'<button type="button" id="vp-predate">Joindre</button>'}</div>
+      <div class="piece"><div><span>Pré-état daté du syndic</span><small>Délai habituel 10 jours · Tour de clef a envoyé la demande à votre syndic</small></div>${SELL.pieces.predate?'<span class="st ok">Reçu</span>':'<button type="button" id="vp-predate">Joindre</button>'}</div>
       <div class="piece"><div><span>Diagnostics complets</span></div><span class="st ok">Reçu</span></div>
       <div class="piece"><div><span>Justificatif de propriété</span></div><span class="st ok">Vérifié</span></div>
       <div class="piece"><div><span>PV d'AG et analyse</span></div><span class="st ok">Joint</span></div></div>
@@ -2003,30 +2005,30 @@ function renderBail(b){ const meuble=/meubl/i.test(b.desc); const dep=b.prix*(me
   const stamp=d.toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
   curT.msgs.push({k:'raw',t:`<div class="offer-card" id="bail-card"><div class="t"><span>Bail d'habitation ${meuble?'meublé':'vide'}</span><b>${eur(b.prix)}<span class="meta" style="font-size:12px"> /mois</span></b></div><span class="st">À signer</span><div class="r"><span>Modèle</span><b>Bail type loi du 6 juillet 1989, décret 2015-587, notice d'information jointe</b></div><div class="r"><span>Durée</span><b>${meuble?'1 an renouvelable':'3 ans renouvelables'}</b></div><div class="r"><span>Dépôt de garantie</span><b>${eur(dep)} (${meuble?'2 mois':'1 mois'}, maximum légal), séquestré chez le prestataire agréé, versé au bailleur après l'état des lieux d'entrée signé</b></div><div class="r"><span>Charges</span><b>${/charges comprises/i.test(b.desc)?'Comprises':'Provision mensuelle, régularisation annuelle'}</b></div>${enc}<div class="r"><span>Diagnostics annexés</span><b>DPE ${b.dpe}, ERP, électricité, surface</b></div><div class="r"><span>Pack Accompagnement</span><b>99 €, payé à l'avance par le bailleur</b></div><div class="acts" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px"><button type="button" class="btn cta sm" id="bail-sign">Signer le bail électroniquement</button></div><time>Généré le ${stamp} · relu par les deux parties avant signature</time></div>`}); }
 document.getElementById('m-body').addEventListener('click',e=>{ const b=findB(curT.id); const meuble=/meubl/i.test(b.desc); const dep=b.prix*(meuble?2:1); const now=()=>new Date().toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  if(e.target.closest('#bail-sign')){ push('ok',`Bail signé électroniquement par les deux parties le ${now()} · exemplaires envoyés par e-mail`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dépôt de garantie</span><b>${eur(dep)}</b></div><span class="st">À régler</span><div class="r"><span>Où va l'argent</span><b>Compte de cantonnement du prestataire de paiement agréé (jamais chez Bienvu, jamais chez le bailleur avant l'état des lieux)</b></div><div class="r"><span>Libération</span><b>Au bailleur dès l'état des lieux d'entrée signé ; restitué sous 1 mois (2 mois si retenues) à la sortie, retenues justifiées par l'état des lieux comparatif</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="dep-pay">Régler ${eur(dep)} par carte ou virement</button></div></div>`}); renderThread(); }
+  if(e.target.closest('#bail-sign')){ push('ok',`Bail signé électroniquement par les deux parties le ${now()} · exemplaires envoyés par e-mail`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>Dépôt de garantie</span><b>${eur(dep)}</b></div><span class="st">À régler</span><div class="r"><span>Où va l'argent</span><b>Compte de cantonnement du prestataire de paiement agréé (jamais chez Tour de clef, jamais chez le bailleur avant l'état des lieux)</b></div><div class="r"><span>Libération</span><b>Au bailleur dès l'état des lieux d'entrée signé ; restitué sous 1 mois (2 mois si retenues) à la sortie, retenues justifiées par l'état des lieux comparatif</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="dep-pay">Régler ${eur(dep)} par carte ou virement</button></div></div>`}); renderThread(); }
   if(e.target.closest('#dep-pay')){ push('ok',`Dépôt de garantie ${eur(dep)} séquestré le ${now()} · reçu envoyé aux deux parties`); curT.msgs.push({k:'raw',t:`<div class="offer-card"><div class="t"><span>État des lieux d'entrée</span></div><span class="st">À planifier avec le bailleur</span><div class="r"><span>Comment</span><b>Dans l'appli, pièce par pièce, photos horodatées des deux côtés, compteurs relevés, signé sur place par les deux parties</b></div><div class="r"><span>Effet</span><b>Libère le dépôt de garantie au bailleur et sert de référence pour la sortie</b></div><div class="acts" style="display:flex;gap:6px;margin-top:4px"><button type="button" class="btn cta sm" id="edl-done">Simuler l'état des lieux signé</button></div></div>`}); renderThread(); }
   if(e.target.closest('#edl-done')){ push('ok',`État des lieux d'entrée signé le ${now()} · 42 photos · compteurs relevés · dépôt de garantie libéré au bailleur · clés remises`); curT.msgs.push({k:'raw',t:`<div class="next"><b>Bienvenue chez vous</b><span>Quittances mensuelles générées automatiquement, rappel de l'assurance habitation (obligatoire), révision annuelle du loyer calculée sur l'IRL, préavis et état des lieux de sortie gérés ici le moment venu.</span><button type="button" class="btn cta sm" id="open-loc" style="margin-top:8px">Ouvrir le suivi de ma location</button></div>`}); renderThread(); } });
 
 // NDA Prestige
 const NDAS={}; let ndaB=null;
-const NDA_HTML=`<h4>Entre les soussignés</h4><p><b>Le Propriétaire</b>, identité et titre de propriété vérifiés par Bienvu, et <b>le Candidat acquéreur</b>, identité vérifiée par Bienvu, capacité financière attestée. <b>En présence de</b> Bienvu SAS, tiers technique non partie : signatures, horodatage, preuve, ouverture de l'accès.</p>
-<h4>Préambule</h4><p>Le Propriétaire envisage de céder le Bien, désigné publiquement par sa commune et ses caractéristiques générales seulement, et souhaite que l'adresse, l'apparence extérieure, le prix, les documents et son identité ne soient communiqués qu'à des candidats identifiés, solvables et engagés à la discrétion. Bienvu n'exerce aucune activité d'entremise au sens de la loi du 2 janvier 1970.</p>
+const NDA_HTML=`<h4>Entre les soussignés</h4><p><b>Le Propriétaire</b>, identité et titre de propriété vérifiés par Tour de clef, et <b>le Candidat acquéreur</b>, identité vérifiée par Tour de clef, capacité financière attestée. <b>En présence de</b> Tour de clef SAS, tiers technique non partie : signatures, horodatage, preuve, ouverture de l'accès.</p>
+<h4>Préambule</h4><p>Le Propriétaire envisage de céder le Bien, désigné publiquement par sa commune et ses caractéristiques générales seulement, et souhaite que l'adresse, l'apparence extérieure, le prix, les documents et son identité ne soient communiqués qu'à des candidats identifiés, solvables et engagés à la discrétion. Tour de clef n'exerce aucune activité d'entremise au sens de la loi du 2 janvier 1970.</p>
 <h4>Article 1 – Objet</h4><p>Conditions de réception, d'usage et de protection des Informations confidentielles en vue exclusivement d'étudier l'acquisition du Bien. Ni promesse, ni exclusivité, ni mandat.</p>
-<h4>Article 2 – Informations confidentielles</h4><ol><li>Adresse exacte, références cadastrales, localisation.</li><li>Photographies, vidéos, drone, visites virtuelles, plans.</li><li>Prix demandé, conditions financières, historique des offres.</li><li>Identité, coordonnées et situation du Propriétaire.</li><li>Titre, diagnostics, déclaration, PV d'AG, règlement, baux, urbanisme, documents d'exploitation.</li><li>Enregistrements de visites en visio et échanges Bienvu.</li><li>Le fait même que le Bien soit à vendre.</li></ol>
+<h4>Article 2 – Informations confidentielles</h4><ol><li>Adresse exacte, références cadastrales, localisation.</li><li>Photographies, vidéos, drone, visites virtuelles, plans.</li><li>Prix demandé, conditions financières, historique des offres.</li><li>Identité, coordonnées et situation du Propriétaire.</li><li>Titre, diagnostics, déclaration, PV d'AG, règlement, baux, urbanisme, documents d'exploitation.</li><li>Enregistrements de visites en visio et échanges Tour de clef.</li><li>Le fait même que le Bien soit à vendre.</li></ol>
 <h4>Article 3 – Exclusions</h4><p>Informations publiques sans faute du Candidat, détenues légitimement avant signature, ou reçues d'un tiers autorisé ; divulgation exigée par la loi ou une autorité, après information préalable du Propriétaire lorsque possible.</p>
-<h4>Article 4 – Obligations du Candidat</h4><ol><li>Usage limité à la Finalité.</li><li>Aucune divulgation, publication, reproduction ou transmission hors du cercle autorisé, y compris réseaux sociaux, messageries, sites d'annonces, professionnels de l'immobilier.</li><li>Aucune copie ou capture hors des fonctions Bienvu ; documents filigranés au nom du Candidat et horodatés.</li><li>Pas de visite sur place, survol, observation ni enquête de voisinage sans accord écrit du Propriétaire.</li><li>Pas d'usage pour acquérir un bien voisin ou concurrencer une exploitation.</li><li>Protection raisonnable et signalement immédiat de toute fuite.</li></ol>
+<h4>Article 4 – Obligations du Candidat</h4><ol><li>Usage limité à la Finalité.</li><li>Aucune divulgation, publication, reproduction ou transmission hors du cercle autorisé, y compris réseaux sociaux, messageries, sites d'annonces, professionnels de l'immobilier.</li><li>Aucune copie ou capture hors des fonctions Tour de clef ; documents filigranés au nom du Candidat et horodatés.</li><li>Pas de visite sur place, survol, observation ni enquête de voisinage sans accord écrit du Propriétaire.</li><li>Pas d'usage pour acquérir un bien voisin ou concurrencer une exploitation.</li><li>Protection raisonnable et signalement immédiat de toute fuite.</li></ol>
 <h4>Article 5 – Cercle autorisé</h4><p>Conjoint ou co-acquéreur déclaré, notaire, banque ou courtier, avocat, expert-comptable, architecte, expert mandaté. Le Candidat se porte fort de leur respect de l'accord.</p>
-<h4>Article 6 – Non-contournement</h4><ol><li>Aucun contact avec le Propriétaire ou ses mandataires hors de la messagerie Bienvu.</li><li>Aucune transmission à un agent, mandataire, marchand de biens, promoteur ou apporteur d'affaires ; aucune offre présentée par l'un d'eux.</li><li>Aucune présentation du Bien à un tiers, aucune rémunération à ce titre.</li></ol>
-<h4>Article 7 – Visites</h4><p>Exclusivement via Bienvu, sur rendez-vous confirmé. Pas de photo ni d'enregistrement sur place sans accord exprès. L'enregistrement d'une visio est réalisé et conservé par Bienvu.</p>
-<h4>Article 8 – Durée et restitution</h4><p>Deux ans à compter de la signature, même en cas de renonciation ; confidentialité de l'identité du Propriétaire sans limitation. Destruction des copies à première demande ou dès renonciation, confirmée par écrit ; Bienvu ferme l'accès.</p>
-<h4>Article 9 – Sanctions</h4><p>Clause pénale (art. 1231-5 C. civ.) : <b>10 000 € par manquement</b>, sans préjudice de la réparation intégrale du dommage et de toute mesure judiciaire. Fermeture immédiate de l'accès et suspension du compte Bienvu.</p>
-<h4>Article 10 – Données personnelles</h4><p>Bienvu, responsable de traitement, traite les identités, l'attestation de capacité, la preuve de signature et le journal des accès pour l'exécution de l'accord, la preuve et la prévention de la fraude ; conservation 5 ans après la fin de l'accord ; droits RGPD exerçables auprès du DPO.</p>
-<h4>Article 11 – Signature électronique et preuve</h4><p>Signature électronique (règlement eIDAS, art. 1367 C. civ.) après vérification d'identité. Le fichier de preuve Bienvu (identité, horodatage, empreinte, journal des consultations filigranées) fait foi entre les Parties.</p>
+<h4>Article 6 – Non-contournement</h4><ol><li>Aucun contact avec le Propriétaire ou ses mandataires hors de la messagerie Tour de clef.</li><li>Aucune transmission à un agent, mandataire, marchand de biens, promoteur ou apporteur d'affaires ; aucune offre présentée par l'un d'eux.</li><li>Aucune présentation du Bien à un tiers, aucune rémunération à ce titre.</li></ol>
+<h4>Article 7 – Visites</h4><p>Exclusivement via Tour de clef, sur rendez-vous confirmé. Pas de photo ni d'enregistrement sur place sans accord exprès. L'enregistrement d'une visio est réalisé et conservé par Tour de clef.</p>
+<h4>Article 8 – Durée et restitution</h4><p>Deux ans à compter de la signature, même en cas de renonciation ; confidentialité de l'identité du Propriétaire sans limitation. Destruction des copies à première demande ou dès renonciation, confirmée par écrit ; Tour de clef ferme l'accès.</p>
+<h4>Article 9 – Sanctions</h4><p>Clause pénale (art. 1231-5 C. civ.) : <b>10 000 € par manquement</b>, sans préjudice de la réparation intégrale du dommage et de toute mesure judiciaire. Fermeture immédiate de l'accès et suspension du compte Tour de clef.</p>
+<h4>Article 10 – Données personnelles</h4><p>Tour de clef, responsable de traitement, traite les identités, l'attestation de capacité, la preuve de signature et le journal des accès pour l'exécution de l'accord, la preuve et la prévention de la fraude ; conservation 5 ans après la fin de l'accord ; droits RGPD exerçables auprès du DPO.</p>
+<h4>Article 11 – Signature électronique et preuve</h4><p>Signature électronique (règlement eIDAS, art. 1367 C. civ.) après vérification d'identité. Le fichier de preuve Tour de clef (identité, horodatage, empreinte, journal des consultations filigranées) fait foi entre les Parties.</p>
 <h4>Article 12 – Dispositions générales</h4><p>Droit français ; intégralité ; modification par écrit ; nullité partielle sans effet sur le reste ; incessibilité ; règlement amiable d'un mois puis tribunaux du lieu de situation du Bien.</p>
-<h4>Article 13 – Signatures</h4><p>Propriétaire et Candidat, horodatage Bienvu, identités vérifiées, empreinte SHA-256, mention « Lu et approuvé, bon pour engagement de confidentialité ».</p>`;
+<h4>Article 13 – Signatures</h4><p>Propriétaire et Candidat, horodatage Tour de clef, identités vérifiées, empreinte SHA-256, mention « Lu et approuvé, bon pour engagement de confidentialité ».</p>`;
 function openNda(b){ ndaB=b; document.getElementById('nda-title').textContent=`Accord de confidentialité · ${b.etage}, ${b.ville}`; document.getElementById('nda-text').innerHTML=NDA_HTML; document.getElementById('nda-text').scrollTop=0; document.getElementById('nda-read').checked=false; document.getElementById('nda-ok').checked=false; document.getElementById('nda-cap-st').textContent=''; ndaCap=false; ndaScrolled=false; show('nda'); }
 let ndaCap=false, ndaScrolled=false;
-document.getElementById('nda-cap').addEventListener('change',e=>{ if(!e.target.files.length) return; const st=document.getElementById('nda-cap-st'); st.textContent='Vérification…'; setTimeout(()=>{ st.textContent='Formulaire reçu · contre-appel de l\'agence en cours…'; },1000); setTimeout(()=>{ ndaCap=true; st.textContent='Capacité attestée par Crédit Agricole du Languedoc, agence Montpellier Comédie, jusqu\'à 3 M€ · vérifiée par Bienvu le '+new Date().toLocaleDateString('fr-FR')+' · valable 30 jours'; st.style.color='var(--good)'; },2600); });
+document.getElementById('nda-cap').addEventListener('change',e=>{ if(!e.target.files.length) return; const st=document.getElementById('nda-cap-st'); st.textContent='Vérification…'; setTimeout(()=>{ st.textContent='Formulaire reçu · contre-appel de l\'agence en cours…'; },1000); setTimeout(()=>{ ndaCap=true; st.textContent='Capacité attestée par Crédit Agricole du Languedoc, agence Montpellier Comédie, jusqu\'à 3 M€ · vérifiée par Tour de clef le '+new Date().toLocaleDateString('fr-FR')+' · valable 30 jours'; st.style.color='var(--good)'; },2600); });
 document.getElementById('nda-form').addEventListener('click',()=>toast('Formulaire ACF-2026-xxxx généré à votre nom, à remettre à votre conseiller'));
 document.getElementById('nda-text').addEventListener('scroll',e=>{ const t=e.target; if(t.scrollTop+t.clientHeight>=t.scrollHeight-8) ndaScrolled=true; });
 document.getElementById('back-nda').addEventListener('click',()=>openDetail(ndaB.id));
@@ -2061,7 +2063,7 @@ function openDossier(){ const b=findB(curT.id); const D=curT.dossier; const t0=D
     ${piece('Relevé de charges et appels de fonds','12 derniers mois',D.pieces.ven.charges,'ven')}
     ${piece('Pré-état daté du syndic','Demandé le '+fr(t0)+' · délai habituel 10 jours',D.pieces.ven.predate,'ven','',inDays(addD(t0,10))<0)}
     ${piece('Dossier de diagnostics complet','DPE, amiante, plomb, électricité, ERP',D.pieces.ven.diag,'ven')}
-    ${piece('Titre de propriété','Vérifié par Bienvu',D.pieces.ven.titre,'ven')}</div>
+    ${piece('Titre de propriété','Vérifié par Tour de clef',D.pieces.ven.titre,'ven')}</div>
   <div class="pane"><h3>Votre financement <small>visible par le vendeur</small></h3><div class="fin"><div class="b"><i style="width:${(D.fin+1)/FIN.length*100}%"></i></div><b style="font-size:14px">${FIN[D.fin]}</b><span class="hint">Étape suivante : ${FIN[D.fin+1]||'terminé'}. Nos courtiers partenaires vous rappellent sans frais.</span><button type="button" class="btn ghost sm" id="fin-next" style="justify-self:start">Mettre à jour mon financement</button></div></div>
   <div class="pane"><h3>Les parties</h3><div class="who">
     <div><span>Acheteur</span><b>Vous · identité vérifiée</b></div>
@@ -2114,18 +2116,18 @@ function saleBody(t,role){ const b=findB(t.id); const P=t.price, ac=Math.round(P
   const A=(k,label,cls)=>t.ok[k+'_'+me]?`<span class="tx-done">✓ ${label.replace(/^(Je |J')/,'Fait : ')}</span>`:`<button type="button" class="btn ${cls||'cta'}" data-tx-act="${k}">${label}</button>`;
   const W=(k,label)=>t.ok[k+'_'+(me==='acheteur'?'vendeur':'acheteur')]?`<span class="tx-done">✓ ${other} : fait</span>`:`<span class="tx-wait">${other} : en attente</span> <button type="button" class="lnk" data-tx-sim="${k}">Simuler : ${label}</button>`;
   switch(t.stage){
-  case 1: return `<p>Chaque partie choisit librement son notaire, sans surcoût : les deux études se partagent les émoluments. Bienvu transmet ensuite le même dossier aux deux.</p>
+  case 1: return `<p>Chaque partie choisit librement son notaire, sans surcoût : les deux études se partagent les émoluments. Tour de clef transmet ensuite le même dossier aux deux.</p>
     <div class="tx-who"><div><span>Notaire de l'acheteur</span><b>${t.na||'À renseigner'}</b></div><div><span>Notaire du vendeur</span><b>${t.nv||'À renseigner'}</b></div></div>
     ${(role==='acheteur'?t.na:t.nv)?'':`<div class="row2"><input id="tx-not" placeholder="Maître Nom, étude, ville"><button type="button" class="btn cta" data-tx-act="notaire">Enregistrer mon notaire</button></div>`}
     ${(role==='acheteur'?t.nv:t.na)?'':`<p class="hint">${other} n'a pas encore indiqué son notaire. <button type="button" class="lnk" data-tx-sim="notaire">Simuler : ${other.toLowerCase()} renseigne le sien</button></p>`}`;
-  case 2: return `<p>Le notaire rédige le compromis à partir du dossier Bienvu : offre signée, déclaration du vendeur et photos, diagnostics, justificatif de propriété${COPRO.includes(b.type)?', PV d\'AG et pré-état daté':''}, identités vérifiées. Objectif : projet envoyé sous 15 jours, relance automatique à J+7.</p>
+  case 2: return `<p>Le notaire rédige le compromis à partir du dossier Tour de clef : offre signée, déclaration du vendeur et photos, diagnostics, justificatif de propriété${COPRO.includes(b.type)?', PV d\'AG et pré-état daté':''}, identités vérifiées. Objectif : projet envoyé sous 15 jours, relance automatique à J+7.</p>
     ${t.ok.draft?`<div class="tx-doc"><b>Projet de compromis</b><span>Prix ${eur(P)} · acompte ${eur(ac)} (5 %) · condition suspensive de prêt ${t.cash?'non (achat comptant)':'de '+eur(loan)+' à 60 jours'} · date limite de l'acte : ${dPlus(90)}</span></div><p>Relisez-le ; vos remarques partent directement au notaire.</p><div class="tx-acts">${A('read','J\'ai relu, je suis d\'accord')} ${W('read','relecture faite')}</div>`:`<p class="tx-wait">En attente du notaire.</p><button type="button" class="lnk" data-tx-sim="draft">Simuler : le notaire envoie le projet</button>`}`;
-  case 3: return `<p>Signature chez le notaire ou à distance (signature électronique qualifiée), le ${dPlus(6)}. L'acheteur verse l'acompte <b>sur le compte séquestre du notaire</b> : jamais chez Bienvu, jamais chez le vendeur.</p>
+  case 3: return `<p>Signature chez le notaire ou à distance (signature électronique qualifiée), le ${dPlus(6)}. L'acheteur verse l'acompte <b>sur le compte séquestre du notaire</b> : jamais chez Tour de clef, jamais chez le vendeur.</p>
     <div class="tx-money"><div><span>Acompte (5 %)</span><b>${eur(ac)}</b><small>Virement au notaire, restitué en cas de rétractation ou de refus de prêt</small></div></div>
     <div class="tx-acts">${role==='acheteur'?A('acompte','Je vire l\'acompte au notaire','ghost')+' ':''}${A('sign','Je signe le compromis')} ${W('sign','signature')}</div>
     ${role==='vendeur'?`<p class="hint">Acompte : ${t.ok.acompte_acheteur?'<b>reçu par le notaire</b>':'en attente de l\'acheteur'}.</p>`:''}`;
   case 4: return `<p>L'acheteur dispose de <b>10 jours</b> pour se rétracter sans motif (article L271-1 du Code de la construction), à compter du lendemain de la notification du compromis signé. Le vendeur, lui, est engagé.</p>
-    <div class="tx-count"><b>Fin du délai : ${dPlus(10)}</b><span>${role==='acheteur'?'Vous pouvez encore vous rétracter : l\'acompte vous serait intégralement restitué.':'Aucune action de votre part : Bienvu vous prévient à la fin du délai.'}</span></div>
+    <div class="tx-count"><b>Fin du délai : ${dPlus(10)}</b><span>${role==='acheteur'?'Vous pouvez encore vous rétracter : l\'acompte vous serait intégralement restitué.':'Aucune action de votre part : Tour de clef vous prévient à la fin du délai.'}</span></div>
     <div class="tx-acts">${role==='acheteur'?(t.askRetract?`<button type="button" class="btn warnb" data-tx-act="retract">Confirmer : annuler la vente (acompte restitué sous 21 jours)</button> <button type="button" class="btn ghost" data-tx-act="noretract">Non, je continue</button> `:`<button type="button" class="btn ghost" data-tx-act="retract">Me rétracter</button> `):''}<button type="button" class="lnk" data-tx-sim="ret">Simuler : fin du délai de rétractation</button></div>`;
   case 5: return t.cash?`<p>Achat comptant : pas de condition de prêt. Le notaire vérifie l'origine des fonds.</p><button type="button" class="lnk" data-tx-sim="fin">Continuer</button>`:`<p>Condition suspensive : l'acheteur doit obtenir son prêt de ${eur(loan)} avant le <b>${dPlus(60)}</b>. En cas de refus de la banque, la vente est annulée et l'acompte restitué.</p>
     <div class="fin"><div class="b"><i style="width:${(t.fin+1)/FIN2.length*100}%"></i></div><b style="font-size:14px">${FIN2[t.fin]}</b></div>
@@ -2141,7 +2143,7 @@ function saleBody(t,role){ const b=findB(t.id); const P=t.price, ac=Math.round(P
   case 8: if(t.cancel) return `<div class="tx-end off"><b>Vente annulée : rétractation de l'acheteur.</b><span>L'acompte est restitué à l'acheteur par le notaire. L'annonce du vendeur est remise en ligne, avec ses vues et favoris.</span></div><button type="button" class="lnk" data-tx-act="reset">Recommencer la démo</button>`;
     return `<div class="tx-end"><b>Félicitations, la vente est terminée.</b><span>${role==='acheteur'?'Vous êtes propriétaire. L\'attestation de propriété est disponible ; le titre définitif vous sera adressé par le notaire après publication.':'Le prix de vente est versé par le notaire. Votre annonce a été retirée automatiquement.'}</span></div>
     <div class="tx-docs"><b>Vos documents, archivés 10 ans</b><span>Offre d'achat signée</span><span>Compromis de vente</span><span>Acte authentique (copie)</span><span>Déclaration du vendeur et 15 photos horodatées</span><span>Diagnostics techniques</span>${COPRO.includes(b.type)?'<span>PV d\'AG et état daté</span>':''}</div>
-    <div class="tx-rate"><b>Notez ${role==='acheteur'?'le vendeur':'l\'acheteur'}</b><span class="stars" data-tx-rate>${[1,2,3,4,5].map(i=>`<button type="button" data-star="${i}" class="${(t.rate||0)>=i?'on':''}">★</button>`).join('')}</span><small>Bien conforme aux photos et à la déclaration ? Votre note alimente la fiabilité affichée sur Bienvu.</small></div>`;
+    <div class="tx-rate"><b>Notez ${role==='acheteur'?'le vendeur':'l\'acheteur'}</b><span class="stars" data-tx-rate>${[1,2,3,4,5].map(i=>`<button type="button" data-star="${i}" class="${(t.rate||0)>=i?'on':''}">★</button>`).join('')}</span><small>Bien conforme aux photos et à la déclaration ? Votre note alimente la fiabilité affichée sur Tour de clef.</small></div>`;
   } return ''; }
 
 // ---------- Étapes de la LOCATION ----------
@@ -2155,7 +2157,7 @@ function rentBody(t,role){ const b=findB(t.id); const meuble=/meubl/i.test(b.des
   const c=t.cand!=null?CANDS[t.cand]:null;
   switch(t.stage){
   case 0: if(role==='locataire') return `<p>Votre dossier a été envoyé : pièces vérifiées et filigranées, visibles par le bailleur seulement s'il vous présélectionne. Aucun paiement ne vous sera demandé avant la signature du bail.</p><button type="button" class="lnk" data-tx-sim="choose">Simuler : le bailleur retient votre dossier</button>`;
-    return `<p>Comparez les dossiers sur des critères objectifs. Bienvu masque les informations qu'un bailleur n'a pas le droit de demander (loi du 6 juillet 1989, décret 2015-1437).</p>
+    return `<p>Comparez les dossiers sur des critères objectifs. Tour de clef masque les informations qu'un bailleur n'a pas le droit de demander (loi du 6 juillet 1989, décret 2015-1437).</p>
     <div class="cands">${CANDS.map((x,i)=>{ const r=Math.round(b.prix/x.rev*100); return `<div class="cand ${i===0?'best':''}"><div class="h"><b>${x.n}</b><span class="badge ${r<=33?'good':'warn'}">loyer = ${r} % des revenus</span></div><span>${x.sit} · ${eur(x.rev)} net/mois</span><span>Garantie : <b>${x.gar}</b></span><span>${x.visit} · ${x.anc}</span><span class="hint">${x.pieces}/6 pièces vérifiées · ${x.fiab}</span><button type="button" class="btn ${i===0?'cta':'ghost'} sm" data-tx-pick="${i}">Retenir ce dossier</button></div>`; }).join('')}</div>`;
   case 1: return `<p>${c?`Dossier retenu : <b>${c.n}</b>. Les autres candidats ont été prévenus. `:''}Bail généré sur le modèle officiel, complété automatiquement.</p>
     <div class="tx-doc"><b>Bail d'habitation ${meuble?'meublé':'vide'} · ${b.type} ${fmt(b.surface)} m², ${b.ville}</b><span>Loyer ${eur(b.prix)} + provision sur charges ${eur(ch)} · durée ${meuble?'1 an':'3 ans'} renouvelable · dépôt de garantie ${eur(dep)} (${meuble?'2 mois':'1 mois'} hors charges, maximum légal) · révision annuelle selon l'IRL · annexes : diagnostics (DPE ${b.dpe||'—'}, ERP, électricité, gaz), notice d'information, état des lieux à venir${b.ville==='Montpellier'?' · loyer conforme à l\'encadrement':''}</span></div>
@@ -2198,7 +2200,7 @@ function renderTx(){ const t=TXS[TXR.key]; const role=TXR.role; const b=findB(t.
   <ol class="tx-steps">${S.map((s,i)=>`<li class="${i<t.stage?'done':i===t.stage?'cur':''}"><i>${i<t.stage?'✓':i+1}</i><span>${s.t}</span></li>`).join('')}</ol>
   <div class="tx-grid"><div class="pane tx-cur"><div class="toolbar"><h3>${t.stage+1}. ${S[t.stage].t}</h3><span class="hint">${t.stage<S.length-1?'Action : '+S[t.stage].who:''}</span></div>${t.kind==='vente'?saleBody(t,role):rentBody(t,role)}</div>
   <aside class="tx-side"><div class="pane"><h3>Journal</h3><div class="log">${t.log.slice(0,12).map(l=>`<div><time>${l[0]}</time><span>${l[1]}</span></div>`).join('')}</div></div>
-   <div class="pane"><h3>Sécurité</h3><p class="hint">${t.kind==='vente'?'Bienvu ne détient jamais de fonds : acompte et solde transitent par le compte séquestre du notaire. Aucun frais à l\'acte, aucune commission.':'Le dépôt de garantie transite par un prestataire de paiement agréé ; Bienvu ne détient jamais de fonds. Aucune demande d\'argent hors plateforme.'}</p><button type="button" class="lnk" data-tx-act="reset">Recommencer la démo</button></div></aside></div>`; }
+   <div class="pane"><h3>Sécurité</h3><p class="hint">${t.kind==='vente'?'Tour de clef ne détient jamais de fonds : acompte et solde transitent par le compte séquestre du notaire. Aucun frais à l\'acte, aucune commission.':'Le dépôt de garantie transite par un prestataire de paiement agréé ; Tour de clef ne détient jamais de fonds. Aucune demande d\'argent hors plateforme.'}</p><button type="button" class="lnk" data-tx-act="reset">Recommencer la démo</button></div></aside></div>`; }
 function txNext(t,txt){ t.stage++; txLog(t,txt); txSave(); renderTx(); window.scrollTo({top:0,behavior:'smooth'}); }
 document.getElementById('v-tx').addEventListener('click',e=>{ const el=e.target.closest('button'); if(!el) return; const t=TXS[TXR.key]; if(!t) return; const role=TXR.role; const b=findB(t.id);
   const both=k=>{ const r=t.kind==='vente'?['acheteur','vendeur']:['locataire','bailleur']; return r.every(x=>t.ok[k+'_'+x]); };
@@ -2276,7 +2278,7 @@ function copro(){ const t=document.getElementById('p-type').value; document.getE
 document.getElementById('p-type').addEventListener('change',copro); copro();
 function declOk(){ const shots=shotsEl.querySelectorAll('.shot.done').length; const answered=qsEl.querySelectorAll('.a button[aria-pressed="true"]').length; if(shots<SHOTS.length) return `Il manque ${SHOTS.length-shots} photo${SHOTS.length-shots>1?'s':''} à la déclaration`; if(answered<QS.length) return 'Répondez à toutes les questions (« ? » accepté)'; if(!document.getElementById('p-cert').checked) return 'Certifiez votre déclaration pour publier'; return ''; }
 function baro(){ const v=document.getElementById('p-ville').value.trim(); const qv=document.getElementById('p-quartier').value.trim(); const s=+document.getElementById('p-surface').value, p=+document.getElementById('p-prix').value; const op=document.getElementById('p-op').value; const key=Object.keys(DVF).find(k=>k.toLowerCase()===v.toLowerCase()); const el=document.getElementById('p-baro');
-  if(!key||!s||!p){ el.textContent='Saisissez ville, quartier, surface et prix : Bienvu compare aux ventes réelles autour de l\'adresse.'; return; }
+  if(!key||!s||!p){ el.textContent='Saisissez ville, quartier, surface et prix : Tour de clef compare aux ventes réelles autour de l\'adresse.'; return; }
   const qk=DVF_Q[key]?Object.keys(DVF_Q[key]).find(k=>k.toLowerCase()===qv.toLowerCase()):null;
   const e=ecart({ville:key,quartier:qk||qv,prix:p,surface:s,op:op==='Vente'?'vente':'location',type:document.getElementById('p-type').value}); const pct=e.pct;
   const src=op!=='Vente'?`loyer de référence à ${key} : ${fmt(e.ref)} €/m²`:e.level==='quartier'?`${e.n} ventes à moins de ${e.rayon} m (${qk}) : ${fmt(e.ref)} €/m²`:`moyenne communale ${key} : ${fmt(e.ref)} €/m²${qv?' (quartier « '+qv+' » sans ventes comparables suffisantes)':' — indiquez le quartier pour affiner'}`;
@@ -2340,7 +2342,7 @@ qsEl.addEventListener('click',()=>setTimeout(wzUpd,0));
 // Estimation au moment du prix
 function wzEst(){ const box=document.getElementById('est-box'); const v=norm(wzVal('p-ville')); const c=Object.keys(DVF).find(k=>norm(k)===v)||Object.keys(DVF).find(k=>norm(k).startsWith(v)&&v.length>2); const S=+wzVal('p-surface'); if(!c||!S){ box.hidden=true; return; }
   const loc=document.getElementById('p-op').value==='Location'; const typ=document.getElementById('p-type').value; const k=typ==='Maison'?0.93:(typ==='Studio'?1.12:1.04); const base=(loc?DVF[c].l:DVF[c].v)*S*k; const r=x=>loc?Math.round(x/10)*10:Math.round(x/1000)*1000;
-  box.hidden=false; box.innerHTML=`<span class="eyebrow">Estimation Bienvu</span><span>${typ} de ${fmt(S)} m² à ${c} : <b class="v">${eur(r(base))}${loc?' / mois':''}</b></span><span class="hint">Fourchette ${eur(r(base*0.92))} – ${eur(r(base*1.08))}, d'après les ${loc?'loyers':'ventes'} de la commune. Ajustez selon l'état, l'étage et la vue.</span><button type="button" class="btn ghost sm" id="est-use">Utiliser ce prix</button>`;
+  box.hidden=false; box.innerHTML=`<span class="eyebrow">Estimation Tour de clef</span><span>${typ} de ${fmt(S)} m² à ${c} : <b class="v">${eur(r(base))}${loc?' / mois':''}</b></span><span class="hint">Fourchette ${eur(r(base*0.92))} – ${eur(r(base*1.08))}, d'après les ${loc?'loyers':'ventes'} de la commune. Ajustez selon l'état, l'étage et la vue.</span><button type="button" class="btn ghost sm" id="est-use">Utiliser ce prix</button>`;
   document.getElementById('est-use').onclick=()=>{ const pi=document.getElementById('p-prix'); pi.value=r(base); pi.dispatchEvent(new Event('input')); wzUpd(); }; }
 // Aperçu en direct
 function wzUpd(){ const op=document.getElementById('p-op').value==='Location'?'location':'vente'; const typ=document.getElementById('p-type').value; const S=+wzVal('p-surface'), P=+wzVal('p-prix'), pc=+wzVal('p-pieces'); const city=wzVal('p-ville')||'Votre ville'; const q=wzVal('p-quartier');
